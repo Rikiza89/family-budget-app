@@ -2,8 +2,8 @@
 
 Djangoで作られたモバイルファースト家計簿管理システム。家族で収支・貯蓄を共有管理できます。
 
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![Django](https://img.shields.io/badge/django-4.2+-green.svg)
+![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
+![Django](https://img.shields.io/badge/django-5.2-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## ✨ 主な機能
@@ -184,6 +184,14 @@ pip install pillow
 - 有効期限（7日）を確認
 - データベースに `FamilyInvite` モデルがあるか確認
 
+## 📄 デモサイトはこちら
+
+デモサイトを公開しています。 [サイトリンク](mydemoapplication.pythonanywhere.com) 
+是非一度お試しください。
+
+※ストレージ管理の為定期的にデータを削除しますのでご了承ください。
+本番使用にご興味ある方はぜひ連絡ください。サーバー運用に協力します。
+
 ## 🤝 コントリビューション
 
 1. Fork the repository
@@ -216,5 +224,6 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
 - [Chart.js](https://www.chartjs.org/)
 
 ---
+
 
 Made with ❤️ for families managing their budgets together
