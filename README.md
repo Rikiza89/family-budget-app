@@ -186,7 +186,7 @@ pip install pillow
 
 ## 📄 デモサイトはこちら
 
-デモサイトを公開しています。 [サイトリンク](mydemoapplication.pythonanywhere.com) 
+デモサイトを公開しています。 [サイトリンク](https://mydemoapplication.pythonanywhere.com) 
 是非一度お試しください。
 
 ※ストレージ管理の為定期的にデータを削除しますのでご了承ください。
@@ -227,3 +227,4 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
 
 
 Made with ❤️ for families managing their budgets together
+
