@@ -1,0 +1,52 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}支払方法設定 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">💳</div>
+            <h2 class="text-2xl font-bold mb-2">支払方法設定</h2>
+            <p class="text-gray-600">最後のステップです！</p>
+        </div>
+        
+        <div class="mb-6 p-6 bg-green-50 rounded-lg">
+            <p class="font-medium text-gray-900 mb-3">以下の支払方法を自動作成します：</p>
+            <ul class="space-y-2">
+                <li class="flex items-center">
+                    <span class="text-2xl mr-2">💵</span>
+                    <span>現金</span>
+                </li>
+                <li class="flex items-center">
+                    <span class="text-2xl mr-2">💳</span>
+                    <span>クレジットカード</span>
+                </li>
+                <li class="flex items-center">
+                    <span class="text-2xl mr-2">🚃</span>
+                    <span>交通系ICカード</span>
+                </li>
+                <li class="flex items-center">
+                    <span class="text-2xl mr-2">📱</span>
+                    <span>PayPay</span>
+                </li>
+                <li class="flex items-center">
+                    <span class="text-2xl mr-2">🏦</span>
+                    <span>銀行振込</span>
+                </li>
+            </ul>
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-700 transition mb-3">
+                セットアップ完了！
+            </button>
+        </form>
+        
+        <p class="text-center text-sm text-gray-500">
+            後から追加・編集できます
+        </p>
+    </div>
+</div>
+{% endblock %}

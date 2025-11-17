@@ -1,0 +1,94 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}取引履歴 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <h2 class="text-2xl font-bold mb-4">📝 取引履歴</h2>
+    
+    <!-- フィルター -->
+    <div class="bg-white rounded-lg shadow p-4 mb-4">
+        <form method="GET" class="space-y-3">
+            <div class="grid grid-cols-2 gap-3">
+                <select name="type" class="p-3 border-2 border-gray-300 rounded-lg">
+                    <option value="">すべて</option>
+                    <option value="expense">支出のみ</option>
+                    <option value="income">収入のみ</option>
+                </select>
+                
+                <select name="category" class="p-3 border-2 border-gray-300 rounded-lg">
+                    <option value="">全カテゴリー</option>
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700">
+                フィルター適用
+            </button>
+        </form>
+    </div>
+    
+    <!-- 取引リスト -->
+    {% if transactions %}
+    <div class="space-y-2">
+        {% for trans in transactions %}
+        <div class="bg-white rounded-lg shadow p-4">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-2 mb-1">
+                        <span class="text-xl">
+                            {% if trans.transaction_type == 'income' %}💰{% else %}💸{% endif %}
+                        </span>
+                        <h3 class="font-bold">{{ trans.category.name }}</h3>
+                        {% if trans.category.is_insurance_saving %}
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">積立</span>
+                        {% endif %}
+                    </div>
+                    
+                    <p class="text-sm text-gray-600">{{ trans.date|date:"Y年m月d日" }}</p>
+                    
+                    {% if trans.description %}
+                    <p class="text-sm text-gray-700 mt-1">{{ trans.description }}</p>
+                    {% endif %}
+                    
+                    <div class="flex items-center space-x-2 mt-2 text-xs text-gray-500">
+                        {% if trans.payment_method %}
+                        <span>💳 {{ trans.payment_method.name }}</span>
+                        {% endif %}
+                        {% if trans.member %}
+                        <span>👤 {{ trans.member.nickname }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="text-right">
+                    <p class="text-xl font-bold {% if trans.transaction_type == 'income' %}text-blue-600{% else %}text-red-600{% endif %}">
+                        {% if trans.transaction_type == 'income' %}+{% else %}-{% endif %}¥{{ trans.amount|floatformat:0 }}
+                    </p>
+                    
+                    <a href="{% url 'delete_transaction' trans.id %}" class="text-xs text-red-500 hover:underline mt-2 inline-block">
+                        削除
+                    </a>
+                </div>
+            </div>
+            
+            {% if trans.receipt_image %}
+            <div class="mt-3 pt-3 border-t">
+                <img src="{{ trans.receipt_image.url }}" alt="レシート" class="max-w-xs rounded">
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-lg shadow p-8 text-center">
+        <p class="text-gray-500 mb-4">取引がありません</p>
+        <a href="{% url 'quick_add_transaction' %}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+            最初の取引を追加
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

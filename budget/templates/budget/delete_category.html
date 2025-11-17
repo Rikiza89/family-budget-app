@@ -1,0 +1,38 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}カテゴリー削除 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold text-red-600 mb-4">⚠️ カテゴリー削除</h2>
+        
+        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+            <p class="font-bold text-lg">{{ category.icon }} {{ category.name }}</p>
+            <p class="text-sm text-gray-600">{{ category.get_category_type_display }}</p>
+        </div>
+        
+        {% if transaction_count > 0 %}
+        <div class="bg-red-50 border border-red-200 p-4 rounded-lg mb-4">
+            <p class="text-red-700 font-medium">⚠️ 削除できません</p>
+            <p class="text-sm text-red-600 mt-1">このカテゴリーは {{ transaction_count }} 件の取引で使用されています</p>
+        </div>
+        <a href="{% url 'manage_categories' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+            戻る
+        </a>
+        {% else %}
+        <p class="text-gray-700 mb-6">このカテゴリーを削除してもよろしいですか？</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 mb-3">
+                削除する
+            </button>
+            <a href="{% url 'manage_categories' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+                キャンセル
+            </a>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

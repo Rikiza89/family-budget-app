@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 - 家計簿アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full">
+        <div class="text-center mb-8">
+            <h1 class="text-5xl mb-4">💰</h1>
+            <h2 class="text-3xl font-bold text-gray-800">家計簿アプリ</h2>
+            {% if invite %}
+            <div class="mt-4 bg-blue-100 border-2 border-blue-300 p-4 rounded-lg">
+                <p class="text-blue-800 font-bold">
+                    🎉 <strong>{{ invite.family.name }}</strong>に招待されています！
+                </p>
+            </div>
+            {% else %}
+            <p class="text-gray-600 mt-2">無料で今すぐ始められます</p>
+            {% endif %}
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-center">新規登録</h3>
+            
+            {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% if form.errors %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+                <ul class="list-disc list-inside">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">ユーザー名</label>
+                    {{ form.username }}
+                    <p class="text-xs text-gray-500 mt-1">英数字のみ使用可能</p>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">メールアドレス（任意）</label>
+                    {{ form.email }}
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">パスワード</label>
+                    {{ form.password1 }}
+                    <p class="text-xs text-gray-500 mt-1">8文字以上</p>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">パスワード（確認）</label>
+                    {{ form.password2 }}
+                </div>
+                
+                <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition mb-4">
+                    アカウント作成
+                </button>
+            </form>
+            
+            <div class="text-center">
+                <p class="text-gray-600">すでにアカウントをお持ちの方</p>
+                <a href="{% url 'login' %}" class="text-blue-600 font-medium hover:underline">
+                    ログインはこちら
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

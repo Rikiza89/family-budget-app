@@ -1,0 +1,35 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}プロフィール設定 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">👋</div>
+            <h2 class="text-2xl font-bold mb-2">はじめまして！</h2>
+            <p class="text-gray-600">まずはプロフィールを設定しましょう</p>
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">家族名</label>
+                {{ form.name }}
+                <p class="text-xs text-gray-500 mt-1">例: 田中家、佐藤ファミリー</p>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">あなたのニックネーム</label>
+                {{ form.nickname }}
+                <p class="text-xs text-gray-500 mt-1">例: パパ、ママ、太郎</p>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition">
+                次へ
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

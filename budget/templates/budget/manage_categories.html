@@ -1,0 +1,63 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}カテゴリー管理 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold">📂 カテゴリー管理</h2>
+        <a href="{% url 'add_category' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            ➕ 追加
+        </a>
+    </div>
+    
+    <!-- 支出カテゴリー -->
+    <div class="bg-white rounded-lg shadow p-4 mb-4">
+        <h3 class="font-bold mb-3 text-red-600">💸 支出</h3>
+        <div class="space-y-2">
+            {% for cat in categories %}
+            {% if cat.category_type == 'expense' %}
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">{{ cat.icon }}</span>
+                    <div>
+                        <p class="font-medium">{{ cat.name }}</p>
+                        {% if cat.is_insurance_saving %}
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">積立</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="{% url 'edit_category' cat.id %}" class="text-blue-600 hover:underline text-sm">編集</a>
+                    <a href="{% url 'delete_category' cat.id %}" class="text-red-600 hover:underline text-sm">削除</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- 収入カテゴリー -->
+    <div class="bg-white rounded-lg shadow p-4 mb-4">
+        <h3 class="font-bold mb-3 text-blue-600">💰 収入</h3>
+        <div class="space-y-2">
+            {% for cat in categories %}
+            {% if cat.category_type == 'income' %}
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">{{ cat.icon }}</span>
+                    <p class="font-medium">{{ cat.name }}</p>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="{% url 'edit_category' cat.id %}" class="text-blue-600 hover:underline text-sm">編集</a>
+                    <a href="{% url 'delete_category' cat.id %}" class="text-red-600 hover:underline text-sm">削除</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <a href="{% url 'settings' %}" class="block text-center text-gray-600 hover:underline">← 設定に戻る</a>
+</div>
+{% endblock %}

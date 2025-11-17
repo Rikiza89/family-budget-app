@@ -1,0 +1,33 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}支払方法管理 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold">💳 支払方法管理</h2>
+        <a href="{% url 'add_payment_method' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            ➕ 追加
+        </a>
+    </div>
+    
+    <div class="bg-white rounded-lg shadow p-4 mb-4">
+        <div class="space-y-2">
+            {% for method in payment_methods %}
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                    <p class="font-medium">{{ method.name }}</p>
+                    <p class="text-sm text-gray-600">{{ method.get_method_type_display }}</p>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="{% url 'edit_payment_method' method.id %}" class="text-blue-600 hover:underline text-sm">編集</a>
+                    <a href="{% url 'delete_payment_method' method.id %}" class="text-red-600 hover:underline text-sm">削除</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <a href="{% url 'settings' %}" class="block text-center text-gray-600 hover:underline">← 設定に戻る</a>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'budget/base.html' %}
+
+{% block title %}貯金を登録 - 家計簿{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="text-center mb-6">
+            <h2 class="text-3xl mb-2">🏦</h2>
+            <h3 class="text-2xl font-bold">現金貯蓄を登録</h3>
+            <p class="text-gray-600 mt-2">給料からの積立、ボーナス貯金など</p>
+        </div>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">金額</label>
+                <div class="relative">
+                    <span class="absolute right-4 top-1/2 transform -translate-y-1/2 text-3xl text-gray-400">¥</span>
+                    {{ form.amount }}
+                </div>
+                <div class="mt-3 grid grid-cols-4 gap-2">
+                    <button type="button" class="quick-amount p-3 bg-purple-50 rounded-lg hover:bg-purple-100" data-amount="10000">10,000</button>
+                    <button type="button" class="quick-amount p-3 bg-purple-50 rounded-lg hover:bg-purple-100" data-amount="30000">30,000</button>
+                    <button type="button" class="quick-amount p-3 bg-purple-50 rounded-lg hover:bg-purple-100" data-amount="50000">50,000</button>
+                    <button type="button" class="quick-amount p-3 bg-purple-50 rounded-lg hover:bg-purple-100" data-amount="100000">100,000</button>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">日付</label>
+                {{ form.date }}
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">メモ</label>
+                {{ form.description }}
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <p class="text-sm text-blue-800">
+                    💡 <strong>ヒント:</strong> 保険の積立は「支出」として「保険（積立）」カテゴリーで登録してください。こちらは純粋な現金貯蓄用です。
+                </p>
+            </div>
+            
+            <button type="submit" class="w-full bg-purple-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-purple-700 transition">
+                貯金を保存
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // クイック金額
+    document.querySelectorAll('.quick-amount').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const amount = btn.dataset.amount;
+            document.querySelector('input[name="amount"]').value = amount;
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家計簿アプリ - かんたん・シンプル</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white">
+    <!-- ヒーロー -->
+    <section class="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-6xl font-bold mb-6">💰</h1>
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">家族で使える家計簿アプリ</h2>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">スマホで2タップ。収支も貯蓄も一目でわかる。</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'signup' %}" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition">
+                    無料で始める
+                </a>
+                <a href="{% url 'login' %}" class="bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-800 transition border-2 border-white">
+                    ログイン
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 特徴 -->
+    <section class="py-20 px-4">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-3xl font-bold text-center mb-12">こんな機能があります</h3>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h4 class="text-xl font-bold mb-3">2タップで記録</h4>
+                    <p class="text-gray-600">レシートを撮影してすぐ入力。スマホに最適化された操作感。</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">📊</div>
+                    <h4 class="text-xl font-bold mb-3">一目でわかる</h4>
+                    <p class="text-gray-600">月次収支、カテゴリー別、予算対比がダッシュボードで確認できます。</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">💎</div>
+                    <h4 class="text-xl font-bold mb-3">貯蓄を分けて管理</h4>
+                    <p class="text-gray-600">現金貯蓄と保険積立を別々に管理。長期資産が見える化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="bg-blue-50 py-16 px-4">
+        <div class="max-w-2xl mx-auto text-center">
+            <h3 class="text-3xl font-bold mb-6">今すぐ無料で始めましょう</h3>
+            <p class="text-gray-600 mb-8">登録は1分。家計管理を今日から始められます。</p>
+            <a href="{% url 'signup' %}" class="inline-block bg-blue-600 text-white px-10 py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition">
+                アカウント作成（無料）
+            </a>
+        </div>
+    </section>
+    
+    <!-- フッター -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="text-sm opacity-75">&copy; 2025 家計簿アプリ. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
