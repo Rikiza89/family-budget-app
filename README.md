@@ -2,8 +2,8 @@
 
 Djangoで作られたモバイルファースト家計簿管理システム。家族で収支・貯蓄を共有管理できます。
 
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![Django](https://img.shields.io/badge/django-4.2+-green.svg)
+![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
+![Django](https://img.shields.io/badge/django-5.2+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 ## ✨ 主な機能
@@ -296,3 +296,4 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
 ---
 
 Made with ❤️ for families managing their budgets together
+
