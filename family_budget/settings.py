@@ -40,9 +40,15 @@ INSTALLED_APPS = [
     'budget',
 ]
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_SAVE_EVERY_REQUEST = True  # Important!
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -101,13 +107,26 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# https://docs.djangoproject.com/en/5.0/topics/i18n/
 
 LANGUAGE_CODE = 'ja'
 TIME_ZONE = 'Asia/Tokyo'
+
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
+# Available languages
+LANGUAGES = [
+    ('ja', '日本語'),
+    ('it', 'Italiano'),
+    ('en', 'English'),
+]
+
+# Locale paths
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -125,4 +144,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
+
 LOGOUT_REDIRECT_URL = 'landing'
+
+# 1. Add to settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # or your SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'
+DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
