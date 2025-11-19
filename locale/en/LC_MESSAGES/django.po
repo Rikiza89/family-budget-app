@@ -1,0 +1,1649 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 15:15+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: budget/auth_views.py:20 budget/auth_views.py:73 budget/auth_views.py:76
+#: budget/templates/budget/login.html:31 budget/templates/budget/signup.html:52
+msgid "ユーザー名"
+msgstr "Username"
+
+#: budget/auth_views.py:23
+#, fuzzy
+#| msgid "ユーザー名"
+msgid "ユーザー名（英数字）"
+msgstr "Username"
+
+#: budget/auth_views.py:27
+#, fuzzy
+#| msgid "メールアドレス（任意）"
+msgid "メールアドレス"
+msgstr "Email Address (Optional)"
+
+#: budget/auth_views.py:31 budget/templates/budget/signup.html:58
+msgid "メールアドレス（任意）"
+msgstr "Email Address (Optional)"
+
+#: budget/auth_views.py:35 budget/auth_views.py:81 budget/auth_views.py:84
+#: budget/templates/budget/login.html:39 budget/templates/budget/signup.html:63
+msgid "パスワード"
+msgstr "Password"
+
+#: budget/auth_views.py:38
+#, fuzzy
+#| msgid "パスワード（確認）"
+msgid "パスワード（8文字以上）"
+msgstr "Password (More than 8 characters)"
+
+#: budget/auth_views.py:42 budget/templates/budget/signup.html:69
+msgid "パスワード（確認）"
+msgstr "Password (Confirm)"
+
+#: budget/auth_views.py:45
+#, fuzzy
+#| msgid "パスワード"
+msgid "パスワードを再入力"
+msgstr "Password"
+
+#: budget/auth_views.py:53
+#, fuzzy
+#| msgid "件の取引で使用されています"
+msgid "このユーザー名は既に使用されています"
+msgstr "transactions"
+
+#: budget/auth_views.py:62
+msgid "パスワードが一致しません"
+msgstr "Password is inccorect"
+
+#: budget/auth_views.py:65
+msgid "パスワードは8文字以上にしてください"
+msgstr "Write a Password that is longer than 8 characters"
+
+#: budget/auth_views.py:102
+#, fuzzy
+#| msgid "この招待リンクを削除してもよろしいですか？"
+msgid "この招待リンクは有効期限切れです"
+msgstr "Are you sure you want to delete this invitation link?"
+
+#: budget/auth_views.py:105
+#, fuzzy
+#| msgid "招待リンクがありません"
+msgid "招待コードが見つかりません"
+msgstr "No invitation links"
+
+#: budget/auth_views.py:130
+#, fuzzy
+#| msgid "まずはプロフィールを設定しましょう"
+msgid "✓ アカウントを作成しました"
+msgstr "Let's set up your profile first"
+
+#: budget/auth_views.py:147
+#, fuzzy
+#| msgid "招待リンクがありません"
+msgid "⚠️ 招待コードが見つかりません"
+msgstr "No invitation links"
+
+#: budget/auth_views.py:151
+msgid "⚠️ この招待リンクは無効です"
+msgstr "Invitation is no valid"
+
+#: budget/auth_views.py:157
+msgid "すでに家族に所属しています"
+msgstr "You are already part of this family"
+
+#: budget/auth_views.py:179
+#, python-format
+msgid "✓ %(family_name)sに参加しました！"
+msgstr ""
+
+#: budget/auth_views.py:206
+#, python-format
+msgid "✓ おかえりなさい、%(username)sさん"
+msgstr "✓ Welcome back、%(username)s"
+
+#: budget/auth_views.py:214
+msgid "ユーザー名またはパスワードが正しくありません"
+msgstr "Username or Password are incorrect"
+
+#: budget/auth_views.py:225
+#, fuzzy
+#| msgid "ログアウトしますか？"
+msgid "✓ ログアウトしました"
+msgstr "Do you want to log out?"
+
+#: budget/forms.py:13 budget/setup_views.py:311
+#: budget/templates/budget/join_family_confirm.html:22
+#: budget/templates/budget/setup_profile.html:24
+msgid "あなたのニックネーム"
+msgstr "Your Nickname"
+
+#: budget/forms.py:17 budget/templates/budget/setup_profile.html:26
+msgid "例: パパ、ママ、太郎"
+msgstr "Example: Dad, Mom, Taro"
+
+#: budget/forms.py:42 budget/models.py:68 budget/models.py:97
+#: budget/models.py:116 budget/models.py:212 budget/setup_views.py:17
+#: budget/setup_views.py:46 budget/setup_views.py:589
+#: budget/templates/budget/add_category.html:19
+#: budget/templates/budget/add_payment_method.html:20
+#: budget/templates/budget/add_recurring.html:14
+#: budget/templates/budget/edit_category.html:19
+#: budget/templates/budget/edit_payment_method.html:19
+#: budget/templates/budget/quick_add.html:15
+#: budget/templates/budget/quick_add＿vecchio.html:15
+msgid "種類"
+msgstr "Type"
+
+#: budget/forms.py:43 budget/models.py:78 budget/models.py:79
+#: budget/models.py:117 budget/models.py:163 budget/models.py:213
+#: budget/setup_views.py:589 budget/templates/budget/add_category.html:14
+#: budget/templates/budget/add_recurring.html:19
+#: budget/templates/budget/edit_budget.html:14
+#: budget/templates/budget/manage_budgets.html:67
+#: budget/templates/budget/quick_add.html:48
+#: budget/templates/budget/quick_add.html:194
+#: budget/templates/budget/quick_add＿vecchio.html:46
+#: budget/templates/budget/quick_add＿vecchio.html:153
+#: budget/templates/budget/quick_add＿vecchio.html:218
+#: budget/templates/budget/settings.html:29
+#: budget/templates/budget/setup_categories.html:3
+#: budget/templates/budget/setup_categories.html:10
+#: budget/templates/budget/setup_categories.html:11
+msgid "カテゴリー"
+msgstr "Cathegory"
+
+#: budget/forms.py:44 budget/forms.py:108 budget/models.py:118
+#: budget/models.py:147 budget/models.py:214 budget/setup_views.py:589
+#: budget/templates/budget/add_recurring.html:24
+#: budget/templates/budget/preset_transaction.html:68
+#: budget/templates/budget/quick_add.html:33
+#: budget/templates/budget/quick_add.html:186
+#: budget/templates/budget/quick_add_saving.html:18
+#: budget/templates/budget/quick_add_saving.html:57
+#: budget/templates/budget/quick_add＿vecchio.html:31
+#: budget/templates/budget/quick_add＿vecchio.html:210
+msgid "金額"
+msgstr "Amount"
+
+#: budget/forms.py:45 budget/models.py:101 budget/models.py:102
+#: budget/models.py:119 budget/models.py:215 budget/setup_views.py:589
+#: budget/templates/budget/add_recurring.html:29
+#: budget/templates/budget/preset_transaction.html:38
+#: budget/templates/budget/preset_transaction.html:76
+#: budget/templates/budget/quick_add.html:65
+#: budget/templates/budget/quick_add＿vecchio.html:63
+#: budget/templates/budget/settings.html:51
+#: budget/templates/budget/setup_payment_methods.html:3
+#: budget/templates/budget/setup_payment_methods.html:10
+msgid "支払方法"
+msgstr "Payment Method"
+
+#: budget/forms.py:46 budget/forms.py:109 budget/models.py:120
+#: budget/models.py:148 budget/setup_views.py:589
+#: budget/templates/budget/quick_add.html:71
+#: budget/templates/budget/quick_add.html:202
+#: budget/templates/budget/quick_add_saving.html:32
+#: budget/templates/budget/quick_add＿vecchio.html:69
+#: budget/templates/budget/quick_add＿vecchio.html:226
+msgid "日付"
+msgstr "Date"
+
+#: budget/forms.py:47 budget/forms.py:110 budget/models.py:121
+#: budget/models.py:149 budget/models.py:216 budget/setup_views.py:589
+#: budget/templates/budget/add_recurring.html:34
+#: budget/templates/budget/quick_add_saving.html:37
+msgid "メモ"
+msgstr "Memo"
+
+#: budget/forms.py:72 budget/templates/budget/quick_add.html:82
+#: budget/templates/budget/quick_add＿vecchio.html:80
+msgid "メモ（任意）"
+msgstr "Memo (Optional)"
+
+#: budget/forms.py:84 budget/templates/budget/manage_budgets.html:69
+msgid "選択してください"
+msgstr "Please Select"
+
+#: budget/forms.py:125
+msgid "メモ（例：給料から貯金）"
+msgstr "Memo（eg.：Saved from Salary）"
+
+#: budget/models.py:11 budget/setup_views.py:321
+#: budget/templates/budget/settings.html:16
+#: budget/templates/budget/setup_profile.html:18
+msgid "家族名"
+msgstr "Family Name"
+
+#: budget/models.py:15 budget/models.py:16
+#, fuzzy
+#| msgid "家族名"
+msgid "家族"
+msgstr "Family Name"
+
+#: budget/models.py:25
+#, fuzzy
+#| msgid "あなたのニックネーム"
+msgid "ニックネーム"
+msgstr "Your Nickname"
+
+#: budget/models.py:28 budget/models.py:29
+#: budget/templates/budget/family_members.html:3
+#: budget/templates/budget/family_members.html:7
+msgid "家族メンバー"
+msgstr "Family Members"
+
+#: budget/models.py:46 budget/models.py:47
+#, fuzzy
+#| msgid "招待削除"
+msgid "招待"
+msgstr "Delete Invitation"
+
+#: budget/models.py:63 budget/models.py:111
+#: budget/templates/budget/base_bkup.html:93
+#: budget/templates/budget/dashboard.html:32
+#: budget/templates/budget/manage_categories.html:16
+#: budget/templates/budget/quick_add.html:19
+#: budget/templates/budget/quick_add＿vecchio.html:19
+#: budget/templates/budget/quick_add＿vecchio.html:153
+msgid "支出"
+msgstr "Outcome"
+
+#: budget/models.py:64 budget/models.py:110
+#: budget/templates/budget/base_bkup.html:93
+#: budget/templates/budget/dashboard.html:27
+#: budget/templates/budget/manage_categories.html:42
+#: budget/templates/budget/quick_add.html:23
+#: budget/templates/budget/quick_add＿vecchio.html:23
+#: budget/templates/budget/quick_add＿vecchio.html:153
+msgid "収入"
+msgstr "Income"
+
+#: budget/models.py:67 budget/setup_views.py:16
+#: budget/templates/budget/edit_category.html:14
+msgid "カテゴリー名"
+msgstr "Category Name"
+
+#: budget/models.py:71 budget/utils.py:12
+msgid "保険（積立）"
+msgstr "Insurance (Savings)"
+
+#: budget/models.py:72
+msgid "保険型の積立の場合はチェック"
+msgstr "In the case of an insurance-type savings plan, check the box."
+
+#: budget/models.py:74 budget/setup_views.py:19
+#, fuzzy
+#| msgid "アイコン（絵文字）"
+msgid "アイコン"
+msgstr "Icon (Emoji)"
+
+#: budget/models.py:88 budget/templates/budget/setup_payment_methods.html:19
+#: budget/utils.py:18
+msgid "現金"
+msgstr "Cash"
+
+#: budget/models.py:89 budget/templates/budget/setup_payment_methods.html:23
+#: budget/utils.py:19
+msgid "クレジットカード"
+msgstr "Credit Card"
+
+#: budget/models.py:90
+#, fuzzy
+#| msgid "交通系ICカード"
+msgid "ICカード"
+msgstr "Transit IC Card"
+
+#: budget/models.py:91
+msgid "QR決済"
+msgstr "QR Code"
+
+#: budget/models.py:92 budget/templates/budget/setup_payment_methods.html:35
+#: budget/utils.py:22
+msgid "銀行振込"
+msgstr "Bank Transfer"
+
+#: budget/models.py:93 budget/templates/budget/setup_categories.html:23
+#: budget/utils.py:13
+msgid "その他"
+msgstr "Others"
+
+#: budget/models.py:96 budget/setup_views.py:45
+#: budget/templates/budget/add_payment_method.html:14
+#: budget/templates/budget/edit_payment_method.html:14
+msgid "支払方法名"
+msgstr "Payment Method Name"
+
+#: budget/models.py:115 budget/models.py:146 budget/setup_views.py:589
+msgid "登録者"
+msgstr "User"
+
+#: budget/models.py:122 budget/templates/budget/quick_add.html:213
+#: budget/templates/budget/quick_add＿vecchio.html:237
+msgid "レシート"
+msgstr "Receipt"
+
+#: budget/models.py:123
+msgid "固定費"
+msgstr "Fix Outcome"
+
+#: budget/models.py:128 budget/models.py:129
+#, fuzzy
+#| msgid "取引履歴"
+msgid "取引"
+msgstr "Transaction History"
+
+#: budget/models.py:153 budget/models.py:154
+#: budget/templates/budget/dashboard.html:37
+#: budget/templates/budget/forecast.html:25
+#: budget/templates/budget/forecast.html:46
+#: budget/templates/budget/forecast.html:113
+#: budget/templates/budget/savings_summary.html:16
+msgid "現金貯蓄"
+msgstr "Cash Savings"
+
+#: budget/models.py:164 budget/templates/budget/dashboard.html:15
+#: budget/templates/budget/export_data.html:16
+#: budget/templates/budget/forecast.html:16
+#: budget/templates/budget/manage_budgets.html:13
+#: budget/templates/budget/transaction_list.html:51
+msgid "年"
+msgstr " "
+
+#: budget/models.py:165 budget/templates/budget/dashboard.html:15
+#: budget/templates/budget/export_data.html:21
+#: budget/templates/budget/export_data.html:24
+#: budget/templates/budget/manage_budgets.html:13
+#: budget/templates/budget/transaction_list.html:52
+msgid "月"
+msgstr " "
+
+#: budget/models.py:166
+#, fuzzy
+#| msgid "予算"
+msgid "予算額"
+msgstr "Budget"
+
+#: budget/models.py:169 budget/models.py:170
+#, fuzzy
+#| msgid "予算"
+msgid "予算"
+msgstr "Budget"
+
+#: budget/models.py:204
+msgid "毎日"
+msgstr "Daily"
+
+#: budget/models.py:205
+msgid "毎週"
+msgstr "Weekly"
+
+#: budget/models.py:206
+msgid "毎月"
+msgstr "Monthly"
+
+#: budget/models.py:207
+msgid "毎年"
+msgstr "Yearly"
+
+#: budget/models.py:219 budget/templates/budget/add_recurring.html:39
+msgid "頻度"
+msgstr "Frequency"
+
+#: budget/models.py:220 budget/templates/budget/add_recurring.html:44
+msgid "開始日"
+msgstr "Start Date"
+
+#: budget/models.py:221
+#, fuzzy
+#| msgid "終了日（任意）"
+msgid "終了日"
+msgstr "End Date (Optional)"
+
+#: budget/models.py:222
+msgid "月次の場合は1-31"
+msgstr "In case of Monthly 1-31"
+
+#: budget/models.py:223 budget/templates/budget/manage_recurring.html:41
+#: budget/views.py:541
+msgid "有効"
+msgstr "Active"
+
+#: budget/models.py:229 budget/models.py:230
+#: budget/templates/budget/base.html:153
+msgid "定期取引"
+msgstr "Recurring Transactions"
+
+#: budget/models.py:304 budget/templates/budget/email_settings.html:18
+msgid "通知を有効にする"
+msgstr "Enable Notifications"
+
+#: budget/models.py:305
+msgid "未記録日数"
+msgstr "Not Logged days"
+
+#: budget/models.py:305 budget/templates/budget/email_settings.html:23
+msgid "何日間記録がない場合に通知"
+msgstr "Notify if there is no record for X days"
+
+#: budget/models.py:308
+#, fuzzy
+#| msgid "通知先メールアドレス（1行1アドレス）"
+msgid "通知先メールアドレス"
+msgstr "Notification email addresses (one per line)"
+
+#: budget/models.py:308
+#, fuzzy
+#| msgid "メールアドレス（任意）"
+msgid "1行1メールアドレス"
+msgstr "Email Address (Optional)"
+
+#: budget/models.py:313 budget/templates/budget/email_settings.html:8
+msgid "メール通知設定"
+msgstr "Email Notification Settings"
+
+#: budget/setup_views.py:18 budget/templates/budget/dashboard.html:42
+#: budget/templates/budget/forecast.html:29
+#: budget/templates/budget/forecast.html:50
+#: budget/templates/budget/forecast.html:119
+#: budget/templates/budget/savings_summary.html:20
+msgid "保険積立"
+msgstr "Insurance (Savings)"
+
+#: budget/setup_views.py:25
+msgid "例: 食費"
+msgstr "Eg: food"
+
+#: budget/setup_views.py:51
+#, fuzzy
+#| msgid "例: メインカード、楽天カード名"
+msgid "例: メインカード"
+msgstr "Example: Main Card, Rakuten Card Name"
+
+#: budget/setup_views.py:95
+#, fuzzy
+#| msgid "招待リンクを作成"
+msgid "✓ 招待リンクを作成しました"
+msgstr "Create Invitation Link"
+
+#: budget/setup_views.py:113
+#, fuzzy
+#| msgid "定期取引追加"
+msgid "✓ 招待を削除しました"
+msgstr "Add Recurring Transaction"
+
+#: budget/setup_views.py:152
+#, fuzzy
+#| msgid "カテゴリー追加"
+msgid "✓ カテゴリーを追加しました"
+msgstr "Add cathegory"
+
+#: budget/setup_views.py:175
+#, fuzzy
+#| msgid "メール通知設定"
+msgid "✓ カテゴリーを更新しました"
+msgstr "Email Notification Settings"
+
+#: budget/setup_views.py:202
+msgid "⚠️ このカテゴリーは取引で使用されているため削除できません"
+msgstr "⚠️ This category cannot be deleted because it is used in some transactions."
+
+#: budget/setup_views.py:205
+#, fuzzy
+#| msgid "このカテゴリーを削除してもよろしいですか？"
+msgid "✓ カテゴリーを削除しました"
+msgstr "Are you sure you want to delete this category?"
+
+#: budget/setup_views.py:245
+#, fuzzy
+#| msgid "定期取引追加"
+msgid "✓ 支払方法を追加しました"
+msgstr "Add Recurring Transaction"
+
+#: budget/setup_views.py:268
+#, fuzzy
+#| msgid "メール通知設定"
+msgid "✓ 支払方法を更新しました"
+msgstr "Email Notification Settings"
+
+#: budget/setup_views.py:295
+msgid "⚠️ この支払方法は取引で使用されているため削除できません"
+msgstr "⚠️ This payment method cannot be deleted because it is used in some transactions."
+
+#: budget/setup_views.py:298
+#, fuzzy
+#| msgid "この支払方法を削除してもよろしいですか？"
+msgid "✓ 支払方法を削除しました"
+msgstr "Are you sure you want to delete this payment method?"
+
+#: budget/setup_views.py:314
+#, fuzzy
+#| msgid "例: パパ、ママ、太郎"
+msgid "例: パパ、ママ"
+msgstr "Example: Dad, Mom, Taro"
+
+#: budget/setup_views.py:325
+msgid "例: 田中家"
+msgstr ""
+
+#: budget/setup_views.py:334 budget/templates/budget/setup_categories.html:21
+msgid "デフォルトカテゴリーを使用"
+msgstr "Use Default Categories"
+
+#: budget/setup_views.py:351 budget/templates/budget/edit_budget.html:19
+#: budget/templates/budget/manage_budgets.html:77
+msgid "月額予算"
+msgstr "Monthly Budget"
+
+#: budget/setup_views.py:379
+#, fuzzy
+#| msgid "まずはプロフィールを設定しましょう"
+msgid "✓ プロフィールを作成しました"
+msgstr "Let's set up your profile first"
+
+#: budget/setup_views.py:405
+#, fuzzy
+#| msgid "メール通知設定"
+msgid "✓ カテゴリーを設定しました"
+msgstr "Email Notification Settings"
+
+#: budget/setup_views.py:429
+#, fuzzy
+#| msgid "セットアップ完了"
+msgid "✓ セットアップ完了！"
+msgstr "Setup Complete"
+
+#: budget/setup_views.py:541
+#, fuzzy
+#| msgid "定期取引追加"
+msgid "✓ 予算を設定しました"
+msgstr "Add Recurring Transaction"
+
+#: budget/setup_views.py:628
+#, fuzzy
+#| msgid "メール通知設定"
+msgid "✓ 予算を更新しました"
+msgstr "Email Notification Settings"
+
+#: budget/setup_views.py:646
+#, fuzzy
+#| msgid "定期取引追加"
+msgid "✓ 予算を削除しました"
+msgstr "Add Recurring Transaction"
+
+#: budget/templates/budget/add_category.html:3
+msgid "カテゴリー追加 - 家計簿"
+msgstr "Add cathegory - Household Budget"
+
+#: budget/templates/budget/add_category.html:8
+msgid "カテゴリー追加"
+msgstr "Add cathegory"
+
+#: budget/templates/budget/add_category.html:24
+#: budget/templates/budget/edit_category.html:24
+msgid "アイコン（絵文字）"
+msgstr "Icon (Emoji)"
+
+#: budget/templates/budget/add_category.html:26
+msgid "例"
+msgstr "Example"
+
+#: budget/templates/budget/add_category.html:33
+#: budget/templates/budget/edit_category.html:32
+msgid "保険積立として扱う"
+msgstr "Treat as insurance"
+
+#: budget/templates/budget/add_category.html:34
+#: budget/templates/budget/edit_category.html:33
+msgid "チェックすると、支出と貯蓄の両方に計上されます"
+msgstr "If checked, it will be recorded in both expenses and savings."
+
+#: budget/templates/budget/add_category.html:40
+#: budget/templates/budget/add_payment_method.html:25
+#: budget/templates/budget/add_recurring.html:60
+#: budget/templates/budget/manage_categories.html:10
+#: budget/templates/budget/manage_payment_methods.html:10
+#: budget/templates/budget/manage_recurring.html:9
+msgid "追加"
+msgstr "Add"
+
+#: budget/templates/budget/add_category.html:43
+#: budget/templates/budget/add_payment_method.html:28
+#: budget/templates/budget/add_recurring.html:63
+#: budget/templates/budget/confirm_delete.html:29
+#: budget/templates/budget/confirm_generate_recurring.html:29
+#: budget/templates/budget/create_invite.html:25
+#: budget/templates/budget/delete_budget.html:23
+#: budget/templates/budget/delete_category.html:32
+#: budget/templates/budget/delete_invite.html:22
+#: budget/templates/budget/delete_payment_method.html:32
+#: budget/templates/budget/edit_budget.html:27
+#: budget/templates/budget/edit_category.html:42
+#: budget/templates/budget/edit_payment_method.html:27
+#: budget/templates/budget/join_family_confirm.html:31
+#: budget/templates/budget/logout_confirm.html:23
+#: budget/templates/budget/preset_transaction.html:56
+msgid "キャンセル"
+msgstr "Cancel"
+
+#: budget/templates/budget/add_payment_method.html:3
+msgid "支払方法追加 - 家計簿"
+msgstr "Add Payment Method – Household Budget"
+
+#: budget/templates/budget/add_payment_method.html:8
+msgid "支払方法追加"
+msgstr "Add Payment Method"
+
+#: budget/templates/budget/add_payment_method.html:16
+msgid "例: メインカード、楽天カード名"
+msgstr "Example: Main Card, Rakuten Card Name"
+
+#: budget/templates/budget/add_recurring.html:8
+msgid "定期取引追加"
+msgstr "Add Recurring Transaction"
+
+#: budget/templates/budget/add_recurring.html:49
+msgid "終了日（任意）"
+msgstr "End Date (Optional)"
+
+#: budget/templates/budget/add_recurring.html:54
+msgid "毎月の日付（月次のみ）"
+msgstr "Day of Month (Monthly Only)"
+
+#: budget/templates/budget/add_recurring.html:56
+msgid "例: 25日 → 25"
+msgstr "Example: 25 → 25"
+
+#: budget/templates/budget/base.html:9 budget/templates/budget/landing.html:66
+#: budget/templates/budget/login.html:3 budget/templates/budget/login.html:10
+#: budget/templates/budget/signup.html:3 budget/templates/budget/signup.html:11
+msgid "家計簿アプリ"
+msgstr "Household Budget Application"
+
+#: budget/templates/budget/base.html:97
+#: budget/templates/budget/base_bkup.html:9
+#: budget/templates/budget/base_bkup.html:58
+#: budget/templates/budget/confirm_delete.html:3
+#: budget/templates/budget/dashboard.html:3
+#: budget/templates/budget/export_data.html:3
+#: budget/templates/budget/family_members.html:3
+#: budget/templates/budget/logout_confirm.html:3
+#: budget/templates/budget/manage_budgets.html:6
+#: budget/templates/budget/manage_categories.html:3
+#: budget/templates/budget/manage_payment_methods.html:3
+#: budget/templates/budget/quick_add.html:3
+#: budget/templates/budget/quick_add_saving.html:3
+#: budget/templates/budget/quick_add＿vecchio.html:3
+#: budget/templates/budget/savings_summary.html:3
+#: budget/templates/budget/settings.html:3
+#: budget/templates/budget/setup_categories.html:3
+#: budget/templates/budget/setup_payment_methods.html:3
+#: budget/templates/budget/setup_profile.html:3
+#: budget/templates/budget/transaction_list.html:3
+msgid "家計簿"
+msgstr "Household Budget"
+
+#: budget/templates/budget/base.html:114
+msgid "ようこそ"
+msgstr "Welcome"
+
+#: budget/templates/budget/base.html:115
+msgid "さん"
+msgstr " "
+
+#: budget/templates/budget/base.html:128
+#: budget/templates/budget/base_bkup.html:89
+#: budget/templates/budget/dashboard.html:3
+#: budget/templates/budget/savings_summary.html:77
+msgid "ダッシュボード"
+msgstr "Dashboard"
+
+#: budget/templates/budget/base.html:132
+msgid "支出・収入を入力"
+msgstr "Input Income・Outcome"
+
+#: budget/templates/budget/base.html:136
+#: budget/templates/budget/base_bkup.html:97
+#: budget/templates/budget/quick_add_saving.html:3
+msgid "貯金を登録"
+msgstr "Register Saving"
+
+#: budget/templates/budget/base.html:140
+#: budget/templates/budget/base_bkup.html:101
+#: budget/templates/budget/transaction_list.html:3
+#: budget/templates/budget/transaction_list.html:7
+msgid "取引履歴"
+msgstr "Transaction History"
+
+#: budget/templates/budget/base.html:144
+#: budget/templates/budget/base_bkup.html:105
+#: budget/templates/budget/savings_summary.html:3
+#: budget/templates/budget/savings_summary.html:7
+msgid "貯蓄サマリー"
+msgstr "Savings Summary"
+
+#: budget/templates/budget/base.html:148
+#: budget/templates/budget/base_bkup.html:109
+#: budget/templates/budget/manage_budgets.html:6
+#: budget/templates/budget/manage_budgets.html:10
+#: budget/templates/budget/settings.html:69
+msgid "予算管理"
+msgstr "Savings Summary"
+
+#: budget/templates/budget/base.html:157
+#: budget/templates/budget/forecast.html:6
+msgid "将来予測"
+msgstr "Future Forecast"
+
+#: budget/templates/budget/base.html:161
+msgid "メール設定"
+msgstr "Email Settings"
+
+#: budget/templates/budget/base.html:167
+#: budget/templates/budget/base_bkup.html:113
+#: budget/templates/budget/dashboard.html:174
+#: budget/templates/budget/quick_add＿vecchio.html:127
+#: budget/templates/budget/settings.html:3
+#: budget/templates/budget/settings.html:7
+#: budget/templates/budget/setup_categories.html:3
+#: budget/templates/budget/setup_categories.html:10
+#: budget/templates/budget/setup_categories.html:11
+#: budget/templates/budget/setup_payment_methods.html:3
+#: budget/templates/budget/setup_payment_methods.html:10
+msgid "設定"
+msgstr "Settings"
+
+#: budget/templates/budget/base.html:175
+#: budget/templates/budget/base_bkup.html:121
+#: budget/templates/budget/logout_confirm.html:3
+msgid "ログアウト"
+msgstr "Logut"
+
+#: budget/templates/budget/confirm_delete.html:3
+#: budget/templates/budget/confirm_delete.html:8
+#: budget/templates/budget/delete_category.html:29
+#: budget/templates/budget/family_members.html:40
+#: budget/templates/budget/family_members.html:70
+#: budget/templates/budget/manage_budgets.html:35
+#: budget/templates/budget/manage_categories.html:32
+#: budget/templates/budget/manage_categories.html:53
+#: budget/templates/budget/manage_payment_methods.html:24
+#: budget/templates/budget/transaction_list.html:76
+msgid "削除"
+msgstr "Delete"
+
+#: budget/templates/budget/confirm_delete.html:3
+#: budget/templates/budget/confirm_delete.html:8
+#: budget/templates/budget/logout_confirm.html:3
+msgid "確認"
+msgstr "OK"
+
+#: budget/templates/budget/confirm_delete.html:13
+#, python-format
+msgid ""
+"\n"
+"                %(y)s年%(m)s月%(d)s日\n"
+"                "
+msgstr ""
+
+#: budget/templates/budget/confirm_delete.html:21
+msgid "この取引を削除してもよろしいですか"
+msgstr "Are you sure you want to delete this transaction"
+
+#: budget/templates/budget/confirm_delete.html:21
+msgid "この操作は取り消せません。"
+msgstr "This action cannot be undone."
+
+#: budget/templates/budget/confirm_delete.html:26
+#: budget/templates/budget/delete_budget.html:20
+#: budget/templates/budget/delete_invite.html:19
+#: budget/templates/budget/delete_payment_method.html:29
+msgid "削除する"
+msgstr "Delete"
+
+#: budget/templates/budget/confirm_generate_recurring.html:8
+msgid "定期取引一括記録"
+msgstr "Record All Recurring Transactions"
+
+#: budget/templates/budget/confirm_generate_recurring.html:12
+#, fuzzy
+#| msgid "すべての定期取引を一括記録"
+msgid "以下の定期取引を記録します"
+msgstr "Record All Recurring Transactions at Once"
+
+#: budget/templates/budget/confirm_generate_recurring.html:26
+#: budget/templates/budget/preset_transaction.html:51
+msgid "記録する"
+msgstr "Record"
+
+#: budget/templates/budget/confirm_generate_recurring.html:33
+#: budget/views.py:515
+msgid "記録すべき定期取引はありません"
+msgstr "There are no recurring transactions to record"
+
+#: budget/templates/budget/confirm_generate_recurring.html:35
+#: budget/templates/budget/delete_category.html:21
+#: budget/templates/budget/delete_payment_method.html:21
+msgid "戻る"
+msgstr "Back"
+
+#: budget/templates/budget/create_invite.html:3
+msgid "招待リンク作成 - 家計簿"
+msgstr "Create Invitation Link – Household Budget"
+
+#: budget/templates/budget/create_invite.html:11
+msgid "招待リンクを作成すると、家族メンバーがこのリンクから参加できます。"
+msgstr ""
+"By creating an invitation link, family members can join using this link."
+
+#: budget/templates/budget/create_invite.html:13
+msgid "有効期限:7日間"
+msgstr "Expires in 7 days"
+
+#: budget/templates/budget/create_invite.html:14
+msgid "1回のみ使用可能"
+msgstr "Can be used only once"
+
+#: budget/templates/budget/create_invite.html:15
+msgid "いつでも削除できます"
+msgstr "You can delete it any time"
+
+#: budget/templates/budget/create_invite.html:22
+msgid "招待リンクを作成"
+msgstr "Create Invitation Link"
+
+#: budget/templates/budget/dashboard.html:49
+msgid "今月の収支"
+msgstr "This Month's expenses"
+
+#: budget/templates/budget/dashboard.html:51
+msgid "残高"
+msgstr "Balance"
+
+#: budget/templates/budget/dashboard.html:58
+msgid "総貯蓄（今月）"
+msgstr "Total Savings (This Month)"
+
+#: budget/templates/budget/dashboard.html:66
+msgid "過去6ヶ月の推移"
+msgstr "Trend Over the Past 6 Months"
+
+#: budget/templates/budget/dashboard.html:72
+msgid "カテゴリー別支出"
+msgstr "Expenses by Category"
+
+#: budget/templates/budget/dashboard.html:83
+#: budget/templates/budget/manage_categories.html:26
+#: budget/templates/budget/settings.html:39
+#: budget/templates/budget/transaction_list.html:46
+msgid "積立"
+msgstr "Savings"
+
+#: budget/templates/budget/dashboard.html:93
+msgid "まだ支出がありません"
+msgstr "No expenses yet"
+
+#: budget/templates/budget/dashboard.html:100
+msgid "予算状況"
+msgstr "Budget Status"
+
+#: budget/templates/budget/dashboard.html:120
+#: budget/templates/budget/manage_budgets.html:45
+msgid "予算オーバー"
+msgstr "Over Budget"
+
+#: budget/templates/budget/dashboard.html:131
+msgid "最近の取引"
+msgstr "Recent Transactions"
+
+#: budget/templates/budget/dashboard.html:132
+msgid "すべて見る"
+msgstr "View All"
+
+#: budget/templates/budget/dashboard.html:150
+msgid "まだ取引がありません"
+msgstr "No transactions yet"
+
+#: budget/templates/budget/dashboard.html:158
+msgid "支出を記録"
+msgstr "Record Expense"
+
+#: budget/templates/budget/dashboard.html:163
+msgid "収入を記録"
+msgstr "Record Income"
+
+#: budget/templates/budget/delete_category.html:3
+msgid "カテゴリー削除 - 家計簿"
+msgstr "Delete Category – Household Budget"
+
+#: budget/templates/budget/delete_category.html:8
+msgid "カテゴリー削除"
+msgstr "Delete Category"
+
+#: budget/templates/budget/delete_category.html:17
+#: budget/templates/budget/delete_payment_method.html:17
+msgid "削除できません"
+msgstr "Cannot Delete"
+
+#: budget/templates/budget/delete_category.html:18
+msgid "このカテゴリーは"
+msgstr "This category is used in"
+
+#: budget/templates/budget/delete_category.html:18
+#: budget/templates/budget/delete_payment_method.html:18
+msgid "件の取引で使用されています"
+msgstr "transactions"
+
+#: budget/templates/budget/delete_category.html:24
+msgid "このカテゴリーを削除してもよろしいですか？"
+msgstr "Are you sure you want to delete this category?"
+
+#: budget/templates/budget/delete_invite.html:3
+msgid "招待削除 - 家計簿"
+msgstr "Delete Invitation – Household Budget"
+
+#: budget/templates/budget/delete_invite.html:8
+msgid "招待削除"
+msgstr "Delete Invitation"
+
+#: budget/templates/budget/delete_invite.html:10
+msgid "この招待リンクを削除してもよろしいですか？"
+msgstr "Are you sure you want to delete this invitation link?"
+
+#: budget/templates/budget/delete_invite.html:13
+#: budget/templates/budget/family_members.html:39
+msgid "有効期限"
+msgstr "Expiration Date"
+
+#: budget/templates/budget/delete_payment_method.html:3
+msgid "支払方法削除 - 家計簿"
+msgstr "Delete Payment Method – Household Budget"
+
+#: budget/templates/budget/delete_payment_method.html:8
+msgid "支払方法削除"
+msgstr "Delete Payment Method"
+
+#: budget/templates/budget/delete_payment_method.html:18
+msgid "この支払方法は"
+msgstr "This payment method is used in"
+
+#: budget/templates/budget/delete_payment_method.html:24
+msgid "この支払方法を削除してもよろしいですか？"
+msgstr "Are you sure you want to delete this payment method?"
+
+#: budget/templates/budget/edit_budget.html:8
+msgid "予算編集"
+msgstr "Edit Budget"
+
+#: budget/templates/budget/edit_budget.html:24
+#: budget/templates/budget/edit_category.html:39
+#: budget/templates/budget/edit_payment_method.html:24
+msgid "更新"
+msgstr "Update"
+
+#: budget/templates/budget/edit_category.html:3
+msgid "カテゴリー編集 - 家計簿"
+msgstr "Edit Category – Household Budget"
+
+#: budget/templates/budget/edit_category.html:8
+msgid "カテゴリー編集"
+msgstr "Edit Category"
+
+#: budget/templates/budget/edit_payment_method.html:3
+msgid "支払方法編集 - 家計簿"
+msgstr "Edit Payment Method – Household Budget"
+
+#: budget/templates/budget/edit_payment_method.html:8
+msgid "支払方法編集"
+msgstr "Edit Payment Method"
+
+#: budget/templates/budget/email_settings.html:29
+msgid "通知先メールアドレス（1行1アドレス）"
+msgstr "Notification email addresses (one per line)"
+
+#: budget/templates/budget/email_settings.html:35
+#: budget/templates/budget/quick_add.html:110
+#: budget/templates/budget/quick_add＿vecchio.html:108
+msgid "保存"
+msgstr "Save"
+
+#: budget/templates/budget/export_data.html:3
+#: budget/templates/budget/export_data.html:7
+#: budget/templates/budget/settings.html:72
+msgid "データエクスポート"
+msgstr "Export Data"
+
+#: budget/templates/budget/export_data.html:10
+msgid "取引データをCSV形式でダウンロードできます"
+msgstr "You can download transaction data in CSV format"
+
+#: budget/templates/budget/export_data.html:30
+msgid "CSVダウンロード"
+msgstr "Download CSV"
+
+#: budget/templates/budget/family_members.html:11
+msgid "メンバー一覧"
+msgstr "Member List"
+
+#: budget/templates/budget/family_members.html:20
+msgid "あなた"
+msgstr "You"
+
+#: budget/templates/budget/family_members.html:30
+#: budget/templates/budget/family_members.html:70
+msgid "招待リンク"
+msgstr "Invitation Link"
+
+#: budget/templates/budget/family_members.html:31
+msgid "新規作成"
+msgstr "Create New"
+
+#: budget/templates/budget/family_members.html:45
+#: budget/templates/budget/family_members.html:66
+msgid "コピー"
+msgstr "Copy"
+
+#: budget/templates/budget/family_members.html:52
+msgid "招待リンクがありません"
+msgstr "No invitation links"
+
+#: budget/templates/budget/family_members.html:56
+#: budget/templates/budget/manage_categories.html:61
+#: budget/templates/budget/manage_payment_methods.html:31
+msgid "設定に戻る"
+msgstr "Back to Settings"
+
+#: budget/templates/budget/forecast.html:11
+msgid "予測期間"
+msgstr "Forecast Period"
+
+#: budget/templates/budget/forecast.html:22
+msgid "現在の貯蓄"
+msgstr "Current Savings"
+
+#: budget/templates/budget/forecast.html:37
+msgid "年後の予測"
+msgstr "Forecast after years"
+
+#: budget/templates/budget/forecast.html:43
+msgid "年平均（過去12ヶ月）"
+msgstr "Yearly Average (Past 12 Months)"
+
+#: budget/templates/budget/forecast.html:125
+#, fuzzy
+#| msgid "総貯蓄額"
+msgid "総貯蓄"
+msgstr "Total Savings"
+
+#: budget/templates/budget/join_family_confirm.html:3
+msgid "家族参加 - 家計簿"
+msgstr "Join Family – Household Budget"
+
+#: budget/templates/budget/join_family_confirm.html:10
+msgid "家族に参加"
+msgstr "Join the Family"
+
+#: budget/templates/budget/join_family_confirm.html:11
+#: budget/templates/budget/signup.html:15
+msgid "に招待されています"
+msgstr "You are invited to"
+
+#: budget/templates/budget/join_family_confirm.html:15
+msgid "参加すると、家族の家計簿を共有できます。"
+msgstr "By joining, you can share the family’s household budget."
+
+#: budget/templates/budget/join_family_confirm.html:24
+msgid "家族メンバーに表示されます"
+msgstr "Displayed to family members"
+
+#: budget/templates/budget/join_family_confirm.html:28
+msgid "参加する"
+msgstr "Join"
+
+#: budget/templates/budget/landing.html:3
+msgid "家計簿アプリ - かんたん・シンプル"
+msgstr "Household Budget App – Simple & Easy"
+
+#: budget/templates/budget/landing.html:11
+msgid "家族で使える家計簿アプリ"
+msgstr "A household budget app for families"
+
+#: budget/templates/budget/landing.html:12
+msgid "スマホで2タップ。収支も貯蓄も一目でわかる。"
+msgstr ""
+"Record in 2 taps on your smartphone. See expenses and savings at a glance."
+
+#: budget/templates/budget/landing.html:16
+msgid "無料で始める"
+msgstr "Start for Free"
+
+#: budget/templates/budget/landing.html:19 budget/templates/budget/login.html:3
+#: budget/templates/budget/login.html:15 budget/templates/budget/login.html:47
+msgid "ログイン"
+msgstr "Login"
+
+#: budget/templates/budget/landing.html:28
+msgid "こんな機能があります"
+msgstr "Features"
+
+#: budget/templates/budget/landing.html:33
+msgid "2タップで記録"
+msgstr "Record in 2 Taps"
+
+#: budget/templates/budget/landing.html:34
+msgid "レシートを撮影してすぐ入力。スマホに最適化された操作感。"
+msgstr "Snap a receipt and enter immediately. Optimized for smartphones."
+
+#: budget/templates/budget/landing.html:39
+msgid "一目でわかる"
+msgstr "At a Glance"
+
+#: budget/templates/budget/landing.html:40
+msgid "月次収支、カテゴリー別、予算対比がダッシュボードで確認できます。"
+msgstr ""
+"Monthly income and expenses, category breakdowns, and budget comparisons are "
+"visible on the dashboard."
+
+#: budget/templates/budget/landing.html:45
+msgid "貯蓄を分けて管理"
+msgstr "Manage Savings Separately"
+
+#: budget/templates/budget/landing.html:46
+msgid "現金貯蓄と保険積立を別々に管理。長期資産が見える化。"
+msgstr ""
+"Manage cash savings and insurance savings separately. Visualize long-term "
+"assets."
+
+#: budget/templates/budget/landing.html:55
+msgid "今すぐ無料で始めましょう"
+msgstr "Start Free Now"
+
+#: budget/templates/budget/landing.html:56
+msgid "登録は1分。家計管理を今日から始められます。"
+msgstr ""
+"Registration takes 1 minute. Start managing your household budget today."
+
+#: budget/templates/budget/landing.html:58
+msgid "アカウント作成（無料）"
+msgstr "Create Account (Free)"
+
+#: budget/templates/budget/login.html:11
+msgid "かんたん・シンプル・続けやすい"
+msgstr "Simple, Easy, and Sustainable"
+
+#: budget/templates/budget/login.html:52
+msgid "アカウントをお持ちでない方"
+msgstr "Don’t have an account?"
+
+#: budget/templates/budget/login.html:54
+msgid "新規登録はこちら"
+msgstr "Sign Up Here"
+
+#: budget/templates/budget/logout_confirm.html:10
+msgid "ログアウトしますか？"
+msgstr "Do you want to log out?"
+
+#: budget/templates/budget/logout_confirm.html:11
+msgid "またすぐに戻ってきてくださいね"
+msgstr "Come back soon!"
+
+#: budget/templates/budget/logout_confirm.html:18
+msgid "ログアウトする"
+msgstr "Log Out"
+
+#: budget/templates/budget/manage_budgets.html:13
+#, fuzzy
+#| msgid "予算"
+msgid "の予算"
+msgstr "Budget"
+
+#: budget/templates/budget/manage_budgets.html:19
+msgid "設定済み予算"
+msgstr "Set Budgets"
+
+#: budget/templates/budget/manage_budgets.html:34
+#: budget/templates/budget/manage_categories.html:31
+#: budget/templates/budget/manage_categories.html:52
+#: budget/templates/budget/manage_payment_methods.html:23
+msgid "編集"
+msgstr "Edit"
+
+#: budget/templates/budget/manage_budgets.html:47
+#, fuzzy
+#| msgid "残り"
+msgid "残り:"
+msgstr "Remaining"
+
+#: budget/templates/budget/manage_budgets.html:47
+msgid "使用)"
+msgstr "Use)"
+
+#: budget/templates/budget/manage_budgets.html:49
+msgid "残り"
+msgstr "Remaining"
+
+#: budget/templates/budget/manage_budgets.html:61
+#: budget/templates/budget/manage_budgets.html:82
+msgid "予算を追加"
+msgstr "Add Budget"
+
+#: budget/templates/budget/manage_categories.html:3
+#: budget/templates/budget/manage_categories.html:8
+msgid "カテゴリー管理"
+msgstr "Manage Categories"
+
+#: budget/templates/budget/manage_payment_methods.html:3
+#: budget/templates/budget/manage_payment_methods.html:8
+msgid "支払方法管理"
+msgstr "Manage Payment Methods"
+
+#: budget/templates/budget/manage_recurring.html:8
+msgid "定期取引管理"
+msgstr "Recurring Transaction Management"
+
+#: budget/templates/budget/manage_recurring.html:16
+msgid "すべての定期取引を一括記録"
+msgstr "Record All Recurring Transactions at Once"
+
+#: budget/templates/budget/manage_recurring.html:18
+msgid "今日記録すべき定期取引をまとめて登録"
+msgstr "Add All Recurring Transactions Due Today"
+
+#: budget/templates/budget/manage_recurring.html:32
+msgid "開始"
+msgstr "Start"
+
+#: budget/templates/budget/manage_recurring.html:34
+msgid "最終"
+msgstr "Last"
+
+#: budget/templates/budget/manage_recurring.html:41 budget/views.py:541
+msgid "無効"
+msgstr "Inactive"
+
+#: budget/templates/budget/manage_recurring.html:47
+msgid "定期取引がありません"
+msgstr "No recurring transactions available"
+
+#: budget/templates/budget/preset_transaction.html:3
+msgid "クイック入力"
+msgstr "Quick Entry"
+
+#: budget/templates/budget/preset_transaction.html:10
+msgid "記録完了"
+msgstr "Recorded"
+
+#: budget/templates/budget/preset_transaction.html:19
+msgid "よく使う金額"
+msgstr "Frequently Used Amounts"
+
+#: budget/templates/budget/preset_transaction.html:32
+msgid "金額を入力"
+msgstr "Enter Amount"
+
+#: budget/templates/budget/quick_add.html:3
+#: budget/templates/budget/quick_add.html:8
+#: budget/templates/budget/quick_add＿vecchio.html:3
+#: budget/templates/budget/quick_add＿vecchio.html:8
+msgid "支出・収入を記録"
+msgstr "Record Expense/Income"
+
+#: budget/templates/budget/quick_add.html:74
+#: budget/templates/budget/quick_add＿vecchio.html:72
+msgid "今日"
+msgstr "Today"
+
+#: budget/templates/budget/quick_add.html:75
+#: budget/templates/budget/quick_add＿vecchio.html:73
+msgid "昨日"
+msgstr "Yesterday"
+
+#: budget/templates/budget/quick_add.html:76
+#: budget/templates/budget/quick_add＿vecchio.html:74
+msgid "一昨日"
+msgstr "Day Before Yesterday"
+
+#: budget/templates/budget/quick_add.html:88
+#: budget/templates/budget/quick_add＿vecchio.html:86
+msgid "レシート（任意）"
+msgstr "Receipt (Optional)"
+
+#: budget/templates/budget/quick_add.html:96
+#: budget/templates/budget/quick_add＿vecchio.html:94
+msgid "タップして写真を撮影"
+msgstr "Tap to Take a Photo"
+
+#: budget/templates/budget/quick_add.html:107
+#: budget/templates/budget/quick_add＿vecchio.html:105
+msgid "保存して続ける"
+msgstr "Save and Continue"
+
+#: budget/templates/budget/quick_add_saving.html:10
+msgid "現金貯蓄を登録"
+msgstr "Register Cash Savings"
+
+#: budget/templates/budget/quick_add_saving.html:11
+msgid "給料からの積立、ボーナス貯金など"
+msgstr "Savings from salary, bonus, etc."
+
+#: budget/templates/budget/quick_add_saving.html:43
+msgid "ヒント"
+msgstr "Hint"
+
+#: budget/templates/budget/quick_add_saving.html:43
+#, fuzzy
+#| msgid ""
+#| "保険の積立は「支出」として「保険（積立）」カテゴリーで登録してください。こ"
+#| "ちらは純粋な現金貯蓄用です。 "
+msgid ""
+"保険の積立は「支出」として「保険（積立）」カテゴリーで登録してください。こち"
+"らは純粋な現金貯蓄用です。"
+msgstr ""
+"Insurance savings should be recorded as an expense under the 'Insurance "
+"(Savings)' category. This is for pure cash savings only."
+
+#: budget/templates/budget/quick_add_saving.html:48
+msgid "貯金を保存"
+msgstr "Save Savings"
+
+#: budget/templates/budget/savings_summary.html:11
+msgid "総貯蓄額"
+msgstr "Total Savings"
+
+#: budget/templates/budget/savings_summary.html:28
+msgid "現金貯蓄履歴"
+msgstr "Cash Savings History"
+
+#: budget/templates/budget/savings_summary.html:35
+msgid "貯金"
+msgstr "Savings"
+
+#: budget/templates/budget/savings_summary.html:43
+msgid "まだ貯金がありません"
+msgstr "No savings yet"
+
+#: budget/templates/budget/savings_summary.html:49
+msgid "保険積立履歴"
+msgstr "Insurance Savings History"
+
+#: budget/templates/budget/savings_summary.html:64
+msgid "まだ保険積立がありません"
+msgstr "No insurance savings yet"
+
+#: budget/templates/budget/savings_summary.html:72
+msgid "貯金を追加"
+msgstr "Add Savings"
+
+#: budget/templates/budget/settings.html:12
+msgid "家族情報"
+msgstr "Family Information"
+
+#: budget/templates/budget/settings.html:13
+msgid "メンバー管理"
+msgstr "Manage Members"
+
+#: budget/templates/budget/settings.html:17
+msgid "メンバー"
+msgstr "Members"
+
+#: budget/templates/budget/settings.html:30
+#: budget/templates/budget/settings.html:52
+msgid "管理"
+msgstr "Manage"
+
+#: budget/templates/budget/settings.html:66
+msgid "便利機能"
+msgstr "Convenient Features"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:3
+msgid "食費"
+msgstr "Food"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:4
+msgid "外食"
+msgstr "Dining Out"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:5
+msgid "日用品"
+msgstr "Daily Necessities"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:6
+msgid "交通費"
+msgstr "Transportation"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:7
+msgid "光熱費"
+msgstr "Utilities"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:8
+msgid "通信費"
+msgstr "Communication"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:9
+msgid "医療費"
+msgstr "Medical Expenses"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:10
+msgid "娯楽"
+msgstr "Entertainment"
+
+#: budget/templates/budget/setup_categories.html:23 budget/utils.py:11
+msgid "衣服"
+msgstr "Clothing"
+
+#: budget/templates/budget/setup_categories.html:23
+#, python-format
+msgid "保険（{%% trans "
+msgstr ""
+
+#: budget/templates/budget/setup_categories.html:26
+msgid "保険（積立）」は支出としても貯蓄としても記録されます"
+msgstr "'Insurance (Savings)' is recorded as both an expense and a savings."
+
+#: budget/templates/budget/setup_categories.html:33
+msgid "デフォルトカテゴリーで始める"
+msgstr "Start with Default Categories"
+
+#: budget/templates/budget/setup_categories.html:37
+msgid "後から管理画面で追加・編集できます"
+msgstr "You can add or edit later in the management screen"
+
+#: budget/templates/budget/setup_payment_methods.html:11
+msgid "最後のステップです！"
+msgstr "Final Step!"
+
+#: budget/templates/budget/setup_payment_methods.html:15
+msgid "以下の支払方法を自動作成します："
+msgstr "The following payment methods will be automatically created:"
+
+#: budget/templates/budget/setup_payment_methods.html:27 budget/utils.py:20
+msgid "交通系ICカード"
+msgstr "Transit IC Card"
+
+#: budget/templates/budget/setup_payment_methods.html:31 budget/utils.py:21
+msgid "PayPay"
+msgstr "PayPay"
+
+#: budget/templates/budget/setup_payment_methods.html:43
+msgid "セットアップ完了"
+msgstr "Setup Complete"
+
+#: budget/templates/budget/setup_payment_methods.html:48
+msgid "後から追加・編集できます"
+msgstr "You can add or edit later"
+
+#: budget/templates/budget/setup_profile.html:3
+msgid "プロフィール設定"
+msgstr "Profile Setup"
+
+#: budget/templates/budget/setup_profile.html:10
+msgid "はじめまして！"
+msgstr "Nice to Meet You!"
+
+#: budget/templates/budget/setup_profile.html:11
+msgid "まずはプロフィールを設定しましょう"
+msgstr "Let's set up your profile first"
+
+#: budget/templates/budget/setup_profile.html:20
+msgid "例: 田中家、佐藤ファミリー"
+msgstr "Example: Tanaka Family, Sato Family"
+
+#: budget/templates/budget/setup_profile.html:30
+msgid "次へ"
+msgstr "Next"
+
+#: budget/templates/budget/signup.html:3 budget/templates/budget/signup.html:24
+msgid "新規登録"
+msgstr "Sign Up"
+
+#: budget/templates/budget/signup.html:19
+msgid "無料で今すぐ始められます"
+msgstr "Start Now for Free"
+
+#: budget/templates/budget/signup.html:54
+msgid "英数字のみ使用可能"
+msgstr "Alphanumeric characters only"
+
+#: budget/templates/budget/signup.html:65
+msgid "8文字以上"
+msgstr "At least 8 characters"
+
+#: budget/templates/budget/signup.html:74
+msgid "アカウント作成"
+msgstr "Create Account"
+
+#: budget/templates/budget/signup.html:79
+msgid "すでにアカウントをお持ちの方"
+msgstr "Already have an account?"
+
+#: budget/templates/budget/signup.html:81
+msgid "ログインはこちら"
+msgstr "Login Here"
+
+#: budget/templates/budget/transaction_list.html:14
+msgid "すべて"
+msgstr "All"
+
+#: budget/templates/budget/transaction_list.html:15
+msgid "支出のみ"
+msgstr "Expenses Only"
+
+#: budget/templates/budget/transaction_list.html:16
+msgid "収入のみ"
+msgstr "Income Only"
+
+#: budget/templates/budget/transaction_list.html:20
+msgid "全カテゴリー"
+msgstr "All Categories"
+
+#: budget/templates/budget/transaction_list.html:28
+msgid "フィルター適用"
+msgstr "Apply Filter"
+
+#: budget/templates/budget/transaction_list.html:53
+msgid "日"
+msgstr " "
+
+#: budget/templates/budget/transaction_list.html:91
+msgid "取引がありません"
+msgstr "No Transactions"
+
+#: budget/templates/budget/transaction_list.html:93
+msgid "最初の取引を追加"
+msgstr "Add Your First Transaction"
+
+#: budget/utils.py:14
+msgid "給料"
+msgstr "Salary"
+
+#: budget/utils.py:15
+msgid "賞与"
+msgstr "Bonus"
+
+#: budget/utils.py:16
+msgid "副収入"
+msgstr "Side Income"
+
+#: budget/utils.py:17
+msgid "その他収入"
+msgstr "Other Income"
+
+#: budget/views.py:300
+msgid "✓ 登録しました"
+msgstr ""
+
+#: budget/views.py:347
+#, fuzzy
+#| msgid "貯金を登録"
+msgid "✓ 貯金を登録しました"
+msgstr "Register Saving"
+
+#: budget/views.py:383
+#, python-format
+msgid "✓ %(category_name)s を登録しました"
+msgstr ""
+
+#: budget/views.py:417
+msgid "✓ 削除しました"
+msgstr ""
+
+#: budget/views.py:483
+#, fuzzy
+#| msgid "定期取引追加"
+msgid "✓ 定期取引を追加しました"
+msgstr "Add Recurring Transaction"
+
+#: budget/views.py:513
+#, fuzzy, python-format
+#| msgid "すべての定期取引を一括記録"
+msgid "✓ %(count)s件の定期取引を記録しました"
+msgstr "Record All Recurring Transactions at Once"
+
+#: budget/views.py:542
+#, python-format
+msgid "✓ 定期取引を%(status)sにしました"
+msgstr ""
+
+#: budget/views.py:565
+#, fuzzy
+#| msgid "メール通知設定"
+msgid "✓ メール通知設定を更新しました"
+msgstr "Email Notification Settings"
+
+#~ msgid "現在の状況"
+#~ msgstr "Current Status"
+
+#~ msgid "現在残高"
+#~ msgstr "Current Balance"
+
+#~ msgid "月平均収支"
+#~ msgstr "Average Monthly Balance"
+
+#~ msgid "6ヶ月予測"
+#~ msgstr "6-Month Forecast"
+
+#~ msgid "月平均（過去6ヶ月）"
+#~ msgstr "Monthly Average (Past 6 Months)"
+
+#~ msgid "平均収入"
+#~ msgstr "Average Income"
+
+#~ msgid "平均支出"
+#~ msgstr "Average Expenses"
+
+#~ msgid "平均収支"
+#~ msgstr "Average Balance"
