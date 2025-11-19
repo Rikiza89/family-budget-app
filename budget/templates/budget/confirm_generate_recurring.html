@@ -1,0 +1,40 @@
+<!-- templates/budget/confirm_generate_recurring.html -->
+{% extends 'budget/base.html' %}
+{% load i18n %}
+{% load translation_tags %}
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold mb-6">⚡ {% trans "定期取引一括記録" %}</h2>
+
+        {% if pending_templates %}
+        <div class="bg-yellow-50 p-4 rounded-lg mb-6">
+            <p class="font-medium mb-2">{% trans "以下の定期取引を記録します" %}:</p>
+            <ul class="space-y-2">
+                {% for template in pending_templates %}
+                <li class="flex justify-between items-center">
+                    <span>{{ template.category.name|translate }}</span>
+                    <span class="font-bold">¥{{ template.amount|floatformat:0 }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-700 mb-3">
+                {% trans "記録する" %}（{{ pending_templates|length }}件）
+            </button>
+            <a href="{% url 'manage_recurring' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+                {% trans "キャンセル" %}
+            </a>
+        </form>
+        {% else %}
+        <p class="text-gray-500 text-center py-8">{% trans "記録すべき定期取引はありません" %}</p>
+        <a href="{% url 'manage_recurring' %}" class="block w-full text-center bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+            {% trans "戻る" %}
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

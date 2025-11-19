@@ -4,58 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>{% block title %}家計簿アプリ{% endblock %}</title>
-    
+    {% load i18n %}
+
+    <title>{% block title %}{% trans "家計簿アプリ" %}{% endblock %}</title>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Chart.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
-    
+
+
+
     <style>
         /* カスタムスタイル */
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        
+
         /* モバイル最適化 */
         input, select, textarea {
             font-size: 16px !important; /* iOS zoom防止 */
         }
-        
+
         /* タッチターゲット */
         button, a.btn {
             min-height: 44px;
             min-width: 44px;
         }
-        
+
         /* スムーズスクロール */
         html {
             scroll-behavior: smooth;
         }
-        
+
         /* プルダウンリフレッシュ風 */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .fade-in {
             animation: fadeIn 0.3s ease-in;
         }
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Language Switcher (Always visible) -->
+    <div class="fixed bottom-4 left-4 z-50">
+        {% get_current_language as CURRENT_LANG %}
+        <form action="{% url 'set_language' %}" method="post" id="langForm">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="/" id="nextInput">
+            <select name="language" onchange="switchLanguage(this)" class="bg-blue-600 text-white text-sm px-3 py-2 rounded-lg border-none cursor-pointer shadow-lg">
+                <option value="ja" {% if CURRENT_LANG == 'ja' %}selected{% endif %}>🇯🇵 日本語</option>
+                <option value="it" {% if CURRENT_LANG == 'it' %}selected{% endif %}>🇮🇹 Italiano</option>
+                <option value="en" {% if CURRENT_LANG == 'en' %}selected{% endif %}>🇬🇧 English</option>
+            </select>
+        </form>
+    </div>
+
+    <script>
+        function switchLanguage(select) {
+            const form = document.getElementById('langForm');
+            const nextInput = document.getElementById('nextInput');
+            const selectedLang = select.value;
+            const currentPath = window.location.pathname;
+
+            let cleanPath = currentPath.replace(/^\/(en|it|ja)\//, '/');
+
+            // Add prefix only for IT and EN
+            if (selectedLang === 'it') {
+                nextInput.value = '/it' + cleanPath;
+            } else if (selectedLang === 'en') {
+                nextInput.value = '/en' + cleanPath;
+            } else {
+                // ja (default)
+                nextInput.value = cleanPath;
+            }
+
+            form.submit();
+        }
+    </script>
+
     <!-- ヘッダー -->
     {% if user.is_authenticated %}
-    <header class="bg-blue-600 text-white sticky top-0 z-50 shadow-lg">
+    <header class="bg-blue-600 text-white sticky top-0 z-40 shadow-lg">
         <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <span class="text-2xl">💰</span>
-                <h1 class="text-xl font-bold">家計簿</h1>
+                <h1 class="text-xl font-bold">{% trans "家計簿" %}</h1>
             </div>
-            
+
             <button id="menuBtn" class="p-2 hover:bg-blue-700 rounded-lg">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -63,15 +104,15 @@
             </button>
         </div>
     </header>
-    
+
     <!-- メニュー（モバイルドロワー） -->
     <div id="mobileMenu" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
         <div class="fixed right-0 top-0 bottom-0 w-80 bg-white shadow-xl transform transition-transform duration-300" id="menuDrawer">
             <div class="p-4 bg-blue-600 text-white">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm opacity-90">ようこそ</p>
-                        <p class="font-bold text-lg">{{ user.username }}さん</p>
+                        <p class="text-sm opacity-90">{% trans "ようこそ" %}</p>
+                        <p class="font-bold text-lg">{{ user.username }}{% trans "さん" %}</p>
                     </div>
                     <button id="closeMenuBtn" class="p-2 hover:bg-blue-700 rounded-lg">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,43 +121,58 @@
                     </button>
                 </div>
             </div>
-            
+
             <nav class="p-4">
                 <a href="{% url 'dashboard' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">📊</span>
-                    <span class="font-medium">ダッシュボード</span>
+                    <span class="font-medium">{% trans "ダッシュボード" %}</span>
                 </a>
                 <a href="{% url 'quick_add_transaction' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">➕</span>
-                    <span class="font-medium">支出・収入を入力</span>
+                    <span class="font-medium">{% trans "支出・収入を入力" %}</span>
                 </a>
                 <a href="{% url 'quick_add_saving' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">🏦</span>
-                    <span class="font-medium">貯金を登録</span>
+                    <span class="font-medium">{% trans "貯金を登録" %}</span>
                 </a>
                 <a href="{% url 'transaction_list' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">📝</span>
-                    <span class="font-medium">取引履歴</span>
+                    <span class="font-medium">{% trans "取引履歴" %}</span>
                 </a>
                 <a href="{% url 'savings_summary' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">💎</span>
-                    <span class="font-medium">貯蓄サマリー</span>
+                    <span class="font-medium">{% trans "貯蓄サマリー" %}</span>
                 </a>
                 <a href="{% url 'manage_budgets' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">🎯</span>
-                    <span class="font-medium">予算管理</span>
+                    <span class="font-medium">{% trans "予算管理" %}</span>
                 </a>
+
+<a href="{% url 'manage_recurring' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
+    <span class="text-2xl">🔄</span>
+    <span class="font-medium">{% trans "定期取引" %}</span>
+</a>
+<a href="{% url 'forecast' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
+    <span class="text-2xl">📈</span>
+    <span class="font-medium">{% trans "将来予測" %}</span>
+</a>
+<a href="{% url 'email_settings' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
+    <span class="text-2xl">📧</span>
+    <span class="font-medium">{% trans "メール設定" %}</span>
+</a>
+
+
                 <a href="{% url 'settings' %}" class="flex items-center space-x-3 p-4 hover:bg-gray-100 rounded-lg mb-2">
                     <span class="text-2xl">⚙️</span>
-                    <span class="font-medium">設定</span>
+                    <span class="font-medium">{% trans "設定" %}</span>
                 </a>
-                
+
                 <div class="border-t mt-4 pt-4">
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button type="submit" class="flex items-center space-x-3 p-4 hover:bg-red-50 rounded-lg w-full text-red-600">
                             <span class="text-2xl">🚪</span>
-                            <span class="font-medium">ログアウト</span>
+                            <span class="font-medium">{% trans "ログアウト" %}</span>
                         </button>
                     </form>
                 </div>
@@ -124,7 +180,7 @@
         </div>
     </div>
     {% endif %}
-    
+
     <!-- メッセージ表示 -->
     {% if messages %}
     <div class="max-w-md mx-auto px-4 pt-4">
@@ -135,12 +191,18 @@
         {% endfor %}
     </div>
     {% endif %}
-    
+
     <!-- メインコンテンツ -->
+{% block content_wrapper %}
+    {% if user.is_authenticated %}
     <main class="max-w-md mx-auto min-h-screen pb-20">
+    {% else %}
+    <main class="w-full min-h-screen">
+    {% endif %}
         {% block content %}{% endblock %}
     </main>
-    
+{% endblock %}
+
     <!-- フローティングアクションボタン（ダッシュボード用） -->
     {% if user.is_authenticated and request.path == '/dashboard/' %}
     <div class="fixed bottom-6 right-6 z-40">
@@ -151,14 +213,14 @@
         </a>
     </div>
     {% endif %}
-    
+
     <script>
         // モバイルメニュー
         const menuBtn = document.getElementById('menuBtn');
         const closeMenuBtn = document.getElementById('closeMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         const menuDrawer = document.getElementById('menuDrawer');
-        
+
         if (menuBtn) {
             menuBtn.addEventListener('click', () => {
                 mobileMenu.classList.remove('hidden');
@@ -167,18 +229,18 @@
                 }, 10);
             });
         }
-        
+
         function closeMenu() {
             menuDrawer.style.transform = 'translateX(100%)';
             setTimeout(() => {
                 mobileMenu.classList.add('hidden');
             }, 300);
         }
-        
+
         if (closeMenuBtn) {
             closeMenuBtn.addEventListener('click', closeMenu);
         }
-        
+
         if (mobileMenu) {
             mobileMenu.addEventListener('click', (e) => {
                 if (e.target === mobileMenu) {
@@ -186,7 +248,7 @@
                 }
             });
         }
-        
+
         // メッセージ自動非表示
         setTimeout(() => {
             const messages = document.querySelectorAll('.bg-green-100');
@@ -197,7 +259,7 @@
             });
         }, 3000);
     </script>
-    
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

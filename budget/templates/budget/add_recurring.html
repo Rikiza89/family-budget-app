@@ -1,0 +1,68 @@
+<!-- templates/budget/add_recurring.html -->
+{% extends 'budget/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold mb-6">🔄 {% trans "定期取引追加" %}</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "種類" %}</label>
+                {{ form.transaction_type }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "カテゴリー" %}</label>
+                {{ form.category }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "金額" %}</label>
+                {{ form.amount }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "支払方法" %}</label>
+                {{ form.payment_method }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "メモ" %}</label>
+                {{ form.description }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "頻度" %}</label>
+                {{ form.frequency }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "開始日" %}</label>
+                {{ form.start_date }}
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "終了日（任意）" %}</label>
+                {{ form.end_date }}
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "毎月の日付（月次のみ）" %}</label>
+                {{ form.day_of_month }}
+                <p class="text-xs text-gray-500">{% trans "例: 25日 → 25" %}</p>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 mb-3">
+                {% trans "追加" %}
+            </button>
+            <a href="{% url 'manage_recurring' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+                {% trans "キャンセル" %}
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

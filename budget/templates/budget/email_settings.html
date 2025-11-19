@@ -1,0 +1,40 @@
+<!-- templates/budget/email_settings.html -->
+{% extends 'budget/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold mb-6">📧 {% trans "メール通知設定" %}</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-6">
+                <label class="flex items-center">
+                    <input type="checkbox" name="enable_notifications"
+                           {% if settings.enable_notifications %}checked{% endif %}
+                           class="w-5 h-5">
+                    <span class="ml-2 font-medium">{% trans "通知を有効にする" %}</span>
+                </label>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">{% trans "何日間記録がない場合に通知" %}</label>
+                <input type="number" name="days_without_log" value="{{ settings.days_without_log }}"
+                       min="1" max="30" class="w-full p-3 border-2 rounded-lg">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">{% trans "通知先メールアドレス（1行1アドレス）" %}</label>
+                <textarea name="notification_emails" rows="4"
+                          class="w-full p-3 border-2 rounded-lg">{{ settings.notification_emails }}</textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700">
+                {% trans "保存" %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

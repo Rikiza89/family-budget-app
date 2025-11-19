@@ -1,20 +1,20 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}設定 - 家計簿{% endblock %}
-
+{% load i18n %}
+{% block title %}{% trans "設定" %} - {% trans "家計簿" %}{% endblock %}
+{% load translation_tags %}
 {% block content %}
 <div class="p-4">
-    <h2 class="text-2xl font-bold mb-6">⚙️ 設定</h2>
-    
+    <h2 class="text-2xl font-bold mb-6">⚙️ {% trans "設定" %}</h2>
+
     <!-- 家族情報 -->
     <div class="bg-white rounded-lg shadow p-4 mb-4">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="text-lg font-bold">家族情報</h3>
-            <a href="{% url 'family_members' %}" class="text-blue-600 text-sm hover:underline">メンバー管理</a>
+            <h3 class="text-lg font-bold">{% trans "家族情報" %}</h3>
+            <a href="{% url 'family_members' %}" class="text-blue-600 text-sm hover:underline">{% trans "メンバー管理" %}</a>
         </div>
         <div class="space-y-2">
-            <p><strong>家族名:</strong> {{ family.name }}</p>
-            <p><strong>メンバー:</strong></p>
+            <p><strong>{% trans "家族名" %}:</strong> {{ family.name }}</p>
+            <p><strong>{% trans "メンバー" %}:</strong></p>
             <ul class="ml-4 space-y-1">
                 {% for member in family_members %}
                 <li>👤 {{ member.nickname }} ({{ member.user.username }})</li>
@@ -22,54 +22,54 @@
             </ul>
         </div>
     </div>
-    
+
     <!-- カテゴリー管理 -->
     <div class="bg-white rounded-lg shadow p-4 mb-4">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="text-lg font-bold">カテゴリー</h3>
-            <a href="{% url 'manage_categories' %}" class="text-blue-600 text-sm hover:underline">管理</a>
+            <h3 class="text-lg font-bold">{% trans "カテゴリー" %}</h3>
+            <a href="{% url 'manage_categories' %}" class="text-blue-600 text-sm hover:underline">{% trans "管理" %}</a>
         </div>
-        
+
         <div class="space-y-2">
             {% for cat in categories %}
             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <span>
-                    {{ cat.icon }} {{ cat.name }}
+                    {{ cat.icon }} {{ cat.name|translate }}
                     {% if cat.is_insurance_saving %}
-                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded ml-2">積立</span>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded ml-2">{% trans "積立" %}</span>
                     {% endif %}
                 </span>
-                <span class="text-xs text-gray-500">{{ cat.get_category_type_display }}</span>
+                <span class="text-xs text-gray-500">{{ cat.get_category_type_display|translate }}</span>
             </div>
             {% endfor %}
         </div>
     </div>
-    
+
     <!-- 支払方法 -->
     <div class="bg-white rounded-lg shadow p-4 mb-4">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="text-lg font-bold">支払方法</h3>
-            <a href="{% url 'manage_payment_methods' %}" class="text-blue-600 text-sm hover:underline">管理</a>
+            <h3 class="text-lg font-bold">{% trans "支払方法" %}</h3>
+            <a href="{% url 'manage_payment_methods' %}" class="text-blue-600 text-sm hover:underline">{% trans "管理" %}</a>
         </div>
-        
+
         <div class="space-y-2">
             {% for method in payment_methods %}
             <div class="p-3 bg-gray-50 rounded-lg">
-                {{ method.name }} ({{ method.get_method_type_display }})
+                {{ method.name|translate }} ({{ method.get_method_type_display|translate }})
             </div>
             {% endfor %}
         </div>
     </div>
-    
+
     <!-- 便利リンク -->
     <div class="bg-white rounded-lg shadow p-4 mb-4">
-        <h3 class="text-lg font-bold mb-3">便利機能</h3>
+        <h3 class="text-lg font-bold mb-3">{% trans "便利機能" %}</h3>
         <div class="space-y-2">
             <a href="{% url 'manage_budgets' %}" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100">
-                🎯 予算管理
+                🎯 {% trans "予算管理" %}
             </a>
             <a href="{% url 'export_data' %}" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100">
-                📥 データエクスポート
+                📥 {% trans "データエクスポート" %}
             </a>
         </div>
     </div>

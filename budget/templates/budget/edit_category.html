@@ -1,45 +1,45 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}カテゴリー編集 - 家計簿{% endblock %}
-
+{% load i18n %}
+{% block title %}{% trans "カテゴリー編集 - 家計簿" %}{% endblock %}
+{% load translation_tags %}
 {% block content %}
 <div class="p-4 max-w-md mx-auto">
     <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-2xl font-bold mb-6">✏️ カテゴリー編集</h2>
-        
+        <h2 class="text-2xl font-bold mb-6">✏️ {% trans "カテゴリー編集" %}</h2>
+
         <form method="POST">
             {% csrf_token %}
-            
+
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">カテゴリー名</label>
-                {{ form.name }}
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "カテゴリー名" %}</label>
+                {{ form.name|translate }}
             </div>
-            
+
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">種類</label>
-                {{ form.category_type }}
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "種類" %}</label>
+                {{ form.category_type|translate }}
             </div>
-            
+
             <div class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">アイコン（絵文字）</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "アイコン（絵文字）" %}</label>
                 {{ form.icon }}
             </div>
-            
+
             <div class="mb-6 p-4 bg-blue-50 rounded-lg">
                 <label class="flex items-start">
                     {{ form.is_insurance_saving }}
                     <div class="ml-3">
-                        <span class="font-medium">保険積立として扱う</span>
-                        <p class="text-sm text-gray-600 mt-1">チェックすると、支出と貯蓄の両方に計上されます</p>
+                        <span class="font-medium">{% trans "保険積立として扱う" %}</span>
+                        <p class="text-sm text-gray-600 mt-1">{% trans "チェックすると、支出と貯蓄の両方に計上されます" %}</p>
                     </div>
                 </label>
             </div>
-            
+
             <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 mb-3">
-                更新
+                {% trans "更新" %}
             </button>
             <a href="{% url 'manage_categories' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
-                キャンセル
+                {% trans "キャンセル" %}
             </a>
         </form>
     </div>

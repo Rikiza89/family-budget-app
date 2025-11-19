@@ -1,22 +1,22 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}{{ category.name }} - クイック入力{% endblock %}
-
+{% load i18n %}
+{% block title %}{{ category.name }} - {% trans "クイック入力" %}{% endblock %}
+{% load translation_tags %}
 {% block content %}
 <div class="p-4">
     <div class="bg-white rounded-lg shadow-lg p-6">
         <div class="text-center mb-6">
             <h2 class="text-3xl font-bold mb-2">{{ category.name }}</h2>
-            <p class="text-gray-600">2タップで記録完了</p>
+            <p class="text-gray-600">2タップで{% trans "記録完了" %}</p>
         </div>
-        
+
         <form method="POST">
             {% csrf_token %}
-            
+
             <!-- よく使う金額 -->
             {% if recent_amounts %}
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-3">よく使う金額</label>
+                <label class="block text-sm font-medium text-gray-700 mb-3">{% trans "よく使う金額" %}</label>
                 <div class="grid grid-cols-3 gap-3">
                     {% for amount in recent_amounts %}
                     <button type="button" class="preset-amount p-4 bg-blue-50 border-2 border-blue-200 rounded-lg hover:bg-blue-100 font-bold text-lg" data-amount="{{ amount }}">
@@ -26,34 +26,34 @@
                 </div>
             </div>
             {% endif %}
-            
+
             <!-- カスタム金額 -->
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">金額を入力</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "金額を入力" %}</label>
                 <input type="number" name="amount" id="amountInput" class="w-full p-4 text-2xl font-bold border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none" placeholder="0" inputmode="numeric" required>
             </div>
-            
+
             <!-- 支払方法 -->
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-3">支払方法</label>
+                <label class="block text-sm font-medium text-gray-700 mb-3">{% trans "支払方法" %}</label>
                 <div class="grid grid-cols-2 gap-3">
                     {% for method in common_methods %}
                     <button type="button" class="payment-btn p-4 border-2 border-gray-300 rounded-lg hover:bg-gray-50 transition" data-method="{{ method.id }}">
-                        {{ method.name }}
+                        {{ method.name|translate }}
                     </button>
                     {% endfor %}
                 </div>
                 <input type="hidden" name="payment_method" id="paymentInput">
             </div>
-            
+
             <!-- 送信ボタン -->
             <button type="submit" id="submitBtn" class="w-full bg-blue-600 text-white py-5 rounded-lg font-bold text-xl hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed">
-                記録する
+                {% trans "記録する" %}
             </button>
         </form>
-        
+
         <div class="mt-4 text-center">
-            <a href="{% url 'dashboard' %}" class="text-gray-500 hover:underline">キャンセル</a>
+            <a href="{% url 'dashboard' %}" class="text-gray-500 hover:underline">{% trans "キャンセル" %}</a>
         </div>
     </div>
 </div>
@@ -64,16 +64,16 @@
     const amountInput = document.getElementById('amountInput');
     const paymentInput = document.getElementById('paymentInput');
     const submitBtn = document.getElementById('submitBtn');
-    
-    // プリセット金額
+
+    // プリセット{% trans "金額" %}
     document.querySelectorAll('.preset-amount').forEach(btn => {
         btn.addEventListener('click', () => {
             amountInput.value = btn.dataset.amount;
             checkForm();
         });
     });
-    
-    // 支払方法
+
+    // {% trans "支払方法" %}
     document.querySelectorAll('.payment-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             // 選択状態をリセット
@@ -81,7 +81,7 @@
                 b.classList.remove('border-blue-500', 'bg-blue-50');
                 b.classList.add('border-gray-300');
             });
-            
+
             // 選択
             btn.classList.remove('border-gray-300');
             btn.classList.add('border-blue-500', 'bg-blue-50');
@@ -89,10 +89,10 @@
             checkForm();
         });
     });
-    
+
     // フォームチェック
     amountInput.addEventListener('input', checkForm);
-    
+
     function checkForm() {
         if (amountInput.value && amountInput.value > 0) {
             submitBtn.disabled = false;
@@ -100,7 +100,7 @@
             submitBtn.disabled = true;
         }
     }
-    
+
     checkForm();
 </script>
 {% endblock %}

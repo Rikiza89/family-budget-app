@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン - 家計簿アプリ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-4">
+{% extends 'budget/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "ログイン" %} - {% trans "家計簿アプリ" %}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 p-4">
     <div class="max-w-md w-full">
         <div class="text-center mb-8">
             <h1 class="text-5xl mb-4">💰</h1>
-            <h2 class="text-3xl font-bold text-gray-800">家計簿アプリ</h2>
-            <p class="text-gray-600 mt-2">かんたん・シンプル・続けやすい</p>
+            <h2 class="text-3xl font-bold text-gray-800">{% trans "家計簿アプリ" %}</h2>
+            <p class="text-gray-600 mt-2">{% trans "かんたん・シンプル・続けやすい" %}</p>
         </div>
-        
+
         <div class="bg-white rounded-2xl shadow-xl p-8">
-            <h3 class="text-2xl font-bold mb-6 text-center">ログイン</h3>
-            
+            <h3 class="text-2xl font-bold mb-6 text-center">{% trans "ログイン" %}</h3>
+
             {% if messages %}
             <div class="mb-4">
                 {% for message in messages %}
@@ -26,38 +23,38 @@
                 {% endfor %}
             </div>
             {% endif %}
-            
+
             <form method="POST">
                 {% csrf_token %}
-                
+
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">ユーザー名</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "ユーザー名" %}</label>
                     {{ form.username }}
                     {% if form.username.errors %}
                     <p class="text-red-500 text-sm mt-1">{{ form.username.errors.0 }}</p>
                     {% endif %}
                 </div>
-                
+
                 <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">パスワード</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "パスワード" %}</label>
                     {{ form.password }}
                     {% if form.password.errors %}
                     <p class="text-red-500 text-sm mt-1">{{ form.password.errors.0 }}</p>
                     {% endif %}
                 </div>
-                
+
                 <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition mb-4">
-                    ログイン
+                    {% trans "ログイン" %}
                 </button>
             </form>
-            
+
             <div class="text-center">
-                <p class="text-gray-600">アカウントをお持ちでない方</p>
+                <p class="text-gray-600">{% trans "アカウントをお持ちでない方" %}</p>
                 <a href="{% url 'signup' %}" class="text-blue-600 font-medium hover:underline">
-                    新規登録はこちら
+                    {% trans "新規登録はこちら" %}
                 </a>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

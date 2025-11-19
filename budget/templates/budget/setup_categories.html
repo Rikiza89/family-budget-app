@@ -1,40 +1,40 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}カテゴリー設定 - 家計簿{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "カテゴリー" %}{% trans "設定" %} - {% trans "家計簿" %}{% endblock %}
 
 {% block content %}
 <div class="p-4 max-w-md mx-auto">
     <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
         <div class="text-center mb-8">
             <div class="text-6xl mb-4">📂</div>
-            <h2 class="text-2xl font-bold mb-2">カテゴリー設定</h2>
-            <p class="text-gray-600">収支を分類するカテゴリーを設定します</p>
+            <h2 class="text-2xl font-bold mb-2">{% trans "カテゴリー" %}{% trans "設定" %}</h2>
+            <p class="text-gray-600">収支を分類する{% trans "カテゴリー" %}を{% trans "設定" %}します</p>
         </div>
-        
+
         <form method="POST">
             {% csrf_token %}
-            
+
             <div class="mb-6 p-6 bg-blue-50 rounded-lg">
                 <div class="flex items-start">
                     <input type="checkbox" name="use_default" checked class="mt-1 w-6 h-6">
                     <div class="ml-3">
-                        <label class="font-medium text-gray-900">デフォルトカテゴリーを使用</label>
+                        <label class="font-medium text-gray-900">{% trans "デフォルトカテゴリーを使用" %}</label>
                         <p class="text-sm text-gray-600 mt-1">
-                            食費、外食、日用品、交通費、光熱費、通信費、医療費、娯楽、衣服、<strong>保険（積立）</strong>、その他
+                            {% trans "食費" %}、{% trans "外食" %}、{% trans "日用品" %}、{% trans "交通費" %}、{% trans "光熱費" %}、{% trans "通信費" %}、{% trans "医療費" %}、{% trans "娯楽" %}、{% trans "衣服" %}、<strong>{% trans "保険（{% trans "積立" %}）" %}</strong>、{% trans "その他" %}
                         </p>
                         <p class="text-xs text-blue-700 mt-2">
-                            ✨ 「保険（積立）」は支出としても貯蓄としても記録されます
+                            ✨ 「{% trans "保険（積立）」は支出としても貯蓄としても記録されます"%}
                         </p>
                     </div>
                 </div>
             </div>
-            
+
             <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition mb-3">
-                デフォルトカテゴリーで始める
+                {% trans "デフォルトカテゴリーで始める" %}
             </button>
-            
+
             <p class="text-center text-sm text-gray-500">
-                後から管理画面で追加・編集できます
+                {% trans "後から管理画面で追加・編集できます" %}
             </p>
         </form>
     </div>

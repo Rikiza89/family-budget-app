@@ -1,14 +1,14 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}家族メンバー - 家計簿{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "家族メンバー" %} - {% trans "家計簿" %}{% endblock %}
 
 {% block content %}
 <div class="p-4">
-    <h2 class="text-2xl font-bold mb-6">👨‍👩‍👧‍👦 家族メンバー</h2>
-    
+    <h2 class="text-2xl font-bold mb-6">👨‍👩‍👧‍👦 {% trans "家族メンバー" %}</h2>
+
     <!-- 現在のメンバー -->
     <div class="bg-white rounded-lg shadow p-4 mb-6">
-        <h3 class="font-bold mb-3">メンバー一覧</h3>
+        <h3 class="font-bold mb-3">{% trans "メンバー一覧" %}</h3>
         <div class="space-y-2">
             {% for m in members %}
             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -17,43 +17,43 @@
                     <p class="text-sm text-gray-600">@{{ m.user.username }}</p>
                 </div>
                 {% if m.user == request.user %}
-                <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">あなた</span>
+                <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">{% trans "あなた" %}</span>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
     </div>
-    
+
     <!-- 招待リンク -->
     <div class="bg-white rounded-lg shadow p-4 mb-6">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="font-bold">招待リンク</h3>
-            <a href="{% url 'create_invite' %}" class="text-blue-600 text-sm hover:underline">新規作成</a>
+            <h3 class="font-bold">{% trans "招待リンク" %}</h3>
+            <a href="{% url 'create_invite' %}" class="text-blue-600 text-sm hover:underline">{% trans "新規作成" %}</a>
         </div>
-        
+
         {% if active_invites %}
         <div class="space-y-3">
             {% for invite in active_invites %}
             <div class="p-3 bg-blue-50 rounded-lg">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs text-gray-600">有効期限: {{ invite.expires_at|date:"Y/m/d H:i" }}</span>
-                    <button onclick="deleteInvite({{ invite.id }})" class="text-red-600 text-xs hover:underline">削除</button>
+                    <span class="text-xs text-gray-600">{% trans "有効期限" %}: {{ invite.expires_at|date:"Y/m/d H:i" }}</span>
+                    <button onclick="deleteInvite({{ invite.id }})" class="text-red-600 text-xs hover:underline">{% trans "削除" %}</button>
                 </div>
                 <div class="flex items-center space-x-2">
                     <input type="text" readonly value="{{ request.scheme }}://{{ request.get_host }}/signup/?invite={{ invite.code }}" id="invite-{{ invite.id }}" class="flex-1 p-2 text-sm bg-white border rounded">
                     <button onclick="copyInvite('{{ invite.id }}')" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
-                        コピー
+                        {% trans "コピー" %}
                     </button>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-gray-500 text-center py-4">招待リンクがありません</p>
+        <p class="text-gray-500 text-center py-4">{% trans "招待リンクがありません" %}</p>
         {% endif %}
     </div>
-    
-    <a href="{% url 'settings' %}" class="block text-center text-gray-600 hover:underline">← 設定に戻る</a>
+
+    <a href="{% url 'settings' %}" class="block text-center text-gray-600 hover:underline">← {% trans "設定に戻る" %}</a>
 </div>
 {% endblock %}
 
@@ -63,21 +63,21 @@ function copyInvite(id) {
     const input = document.getElementById('invite-' + id);
     input.select();
     document.execCommand('copy');
-    alert('✓ リンクをコピーしました');
+    alert('✓ リンクを{% trans "コピー" %}しました');
 }
 
 function deleteInvite(id) {
-    if (confirm('この招待リンクを削除しますか？')) {
+    if (confirm('この{% trans "招待リンク" %}を{% trans "削除" %}しますか？')) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `/family/invite/${id}/delete/`;
-        
+
         const csrf = document.createElement('input');
         csrf.type = 'hidden';
         csrf.name = 'csrfmiddlewaretoken';
         csrf.value = '{{ csrf_token }}';
         form.appendChild(csrf);
-        
+
         document.body.appendChild(form);
         form.submit();
     }

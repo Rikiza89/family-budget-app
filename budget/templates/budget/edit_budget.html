@@ -1,0 +1,32 @@
+<!-- templates/budget/edit_budget.html -->
+{% extends 'budget/base.html' %}
+{% load i18n %}
+{% load translation_tags %}
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold mb-6">✏️ {% trans "予算編集" %}</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "カテゴリー" %}</label>
+                <input type="text" value="{{ budget.category.name|translate }}" disabled class="w-full p-3 border-2 rounded-lg bg-gray-100">
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">{% trans "月額予算" %}</label>
+                <input type="number" name="amount" value="{{ budget.amount }}" class="w-full p-3 border-2 border-gray-300 rounded-lg" required>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 mb-3">
+                {% trans "更新" %}
+            </button>
+            <a href="{% url 'manage_budgets' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+                {% trans "キャンセル" %}
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

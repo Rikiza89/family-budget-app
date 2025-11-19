@@ -1,0 +1,51 @@
+<!-- templates/budget/manage_recurring.html -->
+{% extends 'budget/base.html' %}
+{% load i18n %}
+{% load translation_tags %}
+{% block content %}
+<div class="p-4">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">🔄 {% trans "定期取引管理" %}</h2>
+        <a href="{% url 'add_recurring' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg">➕ {% trans "追加" %}</a>
+    </div>
+
+    <!-- One-Click Generate Button -->
+<div class="bg-green-50 p-4 rounded-lg mb-6 text-center">
+    <a href="{% url 'generate_all_recurring' %}"
+       class="inline-block w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-green-700">
+        ⚡ {% trans "すべての定期取引を一括記録" %}
+    </a>
+    <p class="text-sm text-gray-600 mt-2">{% trans "今日記録すべき定期取引をまとめて登録" %}</p>
+</div>
+
+
+    <!-- Active Templates -->
+    <div class="space-y-3">
+        {% for template in templates %}
+        <div class="bg-white p-4 rounded-lg shadow">
+            <div class="flex justify-between items-start">
+                <div class="flex-1">
+                    <h3 class="font-bold text-lg">{{ template.category.name|translate }}</h3>
+                    <p class="text-gray-600">¥{{ template.amount|floatformat:0 }}</p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        {{ template.get_frequency_display|translate }} |
+                        {% trans "開始" %}: {{ template.start_date }}
+                        {% if template.last_generated %}
+                        | {% trans "最終" %}: {{ template.last_generated }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="{% url 'toggle_recurring' template.id %}"
+                       class="text-sm {% if template.is_active %}text-green-600{% else %}text-gray-400{% endif %} hover:underline">
+                        {% if template.is_active %}{% trans "有効" %}{% else %}{% trans "無効" %}{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500 text-center py-8">{% trans "定期取引がありません" %}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

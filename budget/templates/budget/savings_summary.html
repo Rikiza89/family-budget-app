@@ -1,38 +1,38 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}貯蓄サマリー - 家計簿{% endblock %}
-
+{% load i18n %}
+{% block title %}{% trans "貯蓄サマリー" %} - {% trans "家計簿" %}{% endblock %}
+{% load translation_tags %}
 {% block content %}
 <div class="p-4">
-    <h2 class="text-2xl font-bold mb-6">💎 貯蓄サマリー</h2>
-    
+    <h2 class="text-2xl font-bold mb-6">💎 {% trans "貯蓄サマリー" %}</h2>
+
     <!-- 総貯蓄 -->
     <div class="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-lg shadow-lg p-6 mb-6">
-        <p class="text-sm opacity-90 mb-2">総貯蓄額</p>
+        <p class="text-sm opacity-90 mb-2">{% trans "総貯蓄額" %}</p>
         <p class="text-4xl font-bold">¥{{ grand_total|floatformat:0 }}</p>
-        
+
         <div class="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/20">
             <div>
-                <p class="text-xs opacity-75">現金貯蓄</p>
+                <p class="text-xs opacity-75">{% trans "現金貯蓄" %}</p>
                 <p class="text-xl font-bold">¥{{ total_cash_savings|floatformat:0 }}</p>
             </div>
             <div>
-                <p class="text-xs opacity-75">保険積立</p>
+                <p class="text-xs opacity-75">{% trans "保険積立" %}</p>
                 <p class="text-xl font-bold">¥{{ total_insurance_savings|floatformat:0 }}</p>
             </div>
         </div>
     </div>
-    
+
     <!-- 現金貯蓄履歴 -->
     <div class="bg-white rounded-lg shadow mb-6 p-4">
-        <h3 class="text-lg font-bold mb-4">🏦 現金貯蓄履歴</h3>
-        
+        <h3 class="text-lg font-bold mb-4">🏦 {% trans "現金貯蓄履歴" %}</h3>
+
         {% if recent_cash_savings %}
         <div class="space-y-2">
             {% for saving in recent_cash_savings %}
             <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                 <div>
-                    <p class="font-medium">{{ saving.description|default:"貯金" }}</p>
+                    <p class="font-medium">{{ saving.description|default:_("貯金") }}</p>
                     <p class="text-xs text-gray-500">{{ saving.date|date:"Y/m/d" }}</p>
                 </div>
                 <span class="text-lg font-bold text-purple-600">+¥{{ saving.amount|floatformat:0 }}</span>
@@ -40,20 +40,20 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-gray-500 text-center py-8">まだ貯金がありません</p>
+        <p class="text-gray-500 text-center py-8">{% trans "まだ貯金がありません" %}</p>
         {% endif %}
     </div>
-    
+
     <!-- 保険積立履歴 -->
     <div class="bg-white rounded-lg shadow mb-6 p-4">
-        <h3 class="text-lg font-bold mb-4">📋 保険積立履歴</h3>
-        
+        <h3 class="text-lg font-bold mb-4">📋 {% trans "保険積立履歴" %}</h3>
+
         {% if recent_insurance_savings %}
         <div class="space-y-2">
             {% for saving in recent_insurance_savings %}
             <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                 <div>
-                    <p class="font-medium">{{ saving.category.name }}</p>
+                    <p class="font-medium">{{ saving.category.name|translate }}</p>
                     <p class="text-xs text-gray-500">{{ saving.date|date:"Y/m/d" }}</p>
                 </div>
                 <span class="text-lg font-bold text-green-600">+¥{{ saving.amount|floatformat:0 }}</span>
@@ -61,20 +61,20 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-gray-500 text-center py-8">まだ保険積立がありません</p>
+        <p class="text-gray-500 text-center py-8">{% trans "まだ保険積立がありません" %}</p>
         {% endif %}
     </div>
-    
+
     <!-- アクション -->
     <div class="grid grid-cols-2 gap-4">
         <a href="{% url 'quick_add_saving' %}" class="bg-purple-500 text-white p-6 rounded-lg shadow text-center hover:bg-purple-600 transition">
             <p class="text-3xl mb-2">🏦</p>
-            <p class="font-bold">貯金を追加</p>
+            <p class="font-bold">{% trans "貯金を追加" %}</p>
         </a>
-        
+
         <a href="{% url 'dashboard' %}" class="bg-blue-500 text-white p-6 rounded-lg shadow text-center hover:bg-blue-600 transition">
             <p class="text-3xl mb-2">📊</p>
-            <p class="font-bold">ダッシュボード</p>
+            <p class="font-bold">{% trans "ダッシュボード" %}</p>
         </a>
     </div>
 </div>

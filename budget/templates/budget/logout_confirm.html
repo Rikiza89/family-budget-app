@@ -1,26 +1,26 @@
 {% extends 'budget/base.html' %}
-
-{% block title %}ログアウト確認 - 家計簿{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "ログアウト" %}{% trans "確認" %} - {% trans "家計簿" %}{% endblock %}
 
 {% block content %}
 <div class="p-4 max-w-md mx-auto">
     <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
         <div class="text-center mb-6">
             <div class="text-6xl mb-4">👋</div>
-            <h2 class="text-2xl font-bold mb-2">ログアウトしますか？</h2>
-            <p class="text-gray-600">またすぐに戻ってきてくださいね</p>
+            <h2 class="text-2xl font-bold mb-2">{% trans "ログアウトしますか？" %}</h2>
+            <p class="text-gray-600">{% trans "またすぐに戻ってきてくださいね" %}</p>
         </div>
-        
+
         <form method="POST" action="{% url 'logout' %}">
             {% csrf_token %}
-            
+
             <button type="submit" class="w-full bg-red-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition mb-3">
-                ログアウトする
+                {% trans "ログアウトする" %}
             </button>
         </form>
-        
+
         <a href="{% url 'dashboard' %}" class="block w-full bg-gray-200 text-gray-700 py-4 rounded-lg font-bold text-lg text-center hover:bg-gray-300 transition">
-            キャンセル
+            {% trans "キャンセル" %}
         </a>
     </div>
 </div>

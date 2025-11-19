@@ -1,0 +1,28 @@
+<!-- templates/budget/delete_budget.html -->
+{% extends 'budget/base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="p-4 max-w-md mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold text-red-600 mb-4">⚠️ 予算削除</h2>
+        
+        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+            <p class="font-bold text-lg">{{ budget.category.name }}</p>
+            <p class="text-gray-600">月額予算: ¥{{ budget.amount|floatformat:0 }}</p>
+        </div>
+        
+        <p class="text-gray-700 mb-6">この予算設定を削除してもよろしいですか？</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-lg font-bold hover:bg-red-700 mb-3">
+                {% trans "削除する" %}
+            </button>
+            <a href="{% url 'manage_budgets' %}" class="block w-full text-center bg-gray-200 text-gray-700 py-3 rounded-lg hover:bg-gray-300">
+                {% trans "キャンセル" %}
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
