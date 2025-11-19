@@ -2,14 +2,14 @@
 from django.contrib import admin
 from .models import (
     Family, FamilyMember, Category, PaymentMethod,
-    Transaction, CashSaving, Budget
+    Transaction, CashSaving, Budget, RecurringTemplate, EmailNotificationSettings
 )
 
 @admin.register(Family)
 class FamilyAdmin(admin.ModelAdmin):
     list_display = ['name', 'created_at', 'member_count']
     search_fields = ['name']
-    
+
     def member_count(self, obj):
         return obj.members.count()
     member_count.short_description = 'メンバー数'
@@ -39,7 +39,7 @@ class TransactionAdmin(admin.ModelAdmin):
     search_fields = ['description', 'category__name']
     date_hierarchy = 'date'
     readonly_fields = ['created_at', 'updated_at']
-    
+
     fieldsets = (
         ('基本情報', {
             'fields': ('family', 'member', 'transaction_type', 'date')
@@ -55,7 +55,7 @@ class TransactionAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     def save_model(self, request, obj, form, change):
         if not change:  # 新規作成時
             if not obj.member:
@@ -78,13 +78,24 @@ class BudgetAdmin(admin.ModelAdmin):
     list_display = ['year', 'month', 'category', 'amount', 'family', 'usage_display']
     list_filter = ['year', 'month', 'family', 'category']
     search_fields = ['category__name']
-    
+
     def usage_display(self, obj):
         used = obj.get_used_amount()
         percentage = obj.get_usage_percentage()
         return f"¥{used:,} / ¥{obj.amount:,} ({percentage:.1f}%)"
     usage_display.short_description = '使用状況'
 
+@admin.register(RecurringTemplate)
+class RecurringTemplateAdmin(admin.ModelAdmin):
+    list_display = ['category', 'amount', 'frequency', 'start_date', 'last_generated', 'is_active', 'family']
+    list_filter = ['frequency', 'is_active', 'family']
+    search_fields = ['category__name', 'description']
+    readonly_fields = ['last_generated', 'created_at']
+
+@admin.register(EmailNotificationSettings)
+class EmailNotificationSettingsAdmin(admin.ModelAdmin):
+    list_display = ['family', 'enable_notifications', 'days_without_log', 'last_notification_sent']
+    list_filter = ['enable_notifications']
 
 # Django Admin カスタマイズ
 admin.site.site_header = '家計簿アプリ 管理画面'

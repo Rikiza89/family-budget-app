@@ -5,6 +5,7 @@ from .models import Family, FamilyMember, Category, PaymentMethod, Budget, Trans
 from django import forms
 import uuid
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 class CategoryForm(forms.ModelForm):
     """カテゴリーフォーム"""
@@ -12,15 +13,16 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['name', 'category_type', 'is_insurance_saving', 'icon']
         labels = {
-            'name': 'カテゴリー名',
-            'category_type': '種類',
-            'is_insurance_saving': '保険積立',
-            'icon': 'アイコン'
+            'name': _('カテゴリー名'), # ⬅️ Translated
+            'category_type': _('種類'), # ⬅️ Translated
+            'is_insurance_saving': _('保険積立'), # ⬅️ Translated
+            'icon': _('アイコン') # ⬅️ Translated
         }
+
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': '例: 食費'
+                'placeholder': _('例: 食費') # ⬅️ Translated
             }),
             'category_type': forms.Select(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg'
@@ -40,13 +42,13 @@ class PaymentMethodForm(forms.ModelForm):
         model = PaymentMethod
         fields = ['name', 'method_type']
         labels = {
-            'name': '支払方法名',
-            'method_type': '種類'
+            'name': _('支払方法名'), # ⬅️ Translated
+            'method_type': _('種類') # ⬅️ Translated
         }
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': '例: メインカード'
+                'placeholder': _('例: メインカード') # ⬅️ Translated
             }),
             'method_type': forms.Select(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg'
@@ -61,14 +63,14 @@ def family_members(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     members = FamilyMember.objects.filter(family=family)
     active_invites = FamilyInvite.objects.filter(
         family=family,
         is_used=False,
         expires_at__gt=timezone.now()
     )
-    
+
     context = {
         'family': family,
         'members': members,
@@ -84,15 +86,15 @@ def create_invite(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     if request.method == 'POST':
         invite = FamilyInvite.objects.create(
             family=family,
             created_by=member
         )
-        messages.success(request, '✓ 招待リンクを作成しました')
+        messages.success(request, _('✓ 招待リンクを作成しました'))
         return redirect('family_members')
-    
+
     return render(request, 'budget/create_invite.html')
 
 @login_required
@@ -103,14 +105,14 @@ def delete_invite(request, invite_id):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     invite = get_object_or_404(FamilyInvite, id=invite_id, family=family)
-    
+
     if request.method == 'POST':
         invite.delete()
-        messages.success(request, '✓ 招待を削除しました')
+        messages.success(request, _('✓ 招待を削除しました'))
         return redirect('family_members')
-    
+
     context = {'invite': invite}
     return render(request, 'budget/delete_invite.html', context)
 
@@ -124,9 +126,9 @@ def manage_categories(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     categories = Category.objects.filter(family=family).order_by('category_type', 'name')
-    
+
     context = {
         'categories': categories,
     }
@@ -140,18 +142,18 @@ def add_category(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if form.is_valid():
             category = form.save(commit=False)
             category.family = family
             category.save()
-            messages.success(request, '✓ カテゴリーを追加しました')
+            messages.success(request, _('✓ カテゴリーを追加しました'))
             return redirect('manage_categories')
     else:
         form = CategoryForm()
-    
+
     context = {'form': form}
     return render(request, 'budget/add_category.html', context)
 
@@ -163,18 +165,18 @@ def edit_category(request, category_id):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     category = get_object_or_404(Category, id=category_id, family=family)
-    
+
     if request.method == 'POST':
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             form.save()
-            messages.success(request, '✓ カテゴリーを更新しました')
+            messages.success(request, _('✓ カテゴリーを更新しました'))
             return redirect('manage_categories')
     else:
         form = CategoryForm(instance=category)
-    
+
     context = {
         'form': form,
         'category': category
@@ -189,20 +191,20 @@ def delete_category(request, category_id):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     category = get_object_or_404(Category, id=category_id, family=family)
-    
+
     # 使用中かチェック
     transaction_count = Transaction.objects.filter(category=category).count()
-    
+
     if request.method == 'POST':
         if transaction_count > 0:
-            messages.error(request, '⚠️ このカテゴリーは取引で使用されているため削除できません')
+            messages.error(request, _('⚠️ このカテゴリーは取引で使用されているため削除できません')) # ⬅️ Translated
         else:
             category.delete()
-            messages.success(request, '✓ カテゴリーを削除しました')
+            messages.success(request, _('✓ カテゴリーを削除しました'))
         return redirect('manage_categories')
-    
+
     context = {
         'category': category,
         'transaction_count': transaction_count
@@ -217,9 +219,9 @@ def manage_payment_methods(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     payment_methods = PaymentMethod.objects.filter(family=family).order_by('method_type', 'name')
-    
+
     context = {
         'payment_methods': payment_methods,
     }
@@ -233,18 +235,18 @@ def add_payment_method(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     if request.method == 'POST':
         form = PaymentMethodForm(request.POST)
         if form.is_valid():
             method = form.save(commit=False)
             method.family = family
             method.save()
-            messages.success(request, '✓ 支払方法を追加しました')
+            messages.success(request, _('✓ 支払方法を追加しました'))
             return redirect('manage_payment_methods')
     else:
         form = PaymentMethodForm()
-    
+
     context = {'form': form}
     return render(request, 'budget/add_payment_method.html', context)
 
@@ -256,18 +258,18 @@ def edit_payment_method(request, method_id):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     method = get_object_or_404(PaymentMethod, id=method_id, family=family)
-    
+
     if request.method == 'POST':
         form = PaymentMethodForm(request.POST, instance=method)
         if form.is_valid():
             form.save()
-            messages.success(request, '✓ 支払方法を更新しました')
+            messages.success(request, _('✓ 支払方法を更新しました'))
             return redirect('manage_payment_methods')
     else:
         form = PaymentMethodForm(instance=method)
-    
+
     context = {
         'form': form,
         'method': method
@@ -282,20 +284,20 @@ def delete_payment_method(request, method_id):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     method = get_object_or_404(PaymentMethod, id=method_id, family=family)
-    
+
     # 使用中かチェック
     transaction_count = Transaction.objects.filter(payment_method=method).count()
-    
+
     if request.method == 'POST':
         if transaction_count > 0:
-            messages.error(request, '⚠️ この支払方法は取引で使用されているため削除できません')
+            messages.error(request, _('⚠️ この支払方法は取引で使用されているため削除できません')) # ⬅️ Translated
         else:
             method.delete()
-            messages.success(request, '✓ 支払方法を削除しました')
+            messages.success(request, _('✓ 支払方法を削除しました'))
         return redirect('manage_payment_methods')
-    
+
     context = {
         'method': method,
         'transaction_count': transaction_count
@@ -306,21 +308,21 @@ class FamilySetupForm(forms.ModelForm):
     """家族登録フォーム"""
     nickname = forms.CharField(
         max_length=50,
-        label="あなたのニックネーム",
+        label=_("あなたのニックネーム"),
         widget=forms.TextInput(attrs={
             'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-            'placeholder': '例: パパ、ママ'
+            'placeholder': _('例: パパ、ママ') # ⬅️ Translated
         })
     )
-    
+
     class Meta:
         model = Family
         fields = ['name']
-        labels = {'name': '家族名'}
+        labels = {'name': _('家族名')} # ⬅️ Translated
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': '例: 田中家'
+                'placeholder': _('例: 田中家') # ⬅️ Translated
             })
         }
 
@@ -329,7 +331,7 @@ class CategorySetupForm(forms.Form):
     use_default = forms.BooleanField(
         required=False,
         initial=True,
-        label="デフォルトカテゴリーを使用",
+        label=_("デフォルトカテゴリーを使用"), # ⬅️ Translated
         widget=forms.CheckboxInput(attrs={
             'class': 'w-6 h-6'
         })
@@ -346,7 +348,7 @@ class BudgetSetupForm(forms.ModelForm):
             }),
             'amount': forms.NumberInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': '月額予算',
+                'placeholder': _('月額予算'), # ⬅️ Translated
                 'inputmode': 'numeric'
             })
         }
@@ -360,25 +362,25 @@ def setup_profile(request):
         return redirect('dashboard')
     except FamilyMember.DoesNotExist:
         pass
-    
+
     if request.method == 'POST':
         form = FamilySetupForm(request.POST)
         if form.is_valid():
             # 家族作成
             family = form.save()
-            
+
             # メンバー作成
             FamilyMember.objects.create(
                 user=request.user,
                 family=family,
                 nickname=form.cleaned_data['nickname']
             )
-            
-            messages.success(request, '✓ プロフィールを作成しました')
+
+            messages.success(request, _('✓ プロフィールを作成しました')) # ⬅️ Translated
             return redirect('setup_categories')
     else:
         form = FamilySetupForm()
-    
+
     context = {'form': form}
     return render(request, 'budget/setup_profile.html', context)
 
@@ -390,21 +392,21 @@ def setup_categories(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     # すでにカテゴリーがある場合はスキップ
     if Category.objects.filter(family=family).exists():
         return redirect('setup_payment_methods')
-    
+
     if request.method == 'POST':
         form = CategorySetupForm(request.POST)
         if form.is_valid() and form.cleaned_data['use_default']:
             # デフォルトカテゴリー作成
             create_default_categories(family)
-            messages.success(request, '✓ カテゴリーを設定しました')
+            messages.success(request, _('✓ カテゴリーを設定しました'))
             return redirect('setup_payment_methods')
     else:
         form = CategorySetupForm()
-    
+
     context = {'form': form}
     return render(request, 'budget/setup_categories.html', context)
 
@@ -416,18 +418,20 @@ def setup_payment_methods(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     # すでに支払方法がある場合はスキップ
     if PaymentMethod.objects.filter(family=family).exists():
         return redirect('dashboard')
-    
+
     if request.method == 'POST':
         # デフォルト支払方法作成
         create_default_payment_methods(family)
-        messages.success(request, '✓ セットアップ完了！')
+        messages.success(request, _('✓ セットアップ完了！')) # ⬅️ Translated
         return redirect('dashboard')
-    
+
     return render(request, 'budget/setup_payment_methods.html')
+
+
 
 def create_default_categories(family):
     """デフォルトカテゴリー作成"""
@@ -444,7 +448,7 @@ def create_default_categories(family):
         ('保険（積立）', True, '📋'),  # 保険型積立
         ('その他', False, '📦'),
     ]
-    
+
     for name, is_insurance, icon in expense_categories:
         Category.objects.create(
             family=family,
@@ -453,14 +457,14 @@ def create_default_categories(family):
             is_insurance_saving=is_insurance,
             icon=icon
         )
-    
+
     income_categories = [
         ('給料', False, '💰'),
         ('賞与', False, '🎁'),
         ('副収入', False, '💵'),
         ('その他収入', False, '📈'),
     ]
-    
+
     for name, _, icon in income_categories:
         Category.objects.create(
             family=family,
@@ -478,7 +482,7 @@ def create_default_payment_methods(family):
         ('PayPay', 'qr'),
         ('銀行振込', 'bank'),
     ]
-    
+
     for name, method_type in methods:
         PaymentMethod.objects.create(
             family=family,
@@ -494,18 +498,18 @@ def settings(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     categories = Category.objects.filter(family=family).order_by('category_type', 'name')
     payment_methods = PaymentMethod.objects.filter(family=family)
     family_members = FamilyMember.objects.filter(family=family)
-    
+
     context = {
         'family': family,
         'categories': categories,
         'payment_methods': payment_methods,
         'family_members': family_members,
     }
-    
+
     return render(request, 'budget/settings.html', context)
 
 @login_required
@@ -516,16 +520,16 @@ def manage_budgets(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     from django.utils import timezone
     today = timezone.now()
     year = int(request.GET.get('year', today.year))
     month = int(request.GET.get('month', today.month))
-    
+
     if request.method == 'POST':
         category_id = request.POST.get('category')
         amount = request.POST.get('amount')
-        
+
         if category_id and amount:
             Budget.objects.update_or_create(
                 family=family,
@@ -534,15 +538,15 @@ def manage_budgets(request):
                 month=month,
                 defaults={'amount': amount}
             )
-            messages.success(request, '✓ 予算を設定しました')
+            messages.success(request, _('✓ 予算を設定しました'))
             return redirect('manage_budgets')
-    
+
     budgets = Budget.objects.filter(
         family=family,
         year=year,
         month=month
     ).select_related('category')
-    
+
     # 未設定のカテゴリー
     expense_categories = Category.objects.filter(
         family=family,
@@ -550,14 +554,14 @@ def manage_budgets(request):
     ).exclude(
         id__in=budgets.values_list('category_id', flat=True)
     )
-    
+
     context = {
         'budgets': budgets,
         'expense_categories': expense_categories,
         'year': year,
         'month': month,
     }
-    
+
     return render(request, 'budget/manage_budgets.html', context)
 
 @login_required
@@ -568,28 +572,28 @@ def export_data(request):
         family = member.family
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
-    
+
     if request.method == 'POST':
         export_type = request.POST.get('type', 'csv')
         year = request.POST.get('year')
         month = request.POST.get('month')
-        
+
         # CSV/Excel エクスポート処理
         import csv
         from django.http import HttpResponse
-        
+
         response = HttpResponse(content_type='text/csv; charset=utf-8-sig')
         response['Content-Disposition'] = f'attachment; filename="transactions_{year}_{month}.csv"'
-        
+
         writer = csv.writer(response)
-        writer.writerow(['日付', '種類', 'カテゴリー', '金額', '支払方法', 'メモ', '登録者'])
-        
+        writer.writerow([_('日付'), _('種類'), _('カテゴリー'), _('金額'), _('支払方法'), _('メモ'), _('登録者')]) # ⬅️ Translated CSV headers
+
         transactions = Transaction.objects.filter(
             family=family,
             date__year=year,
             date__month=month
         ).select_related('category', 'payment_method', 'member')
-        
+
         for t in transactions:
             writer.writerow([
                 t.date,
@@ -600,7 +604,47 @@ def export_data(request):
                 t.description,
                 t.member.nickname if t.member else ''
             ])
-        
+
         return response
-    
+
     return render(request, 'budget/export_data.html')
+
+
+@login_required
+def edit_budget(request, budget_id):
+    try:
+        member = request.user.familymember
+        family = member.family
+    except FamilyMember.DoesNotExist:
+        return redirect('setup_profile')
+
+    budget = get_object_or_404(Budget, id=budget_id, family=family)
+
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        if amount:
+            budget.amount = amount
+            budget.save()
+            messages.success(request, _('✓ 予算を更新しました')) # ⬅️ Translated
+            return redirect('manage_budgets')
+
+    context = {'budget': budget}
+    return render(request, 'budget/edit_budget.html', context)
+
+@login_required
+def delete_budget(request, budget_id):
+    try:
+        member = request.user.familymember
+        family = member.family
+    except FamilyMember.DoesNotExist:
+        return redirect('setup_profile')
+
+    budget = get_object_or_404(Budget, id=budget_id, family=family)
+
+    if request.method == 'POST':
+        budget.delete()
+        messages.success(request, _('✓ 予算を削除しました')) # ⬅️ Translated
+        return redirect('manage_budgets')
+
+    context = {'budget': budget}
+    return render(request, 'budget/delete_budget.html', context)
