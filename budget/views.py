@@ -390,7 +390,7 @@ def preset_transaction(request, category_id):
                 payment_method_id=payment_method_id if payment_method_id else None,
                 date=timezone.now().date()
             )
-            messages.success(request, _('✓ %(category_name)s を登録しました') % {'category_name': category.name}) # ⬅️ Translated (using placeholder for safety)
+            messages.success(request, _('✓ %(category_name)s を登録しました') % {'category_name': category.name})
             return redirect('dashboard')
 
     # よく使う支払方法
@@ -511,9 +511,9 @@ def generate_all_recurring(request):
 
         if generated_count > 0:
             # Use string formatting for translation
-            messages.success(request, _('✓ %(count)s件の定期取引を記録しました') % {'count': generated_count}) # ⬅️ Translated
+            messages.success(request, _('✓ %(count)s件の定期取引を記録しました') % {'count': generated_count})
         else:
-            messages.info(request, _('記録すべき定期取引はありません')) # ⬅️ Translated
+            messages.info(request, _('記録すべき定期取引はありません'))
 
         return redirect('manage_recurring')
 
@@ -540,7 +540,7 @@ def toggle_recurring(request, template_id):
     template.save()
 
     status = _('有効') if template.is_active else _('無効')
-    messages.success(request, _('✓ 定期取引を%(status)sにしました') % {'status': status}) # ⬅️ Translated
+    messages.success(request, _('✓ 定期取引を%(status)sにしました') % {'status': status})
     return redirect('manage_recurring')
 
 @login_required
