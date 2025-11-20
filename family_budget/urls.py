@@ -21,8 +21,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
-# Non-translated URLs (ONLY i18n endpoint)
+# Non-translated URLs (PWA, i18n endpoint, and media/static files)
 urlpatterns = [
+    # PWA URLs MUST NOT be translated, they need to be at the root path (/)
+    path('', include('pwa.urls')),
+
+    # Django's internationalization endpoint
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 
@@ -36,3 +40,4 @@ urlpatterns += i18n_patterns(
 if settings.DEBUG:
 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
