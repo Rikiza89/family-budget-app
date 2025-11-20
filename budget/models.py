@@ -321,7 +321,6 @@ class RecurringTemplate(models.Model):
 
         return transaction
 
-
 class EmailNotificationSettings(models.Model):
     """メール通知設定"""
     family = models.OneToOneField(Family, on_delete=models.CASCADE, related_name='email_settings')
@@ -337,5 +336,3 @@ class EmailNotificationSettings(models.Model):
 
     def get_email_list(self):
         return [email.strip() for email in self.notification_emails.split('\n') if email.strip()]
-
-
