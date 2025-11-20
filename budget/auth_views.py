@@ -17,32 +17,32 @@ class SignUpForm(forms.Form):
     """新規登録フォーム"""
     username = forms.CharField(
         max_length=150,
-        label=_("ユーザー名"), # ⬅️ Translated
+        label=_("ユーザー名"),
         widget=forms.TextInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
-            'placeholder': _('ユーザー名（英数字）') # ⬅️ Translated
+            'placeholder': _('ユーザー名（英数字）')
         })
     )
     email = forms.EmailField(
-        label=_("メールアドレス"), # ⬅️ Translated
+        label=_("メールアドレス"),
         required=False,
         widget=forms.EmailInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
-            'placeholder': _('メールアドレス（任意）') # ⬅️ Translated
+            'placeholder': _('メールアドレス（任意）')
         })
     )
     password1 = forms.CharField(
         label=_("パスワード"), # ⬅️ Translated
         widget=forms.PasswordInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
-            'placeholder': _('パスワード（8文字以上）') # ⬅️ Translated
+            'placeholder': _('パスワード（8文字以上）')
         })
     )
     password2 = forms.CharField(
-        label=_("パスワード（確認）"), # ⬅️ Translated
+        label=_("パスワード（確認）"),
         widget=forms.PasswordInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
-            'placeholder': _('パスワードを再入力') # ⬅️ Translated
+            'placeholder': _('パスワードを再入力')
         })
     )
 
@@ -50,7 +50,7 @@ class SignUpForm(forms.Form):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
             # Use gettext for immediate error messages
-            raise ValidationError(gettext('このユーザー名は既に使用されています')) # ⬅️ Translated
+            raise ValidationError(gettext('このユーザー名は既に使用されています'))
         return username
 
     def clean(self):
@@ -59,10 +59,10 @@ class SignUpForm(forms.Form):
         password2 = cleaned_data.get('password2')
 
         if password1 and password2 and password1 != password2:
-            raise ValidationError(gettext('パスワードが一致しません')) # ⬅️ Translated
+            raise ValidationError(gettext('パスワードが一致しません'))
 
         if password1 and len(password1) < 8:
-            raise ValidationError(gettext('パスワードは8文字以上にしてください')) # ⬅️ Translated
+            raise ValidationError(gettext('パスワードは8文字以上にしてください'))
 
         return cleaned_data
 
@@ -70,18 +70,18 @@ class LoginForm(AuthenticationForm):
     """ログインフォーム"""
     username = forms.CharField(
         max_length=150,
-        label=_("ユーザー名"), # ⬅️ Translated
+        label=_("ユーザー名"),
         widget=forms.TextInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
-            'placeholder': _('ユーザー名'), # ⬅️ Translated
+            'placeholder': _('ユーザー名'),
             'autocomplete': 'username'
         })
     )
     password = forms.CharField(
-        label=_("パスワード"), # ⬅️ Translated
+        label=_("パスワード"),
         widget=forms.PasswordInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
-            'placeholder': _('パスワード'), # ⬅️ Translated
+            'placeholder': _('パスワード'),
             'autocomplete': 'current-password'
         })
     )
@@ -99,10 +99,10 @@ def signup_view(request):
         try:
             invite = FamilyInvite.objects.get(code=invite_code)
             if not invite.is_valid():
-                messages.warning(request, gettext('この招待リンクは有効期限切れです')) # ⬅️ Translated
+                messages.warning(request, gettext('この招待リンクは有効期限切れです'))
                 invite = None
         except FamilyInvite.DoesNotExist:
-            messages.warning(request, gettext('招待コードが見つかりません')) # ⬅️ Translated
+            messages.warning(request, gettext('招待コードが見つかりません'))
         except Exception:
             pass  # Silently fail for invalid formats
 
@@ -127,7 +127,7 @@ def signup_view(request):
             if invite and invite.is_valid():
                 return redirect('join_family_confirm', code=invite.code)
 
-            messages.success(request, gettext('✓ アカウントを作成しました')) # ⬅️ Translated
+            messages.success(request, gettext('✓ アカウントを作成しました'))
             return redirect('setup_profile')
     else:
         form = SignUpForm()
@@ -144,17 +144,17 @@ def join_family_confirm(request, code):
     try:
         invite = FamilyInvite.objects.get(code=code)
     except FamilyInvite.DoesNotExist:
-        messages.error(request, gettext('⚠️ 招待コードが見つかりません')) # ⬅️ Translated
+        messages.error(request, gettext('⚠️ 招待コードが見つかりません'))
         return redirect('setup_profile')
 
     if not invite.is_valid():
-        messages.error(request, gettext('⚠️ この招待リンクは無効です')) # ⬅️ Translated
+        messages.error(request, gettext('⚠️ この招待リンクは無効です'))
         return redirect('setup_profile')
 
     # すでに家族に所属している場合
     try:
         existing_member = request.user.familymember
-        messages.info(request, gettext('すでに家族に所属しています')) # ⬅️ Translated
+        messages.info(request, gettext('すでに家族に所属しています'))
         return redirect('dashboard')
     except FamilyMember.DoesNotExist:
         pass
@@ -176,7 +176,7 @@ def join_family_confirm(request, code):
             invite.save()
 
             # Note: f-string needs explicit translation function, use gettext for dynamic messages
-            messages.success(request, gettext('✓ %(family_name)sに参加しました！') % {'family_name': invite.family.name}) # ⬅️ Translated and dynamic
+            messages.success(request, gettext('✓ %(family_name)sに参加しました！') % {'family_name': invite.family.name})
             return redirect('dashboard')
     else:
         form = JoinFamilyForm()
@@ -203,7 +203,7 @@ def login_view(request):
                 login(request, user)
 
                 # Note: f-string needs explicit translation function, use gettext for dynamic messages
-                messages.success(request, gettext('✓ おかえりなさい、%(username)sさん') % {'username': user.username}) # ⬅️ Translated and dynamic
+                messages.success(request, gettext('✓ おかえりなさい、%(username)sさん') % {'username': user.username})
 
                 # 次のページへ
                 next_url = request.GET.get('next')
@@ -211,7 +211,7 @@ def login_view(request):
                     return redirect(next_url)
                 return redirect('dashboard')
         else:
-            messages.error(request, gettext('ユーザー名またはパスワードが正しくありません')) # ⬅️ Translated
+            messages.error(request, gettext('ユーザー名またはパスワードが正しくありません'))
     else:
         form = LoginForm()
 
@@ -222,7 +222,7 @@ def logout_view(request):
     """ログアウト"""
     if request.method == 'POST':
         logout(request)
-        messages.success(request, gettext('✓ ログアウトしました')) # ⬅️ Translated
+        messages.success(request, gettext('✓ ログアウトしました'))
         return redirect('landing')
 
     return render(request, 'budget/logout_confirm.html')
