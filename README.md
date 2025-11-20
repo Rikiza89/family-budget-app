@@ -280,11 +280,11 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
 
 ## 🎯 今後の予定
 
-- [ ] PWA対応（オフライン利用）
+- [✓] PWA対応（オフライン利用）
 - [ ] LINE通知連携
 - [ ] 銀行API連携（自動取込）
 - [ ] 複数通貨対応
-- [ ] AI支出分析
+- [✓] AI支出分析
 
 ## 🙏 謝辞
 
@@ -296,4 +296,5 @@ MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
 ---
 
 Made with ❤️ for families managing their budgets together
+
 
