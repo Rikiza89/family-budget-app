@@ -65,6 +65,9 @@
     <div class="bg-white rounded-lg shadow p-4 mb-4">
         <h3 class="text-lg font-bold mb-3">{% trans "便利機能" %}</h3>
         <div class="space-y-2">
+            <a href="{% url 'currency' %}" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100">
+    　           💱 {% trans "通貨設定" %}
+            </a>
             <a href="{% url 'manage_budgets' %}" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100">
                 🎯 {% trans "予算管理" %}
             </a>
