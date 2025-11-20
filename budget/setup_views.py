@@ -13,16 +13,16 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = ['name', 'category_type', 'is_insurance_saving', 'icon']
         labels = {
-            'name': _('カテゴリー名'), # ⬅️ Translated
-            'category_type': _('種類'), # ⬅️ Translated
-            'is_insurance_saving': _('保険積立'), # ⬅️ Translated
-            'icon': _('アイコン') # ⬅️ Translated
+            'name': _('カテゴリー名'),
+            'category_type': _('種類'),
+            'is_insurance_saving': _('保険積立'),
+            'icon': _('アイコン')
         }
 
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': _('例: 食費') # ⬅️ Translated
+                'placeholder': _('例: 食費')
             }),
             'category_type': forms.Select(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg'
@@ -42,13 +42,13 @@ class PaymentMethodForm(forms.ModelForm):
         model = PaymentMethod
         fields = ['name', 'method_type']
         labels = {
-            'name': _('支払方法名'), # ⬅️ Translated
-            'method_type': _('種類') # ⬅️ Translated
+            'name': _('支払方法名'),
+            'method_type': _('種類')
         }
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': _('例: メインカード') # ⬅️ Translated
+                'placeholder': _('例: メインカード')
             }),
             'method_type': forms.Select(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg'
@@ -115,8 +115,6 @@ def delete_invite(request, invite_id):
 
     context = {'invite': invite}
     return render(request, 'budget/delete_invite.html', context)
-
-
 
 @login_required
 def manage_categories(request):
@@ -199,7 +197,7 @@ def delete_category(request, category_id):
 
     if request.method == 'POST':
         if transaction_count > 0:
-            messages.error(request, _('⚠️ このカテゴリーは取引で使用されているため削除できません')) # ⬅️ Translated
+            messages.error(request, _('⚠️ このカテゴリーは取引で使用されているため削除できません'))
         else:
             category.delete()
             messages.success(request, _('✓ カテゴリーを削除しました'))
@@ -292,7 +290,7 @@ def delete_payment_method(request, method_id):
 
     if request.method == 'POST':
         if transaction_count > 0:
-            messages.error(request, _('⚠️ この支払方法は取引で使用されているため削除できません')) # ⬅️ Translated
+            messages.error(request, _('⚠️ この支払方法は取引で使用されているため削除できません'))
         else:
             method.delete()
             messages.success(request, _('✓ 支払方法を削除しました'))
@@ -311,18 +309,18 @@ class FamilySetupForm(forms.ModelForm):
         label=_("あなたのニックネーム"),
         widget=forms.TextInput(attrs={
             'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-            'placeholder': _('例: パパ、ママ') # ⬅️ Translated
+            'placeholder': _('例: パパ、ママ')
         })
     )
 
     class Meta:
         model = Family
         fields = ['name']
-        labels = {'name': _('家族名')} # ⬅️ Translated
+        labels = {'name': _('家族名')}
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': _('例: 田中家') # ⬅️ Translated
+                'placeholder': _('例: 田中家')
             })
         }
 
@@ -331,7 +329,7 @@ class CategorySetupForm(forms.Form):
     use_default = forms.BooleanField(
         required=False,
         initial=True,
-        label=_("デフォルトカテゴリーを使用"), # ⬅️ Translated
+        label=_("デフォルトカテゴリーを使用"),
         widget=forms.CheckboxInput(attrs={
             'class': 'w-6 h-6'
         })
@@ -348,7 +346,7 @@ class BudgetSetupForm(forms.ModelForm):
             }),
             'amount': forms.NumberInput(attrs={
                 'class': 'w-full p-3 border-2 border-gray-300 rounded-lg',
-                'placeholder': _('月額予算'), # ⬅️ Translated
+                'placeholder': _('月額予算'),
                 'inputmode': 'numeric'
             })
         }
@@ -376,7 +374,7 @@ def setup_profile(request):
                 nickname=form.cleaned_data['nickname']
             )
 
-            messages.success(request, _('✓ プロフィールを作成しました')) # ⬅️ Translated
+            messages.success(request, _('✓ プロフィールを作成しました'))
             return redirect('setup_categories')
     else:
         form = FamilySetupForm()
@@ -426,12 +424,10 @@ def setup_payment_methods(request):
     if request.method == 'POST':
         # デフォルト支払方法作成
         create_default_payment_methods(family)
-        messages.success(request, _('✓ セットアップ完了！')) # ⬅️ Translated
+        messages.success(request, _('✓ セットアップ完了！'))
         return redirect('dashboard')
 
     return render(request, 'budget/setup_payment_methods.html')
-
-
 
 def create_default_categories(family):
     """デフォルトカテゴリー作成"""
@@ -586,7 +582,7 @@ def export_data(request):
         response['Content-Disposition'] = f'attachment; filename="transactions_{year}_{month}.csv"'
 
         writer = csv.writer(response)
-        writer.writerow([_('日付'), _('種類'), _('カテゴリー'), _('金額'), _('支払方法'), _('メモ'), _('登録者')]) # ⬅️ Translated CSV headers
+        writer.writerow([_('日付'), _('種類'), _('カテゴリー'), _('金額'), _('支払方法'), _('メモ'), _('登録者')])
 
         transactions = Transaction.objects.filter(
             family=family,
@@ -609,7 +605,6 @@ def export_data(request):
 
     return render(request, 'budget/export_data.html')
 
-
 @login_required
 def edit_budget(request, budget_id):
     try:
@@ -625,7 +620,7 @@ def edit_budget(request, budget_id):
         if amount:
             budget.amount = amount
             budget.save()
-            messages.success(request, _('✓ 予算を更新しました')) # ⬅️ Translated
+            messages.success(request, _('✓ 予算を更新しました'))
             return redirect('manage_budgets')
 
     context = {'budget': budget}
@@ -643,14 +638,11 @@ def delete_budget(request, budget_id):
 
     if request.method == 'POST':
         budget.delete()
-        messages.success(request, _('✓ 予算を削除しました')) # ⬅️ Translated
+        messages.success(request, _('✓ 予算を削除しました'))
         return redirect('manage_budgets')
 
     context = {'budget': budget}
     return render(request, 'budget/delete_budget.html', context)
-
-
-# Add to setup_views.py
 
 @login_required
 def currency_settings(request):
