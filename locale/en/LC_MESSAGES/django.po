@@ -1647,3 +1647,53 @@ msgstr "Email Notification Settings"
 
 #~ msgid "平均収支"
 #~ msgstr "Average Balance"
+
+#: templates/path/to/template.html:8
+msgid "招待リンク作成"
+msgstr "Create Invitation Link"
+
+
+msgid "通貨設定"
+msgstr "Currency Settings"
+
+msgid "現在の通貨"
+msgstr "Current Currency"
+
+msgid "通貨を選択"
+msgstr "Select Currency"
+
+msgid "変更"
+msgstr "Change"
+
+msgid "AI支出分析"
+msgstr "AI Spending Analysis"
+
+msgid "総収入（3ヶ月）"
+msgstr "Total Income (3 months)"
+
+msgid "総支出（3ヶ月）"
+msgstr "Total Expenses (3 months)"
+
+msgid "Gemini AI分析結果"
+msgstr "Gemini AI Analysis"
+
+msgid "カテゴリー別詳細"
+msgstr "Category Details"
+
+msgid "回"
+msgstr "times"
+
+msgid "日本円"
+msgstr "Japanese Yen"
+
+msgid "ユーロ"
+msgstr "Euro"
+
+msgid "米ドル"
+msgstr "US Dollar"
+
+msgid "AIデータ分析"
+msgstr "AI Data Analysis"
+
+msgid "AIが支出パターンを分析。節約のヒントを提案します。"
+msgstr "AI analyzes spending patterns and suggests savings tips."
