@@ -1,7 +1,7 @@
 from django import forms
 from .models import Transaction, CashSaving, Category, PaymentMethod
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _ # ⬅️ Import translation utility
+from django.utils.translation import gettext_lazy as _
 import json
 from django.forms.widgets import Select
 
@@ -10,11 +10,11 @@ class JoinFamilyForm(forms.Form):
     # 1. Translate the label
     nickname = forms.CharField(
         max_length=50,
-        label=_("あなたのニックネーム"), # ⬅️ Translated label
+        label=_("あなたのニックネーム"),
         widget=forms.TextInput(attrs={
             'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
             # 2. Translate the placeholder
-            'placeholder': _('例: パパ、ママ、太郎') # ⬅️ Translated placeholder
+            'placeholder': _('例: パパ、ママ、太郎')
         })
     )
 
@@ -69,7 +69,7 @@ class QuickTransactionForm(forms.ModelForm):
             'description': forms.TextInput(attrs={
                 'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
                 # 4. Translate the placeholder
-                'placeholder': _('メモ（任意）') # ⬅️ Translated placeholder
+                'placeholder': _('メモ（任意）')
             }),
         }
 
@@ -81,7 +81,7 @@ class QuickTransactionForm(forms.ModelForm):
             categories = Category.objects.filter(family=family)
 
             # 5. Translate the default/empty choice text
-            self.fields['category'].choices = [('', _('選択してください'))] + [ # ⬅️ Translated choice
+            self.fields['category'].choices = [('', _('選択してください'))] + [ 
                 (c.id, c.name) for c in categories
             ]
 
@@ -122,11 +122,12 @@ class CashSavingForm(forms.ModelForm):
             'description': forms.TextInput(attrs={
                 'class': 'w-full p-4 text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none',
                 # 7. Translate the placeholder
-                'placeholder': _('メモ（例：給料から貯金）') # ⬅️ Translated placeholder
+                'placeholder': _('メモ（例：給料から貯金）')
             }),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if not self.instance.pk:
+
             self.fields['date'].initial = timezone.now().date()
