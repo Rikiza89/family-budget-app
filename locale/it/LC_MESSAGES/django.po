@@ -859,7 +859,7 @@ msgstr "Solo caratteri alfanumerici"
 
 #: budget/templates/budget/create_invite.html:15
 msgid "いつでも削除できます"
-msgstr ""
+msgstr "E possibile cancellare in qualunque momento"
 
 #: budget/templates/budget/create_invite.html:22
 msgid "招待リンクを作成"
@@ -1728,3 +1728,53 @@ msgstr "✓ Aggiornato"
 
 #~ msgid "平均収支"
 #~ msgstr "Saldo Medio"
+
+
+#: templates/path/to/template.html:8
+msgid "招待リンク作成"
+msgstr "Creazione Link d'Invito"
+
+msgid "通貨設定"
+msgstr "Impostazioni Valuta"
+
+msgid "現在の通貨"
+msgstr "Valuta Corrente"
+
+msgid "通貨を選択"
+msgstr "Seleziona Valuta"
+
+msgid "変更"
+msgstr "Cambia"
+
+msgid "AI支出分析"
+msgstr "Analisi Spese AI"
+
+msgid "総収入（3ヶ月）"
+msgstr "Entrate Totali (3 mesi)"
+
+msgid "総支出（3ヶ月）"
+msgstr "Spese Totali (3 mesi)"
+
+msgid "Gemini AI分析結果"
+msgstr "Analisi Gemini AI"
+
+msgid "カテゴリー別詳細"
+msgstr "Dettagli per Categoria"
+
+msgid "回"
+msgstr "volte"
+
+msgid "日本円"
+msgstr "Yen Giapponese"
+
+msgid "ユーロ"
+msgstr "Euro"
+
+msgid "米ドル"
+msgstr "Dollaro USA"
+
+msgid "AIデータ分析"
+msgstr "Analisi dati AI"
+
+msgid "AIが支出パターンを分析。節約のヒントを提案します。"
+msgstr "L'AI analizza i pattern di spesa e suggerisce consigli per risparmiare."
