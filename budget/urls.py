@@ -51,6 +51,8 @@ urlpatterns = [
     path('budgets/<int:budget_id>/delete/', setup_views.delete_budget, name='delete_budget'),
 
     path('export/', setup_views.export_data, name='export_data'),
+    path('currency/', setup_views.currency_settings, name='currency'),
+    path('ai/', views.ai_spending_analysis, name='ai'),
 
     # 削除
     path('transaction/<int:transaction_id>/delete/', views.delete_transaction, name='delete_transaction'),
@@ -67,4 +69,8 @@ urlpatterns = [
     # Forecast
     path('forecast/', views.forecast_view, name='forecast'),
 
+]
+
+urlpatterns += [
+    path('manifest.json', views.manifest, name='manifest'),
 ]

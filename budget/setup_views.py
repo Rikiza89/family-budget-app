@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Family, FamilyMember, Category, PaymentMethod, Budget, Transaction, FamilyInvite
+from .models import Family, FamilyMember, Category, PaymentMethod, Budget, Transaction, FamilyInvite,Currency
 from django import forms
 import uuid
 from django.utils import timezone
@@ -648,3 +648,30 @@ def delete_budget(request, budget_id):
 
     context = {'budget': budget}
     return render(request, 'budget/delete_budget.html', context)
+
+
+# Add to setup_views.py
+
+@login_required
+def currency_settings(request):
+    try:
+        member = request.user.familymember
+        family = member.family
+    except FamilyMember.DoesNotExist:
+        return redirect('setup_profile')
+
+    if request.method == 'POST':
+        currency_id = request.POST.get('currency')
+        if currency_id:
+            currency = Currency.objects.get(id=currency_id)
+            family.currency = currency
+            family.save()
+            messages.success(request, '✓ 通貨を変更しました')
+            return redirect('settings')
+
+    currencies = Currency.objects.all()
+    context = {
+        'family': family,
+        'currencies': currencies
+    }
+    return render(request, 'budget/currency_settings.html', context)

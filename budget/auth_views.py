@@ -174,7 +174,7 @@ def join_family_confirm(request, code):
             invite.used_by = request.user
             invite.used_at = timezone.now()
             invite.save()
-            
+
             # Note: f-string needs explicit translation function, use gettext for dynamic messages
             messages.success(request, gettext('✓ %(family_name)sに参加しました！') % {'family_name': invite.family.name}) # ⬅️ Translated and dynamic
             return redirect('dashboard')
@@ -201,7 +201,7 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                
+
                 # Note: f-string needs explicit translation function, use gettext for dynamic messages
                 messages.success(request, gettext('✓ おかえりなさい、%(username)sさん') % {'username': user.username}) # ⬅️ Translated and dynamic
 
@@ -223,7 +223,7 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
         messages.success(request, gettext('✓ ログアウトしました')) # ⬅️ Translated
-        return redirect('login')
+        return redirect('landing')
 
     return render(request, 'budget/logout_confirm.html')
 

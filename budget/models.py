@@ -6,11 +6,45 @@ from decimal import Decimal
 import uuid
 from datetime import timedelta
 
+class Currency(models.Model):
+    """通貨設定"""
+    code = models.CharField(max_length=3, unique=True)  # JPY, EUR, USD
+    name = models.CharField(max_length=50)
+    symbol = models.CharField(max_length=5)  # ¥, €, $
+    exchange_rate = models.DecimalField(max_digits=10, decimal_places=4, default=1.0)
+
+    class Meta:
+        verbose_name = "通貨"
+        verbose_name_plural = "通貨"
+
+    def __str__(self):
+        return f"{self.code} ({self.symbol})"
+
 class Family(models.Model):
     """家族グループ"""
-    name = models.CharField(max_length=100, verbose_name=_("家族名")) # ⬅️ Translated verbose_name
+    # name = models.CharField(max_length=100, verbose_name=_("家族名")) # ⬅️ Translated verbose_name
+    # created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100, verbose_name="家族名")
+    currency = models.ForeignKey(
+        Currency,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        verbose_name="通貨"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_currency_symbol(self):
+        return self.currency.symbol
+
+    def convert_to_base(self, amount):
+        """Convert amount to base currency (JPY)"""
+        return amount * self.currency.exchange_rate
+
+    def convert_from_base(self, amount):
+        """Convert from base currency to family currency"""
+        return amount / self.currency.exchange_rate
     class Meta:
         verbose_name = _("家族") # ⬅️ Translated verbose_name
         verbose_name_plural = _("家族") # ⬅️ Translated verbose_name_plural
@@ -314,3 +348,5 @@ class EmailNotificationSettings(models.Model):
 
     def get_email_list(self):
         return [email.strip() for email in self.notification_emails.split('\n') if email.strip()]
+
+

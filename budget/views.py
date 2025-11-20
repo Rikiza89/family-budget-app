@@ -688,3 +688,298 @@ def forecast_view(request):
     }
 
     return render(request, 'budget/forecast.html', context)
+
+
+from django.http import JsonResponse
+from django.conf import settings
+
+def manifest(request):
+    """PWA Manifest"""
+    manifest_data = {
+        "name": "家計簿アプリ",
+        "short_name": "家計簿",
+        "description": "家族で使える家計簿管理アプリ",
+        "start_url": "/",
+        "display": "standalone",
+        "background_color": "#ffffff",
+        "theme_color": "#2563eb",
+        "orientation": "portrait",
+        "icons": [
+            {
+                "src": "/static/images/icons/icon-72x72.png",
+                "sizes": "72x72",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-96x96.png",
+                "sizes": "96x96",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-128x128.png",
+                "sizes": "128x128",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-144x144.png",
+                "sizes": "144x144",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-152x152.png",
+                "sizes": "152x152",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-192x192.png",
+                "sizes": "192x192",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-384x384.png",
+                "sizes": "384x384",
+                "type": "image/png",
+                "purpose": "any maskable"
+            },
+            {
+                "src": "/static/images/icons/icon-512x512.png",
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any maskable"
+            }
+        ]
+    }
+    return JsonResponse(manifest_data)
+
+# Add to views.py or create ai_analysis.py
+
+import google.generativeai as genai
+from django.conf import settings
+from datetime import timedelta
+
+# Configure Gemini
+genai.configure(api_key=settings.GEMINI_API_KEY)
+
+# @login_required
+# def ai_spending_analysis(request):
+#     try:
+#         member = request.user.familymember
+#         family = member.family
+#     except FamilyMember.DoesNotExist:
+#         return redirect('setup_profile')
+
+#     # Get last 3 months data
+#     today = timezone.now().date()
+#     three_months_ago = today - timedelta(days=90)
+
+#     transactions = Transaction.objects.filter(
+#         family=family,
+#         date__gte=three_months_ago
+#     ).select_related('category')
+
+#     # Prepare data for AI
+#     category_totals = {}
+#     for trans in transactions:
+#         cat_name = trans.category.name
+#         if cat_name not in category_totals:
+#             category_totals[cat_name] = {
+#                 'total': 0,
+#                 'count': 0,
+#                 'type': trans.transaction_type
+#             }
+#         category_totals[cat_name]['total'] += float(trans.amount)
+#         category_totals[cat_name]['count'] += 1
+
+#     # Calculate totals
+#     total_income = sum(v['total'] for k, v in category_totals.items() if v['type'] == 'income')
+#     total_expense = sum(v['total'] for k, v in category_totals.items() if v['type'] == 'expense')
+
+#     # Build prompt
+#     currency_symbol = family.get_currency_symbol()
+#     prompt = f"""
+# あなたは家計アドバイザーです。以下のデータを分析し、日本語で改善提案をしてください。
+
+# 【期間】過去3ヶ月
+# 【通貨】{family.currency.code}
+# 【総収入】{currency_symbol}{total_income:,.0f}
+# 【総支出】{currency_symbol}{total_expense:,.0f}
+
+# 【カテゴリー別支出】
+# """
+#     for cat_name, data in category_totals.items():
+#         if data['type'] == 'expense':
+#             prompt += f"- {cat_name}: {currency_symbol}{data['total']:,.0f} ({data['count']}回)\n"
+
+#     prompt += """
+
+# 以下の形式で分析してください：
+# 1. 支出の特徴（3つ）
+# 2. 改善提案（3つ）
+# 3. 節約できそうな項目（具体的な金額目標付き）
+# 4. 良い点（1つ）
+
+# 簡潔に、箇条書きで回答してください。
+# """
+
+#     try:
+#         model = genai.GenerativeModel("gemini-2.5-flash")
+#         response = model.generate_content(prompt)
+#         ai_analysis = response.text
+#     except Exception as e:
+#         ai_analysis = f"AI分析エラー: {str(e)}"
+
+#     context = {
+#         'ai_analysis': ai_analysis,
+#         'total_income': total_income,
+#         'total_expense': total_expense,
+#         'category_totals': category_totals,
+#         'currency_symbol': currency_symbol
+#     }
+
+#     return render(request, 'budget/ai_analysis.html', context)
+
+import markdown
+from django.utils.safestring import mark_safe
+
+@login_required
+def ai_spending_analysis(request):
+    try:
+        member = request.user.familymember
+        family = member.family
+    except FamilyMember.DoesNotExist:
+        return redirect('setup_profile')
+
+    # Get last 3 months data
+    today = timezone.now().date()
+    three_months_ago = today - timedelta(days=90)
+
+    transactions = Transaction.objects.filter(
+        family=family,
+        date__gte=three_months_ago
+    ).select_related('category')
+
+    # Prepare data for AI
+    category_totals = {}
+    for trans in transactions:
+        cat_name = trans.category.name
+        if cat_name not in category_totals:
+            category_totals[cat_name] = {
+                'total': 0,
+                'count': 0,
+                'type': trans.transaction_type
+            }
+        category_totals[cat_name]['total'] += float(trans.amount)
+        category_totals[cat_name]['count'] += 1
+
+    # --- Improved Calculation Logic ---
+    total_income = sum(v['total'] for k, v in category_totals.items() if v['type'] == 'income')
+    total_expense = sum(v['total'] for k, v in category_totals.items() if v['type'] == 'expense')
+
+    # Calculate averages and rates for better context
+    balance = total_income - total_expense
+    savings_rate = (balance / total_income * 100) if total_income > 0 else 0
+
+    # Convert 3-month totals to monthly averages for the prompt
+    monthly_income = total_income / 3
+    monthly_expense = total_expense / 3
+
+    currency_symbol = family.get_currency_symbol()
+
+    # --- Improved Prompt ---
+    prompt = f"""
+あなたは経験豊富なファイナンシャルプランナー（FP）です。
+以下の家計データ（過去3ヶ月の実績）に基づき、具体的で実行可能な家計改善のアドバイスを日本語で作成してください。
+
+## 📊 家計概要（3ヶ月合計）
+- **期間:** 90日間
+- **通貨:** {family.currency.code}
+- **総収入:** {currency_symbol}{total_income:,.0f}
+- **総支出:** {currency_symbol}{total_expense:,.0f}
+- **収支バランス:** {currency_symbol}{balance:,.0f}
+- **貯蓄率:** {savings_rate:.1f}%
+
+## 📅 月平均換算（目安）
+- **月収:** 約 {currency_symbol}{monthly_income:,.0f}
+- **月支出:** 約 {currency_symbol}{monthly_expense:,.0f}
+
+## 📂 カテゴリー別支出詳細（金額順）
+"""
+    # Sort categories by amount (highest first) so AI focuses on big spenders
+    sorted_expenses = sorted(
+        [(k, v) for k, v in category_totals.items() if v['type'] == 'expense'],
+        key=lambda x: x[1]['total'],
+        reverse=True
+    )
+
+    for cat_name, data in sorted_expenses:
+        monthly_avg = data['total'] / 3
+        percent_of_total = (data['total'] / total_expense * 100) if total_expense > 0 else 0
+        prompt += f"- **{cat_name}**: 総額 {currency_symbol}{data['total']:,.0f} (月平均 {currency_symbol}{monthly_avg:,.0f}) | 支出全体の{percent_of_total:.1f}% | {data['count']}回\n"
+
+    prompt += """
+
+## 📝 分析依頼内容
+以下のフォーマットに従って、Markdown形式で出力してください。
+トーンは「親身で、かつ論理的」にお願いします。
+
+### 1. 🔍 現状分析（3つのポイント）
+数字に基づいた客観的な分析を3点挙げてください。
+（例：「食費が支出全体のXX%を占めており、理想的な比率を超えています」など）
+
+### 2. 💡 具体的な改善提案（3つのステップ）
+「少し頑張れば実行できる」レベルの具体的なアクションを3つ提案してください。
+抽象的なアドバイスではなく、具体的な行動（例：「コンビニ利用を週1回減らす」）を提示してください。
+
+### 3. 💰 今すぐ見直すべき項目（節約ターゲット）
+最も削減効果が高いカテゴリーを1つ選び、翌月の具体的な削減目標金額（数値）とその理由を提示してください。
+
+### 4. 🌟 素晴らしい点（Goodポイント）
+家計管理の中で評価できる点、健全な数字、または努力が見られる点を1つ褒めてください。
+
+"""
+
+    try:
+        model = genai.GenerativeModel("gemini-2.5-flash")
+        response = model.generate_content(prompt)
+
+        ai_raw = extract_text(response)
+
+        if not ai_raw:
+            ai_raw = "⚠️ AIが有効なテキストを返しませんでした。（safety / 空の応答）"
+
+        ai_analysis = mark_safe(markdown.markdown(ai_raw))
+
+    except Exception as e:
+        ai_analysis = f"AI分析エラー: {str(e)}"
+
+
+    context = {
+        'ai_analysis': ai_analysis,
+        'total_income': total_income,
+        'total_expense': total_expense,
+        'category_totals': category_totals,
+        'currency_symbol': currency_symbol
+    }
+
+    return render(request, 'budget/ai_analysis.html', context)
+
+# --- Safe extraction of Gemini response ---
+def extract_text(resp):
+    if not resp:
+        return ""
+    if hasattr(resp, "text") and resp.text:
+        return resp.text
+    # Fallback: extract from candidates manually
+    if resp.candidates:
+        for c in resp.candidates:
+            if c.content and c.content.parts:
+                return "".join(
+                    p.text for p in c.content.parts if hasattr(p, "text") and p.text
+                )
+    return ""
