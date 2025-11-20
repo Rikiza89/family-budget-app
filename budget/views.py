@@ -4,8 +4,10 @@ from django.db.models import Sum, Q
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
+from django.conf import settings
 from django.contrib import messages
 from django.db import models
+from django.http import JsonResponse
 from django import forms
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -14,7 +16,6 @@ from .models import (
     Category, Budget, PaymentMethod, EmailNotificationSettings, RecurringTemplate
 )
 from .forms import QuickTransactionForm, CashSavingForm
-from django.conf import settings
 
 import json
 import markdown
@@ -289,8 +290,6 @@ def savings_summary(request):
 
     return render(request, 'budget/savings_summary.html', context)
 
-
-
 @login_required
 def quick_add_transaction(request):
     """クイック取引追加（モバイル最適化）"""
@@ -393,7 +392,6 @@ def preset_transaction(request, category_id):
             )
             messages.success(request, _('✓ %(category_name)s を登録しました') % {'category_name': category.name}) # ⬅️ Translated (using placeholder for safety)
             return redirect('dashboard')
-# ...
 
     # よく使う支払方法
     common_methods = PaymentMethod.objects.filter(family=family)[:4]
@@ -433,7 +431,6 @@ def delete_transaction(request, transaction_id):
     }
 
     return render(request, 'budget/confirm_delete.html', context)
-
 
 class RecurringTemplateForm(forms.ModelForm):
     class Meta:
@@ -546,8 +543,6 @@ def toggle_recurring(request, template_id):
     messages.success(request, _('✓ 定期取引を%(status)sにしました') % {'status': status}) # ⬅️ Translated
     return redirect('manage_recurring')
 
-
-
 @login_required
 def email_notification_settings(request):
     try:
@@ -569,9 +564,6 @@ def email_notification_settings(request):
 
     context = {'settings': settings}
     return render(request, 'budget/email_settings.html', context)
-
-# Feature 3: Future Forecast Charts
-
 
 @login_required
 def forecast_view(request):
@@ -691,10 +683,6 @@ def forecast_view(request):
 
     return render(request, 'budget/forecast.html', context)
 
-
-from django.http import JsonResponse
-from django.conf import settings
-
 def manifest(request):
     """PWA Manifest"""
     manifest_data = {
@@ -758,10 +746,6 @@ def manifest(request):
         ]
     }
     return JsonResponse(manifest_data)
-
-
-
-
 
 @login_required
 def ai_spending_analysis(request):
