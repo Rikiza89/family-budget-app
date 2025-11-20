@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from decimal import Decimal
 import uuid
 from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 
 class Currency(models.Model):
     """通貨設定"""
@@ -22,9 +23,7 @@ class Currency(models.Model):
 
 class Family(models.Model):
     """家族グループ"""
-    # name = models.CharField(max_length=100, verbose_name=_("家族名")) # ⬅️ Translated verbose_name
-    # created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=100, verbose_name="家族名")
+    name = models.CharField(max_length=100, verbose_name=_("家族名"))
     currency = models.ForeignKey(
         Currency,
         on_delete=models.PROTECT,
@@ -45,9 +44,10 @@ class Family(models.Model):
     def convert_from_base(self, amount):
         """Convert from base currency to family currency"""
         return amount / self.currency.exchange_rate
+    
     class Meta:
-        verbose_name = _("家族") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("家族") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("家族")
+        verbose_name_plural = _("家族")
 
     def __str__(self):
         return self.name
@@ -56,11 +56,11 @@ class FamilyMember(models.Model):
     """家族メンバー"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='members')
-    nickname = models.CharField(max_length=50, verbose_name=_("ニックネーム")) # ⬅️ Translated verbose_name
-
+    nickname = models.CharField(max_length=50, verbose_name=_("ニックネーム"))
+    
     class Meta:
-        verbose_name = _("家族メンバー") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("家族メンバー") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("家族メンバー")
+        verbose_name_plural = _("家族メンバー")
 
     def __str__(self):
         return f"{self.nickname} ({self.family.name})"
@@ -69,7 +69,7 @@ class FamilyInvite(models.Model):
     """家族への招待コード"""
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='invites')
     code = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-    created_by = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True) # Use string reference if FamilyMember is defined later
+    created_by = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
     is_used = models.BooleanField(default=False)
@@ -77,8 +77,8 @@ class FamilyInvite(models.Model):
     used_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = _("招待") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("招待") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("招待")
+        verbose_name_plural = _("招待")
 
     def save(self, *args, **kwargs):
         if not self.expires_at:
@@ -94,23 +94,23 @@ class FamilyInvite(models.Model):
 class Category(models.Model):
     """カテゴリー"""
     CATEGORY_TYPES = [
-        ('expense', _('支出')), # ⬅️ Translated choice
-        ('income', _('収入')), # ⬅️ Translated choice
+        ('expense', _('支出')),
+        ('income', _('収入')),
     ]
 
-    name = models.CharField(max_length=50, verbose_name=_("カテゴリー名")) # ⬅️ Translated verbose_name
-    category_type = models.CharField(max_length=10, choices=CATEGORY_TYPES, verbose_name=_("種類")) # ⬅️ Translated verbose_name
+    name = models.CharField(max_length=50, verbose_name=_("カテゴリー名"))
+    category_type = models.CharField(max_length=10, choices=CATEGORY_TYPES, verbose_name=_("種類"))
     is_insurance_saving = models.BooleanField(
         default=False,
-        verbose_name=_("保険（積立）"), # ⬅️ Translated verbose_name
-        help_text=_("保険型の積立の場合はチェック") # ⬅️ Translated help_text
+        verbose_name=_("保険（積立）"),
+        help_text=_("保険型の積立の場合はチェック")
     )
-    icon = models.CharField(max_length=50, blank=True, verbose_name=_("アイコン")) # ⬅️ Translated verbose_name
+    icon = models.CharField(max_length=50, blank=True, verbose_name=_("アイコン"))
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='categories')
 
     class Meta:
-        verbose_name = _("カテゴリー") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("カテゴリー") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("カテゴリー")
+        verbose_name_plural = _("カテゴリー")
         unique_together = ['name', 'family']
 
     def __str__(self):
@@ -119,21 +119,21 @@ class Category(models.Model):
 class PaymentMethod(models.Model):
     """支払方法"""
     METHOD_TYPES = [
-        ('cash', _('現金')), # ⬅️ Translated choice
-        ('credit', _('クレジットカード')), # ⬅️ Translated choice
-        ('ic', _('ICカード')), # ⬅️ Translated choice
-        ('qr', _('QR決済')), # ⬅️ Translated choice
-        ('bank', _('銀行振込')), # ⬅️ Translated choice
-        ('other', _('その他')), # ⬅️ Translated choice
+        ('cash', _('現金')),
+        ('credit', _('クレジットカード')),
+        ('ic', _('ICカード')),
+        ('qr', _('QR決済')),
+        ('bank', _('銀行振込')),
+        ('other', _('その他')),
     ]
 
-    name = models.CharField(max_length=50, verbose_name=_("支払方法名")) # ⬅️ Translated verbose_name
-    method_type = models.CharField(max_length=10, choices=METHOD_TYPES, verbose_name=_("種類")) # ⬅️ Translated verbose_name
+    name = models.CharField(max_length=50, verbose_name=_("支払方法名"))
+    method_type = models.CharField(max_length=10, choices=METHOD_TYPES, verbose_name=_("種類"))
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='payment_methods')
 
     class Meta:
-        verbose_name = _("支払方法") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("支払方法") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("支払方法")
+        verbose_name_plural = _("支払方法")
 
     def __str__(self):
         return self.name
@@ -141,26 +141,26 @@ class PaymentMethod(models.Model):
 class Transaction(models.Model):
     """収支取引"""
     TRANSACTION_TYPES = [
-        ('income', _('収入')), # ⬅️ Translated choice
-        ('expense', _('支出')), # ⬅️ Translated choice
+        ('income', _('収入')),
+        ('expense', _('支出')),
     ]
 
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='transactions')
-    member = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True, verbose_name=_("登録者")) # ⬅️ Translated verbose_name
-    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES, verbose_name=_("種類")) # ⬅️ Translated verbose_name
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=_("カテゴリー")) # ⬅️ Translated verbose_name
-    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("金額")) # ⬅️ Translated verbose_name
-    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("支払方法")) # ⬅️ Translated verbose_name
-    date = models.DateField(default=timezone.now, verbose_name=_("日付")) # ⬅️ Translated verbose_name
-    description = models.CharField(max_length=200, blank=True, verbose_name=_("メモ")) # ⬅️ Translated verbose_name
-    receipt_image = models.ImageField(upload_to='receipts/%Y/%m/', blank=True, null=True, verbose_name=_("レシート")) # ⬅️ Translated verbose_name
-    is_recurring = models.BooleanField(default=False, verbose_name=_("固定費")) # ⬅️ Translated verbose_name
+    member = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True, verbose_name=_("登録者"))
+    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES, verbose_name=_("種類"))
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=_("カテゴリー"))
+    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("金額"))
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("支払方法"))
+    date = models.DateField(default=timezone.now, verbose_name=_("日付"))
+    description = models.CharField(max_length=200, blank=True, verbose_name=_("メモ"))
+    receipt_image = models.ImageField(upload_to='receipts/%Y/%m/', blank=True, null=True, verbose_name=_("レシート"))
+    is_recurring = models.BooleanField(default=False, verbose_name=_("固定費"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = _("取引") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("取引") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("取引")
+        verbose_name_plural = _("取引")
         ordering = ['-date', '-created_at']
 
     def __str__(self):
@@ -177,15 +177,15 @@ class Transaction(models.Model):
 class CashSaving(models.Model):
     """現金貯蓄（貯金）"""
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='cash_savings')
-    member = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True, verbose_name=_("登録者")) # ⬅️ Translated verbose_name
-    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("金額")) # ⬅️ Translated verbose_name
-    date = models.DateField(default=timezone.now, verbose_name=_("日付")) # ⬅️ Translated verbose_name
-    description = models.CharField(max_length=200, blank=True, verbose_name=_("メモ")) # ⬅️ Translated verbose_name
+    member = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True, verbose_name=_("登録者"))
+    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("金額"))
+    date = models.DateField(default=timezone.now, verbose_name=_("日付"))
+    description = models.CharField(max_length=200, blank=True, verbose_name=_("メモ"))
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = _("現金貯蓄") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("現金貯蓄") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("現金貯蓄")
+        verbose_name_plural = _("現金貯蓄")
         ordering = ['-date', '-created_at']
 
     def __str__(self):
@@ -194,20 +194,19 @@ class CashSaving(models.Model):
 class Budget(models.Model):
     """予算設定"""
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='budgets')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_("カテゴリー")) # ⬅️ Translated verbose_name
-    year = models.IntegerField(verbose_name=_("年")) # ⬅️ Translated verbose_name
-    month = models.IntegerField(verbose_name=_("月")) # ⬅️ Translated verbose_name
-    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("予算額")) # ⬅️ Translated verbose_name
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name=_("カテゴリー"))
+    year = models.IntegerField(verbose_name=_("年"))
+    month = models.IntegerField(verbose_name=_("月"))
+    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("予算額"))
 
     class Meta:
-        verbose_name = _("予算") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("予算") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("予算")
+        verbose_name_plural = _("予算")
         unique_together = ['family', 'category', 'year', 'month']
 
     def __str__(self):
         return f"{self.year}/{self.month} - {self.category.name}: ¥{self.amount:,}"
 
-    # ... (methods omitted for brevity)
     def get_used_amount(self):
         from django.db.models import Sum
         result = Transaction.objects.filter(
@@ -226,42 +225,35 @@ class Budget(models.Model):
             return 0
         return (self.get_used_amount() / self.amount * 100)
 
-
-
-        # Add to models.py
-
-from dateutil.relativedelta import relativedelta
-
 class RecurringTemplate(models.Model):
     """定期取引テンプレート"""
     FREQUENCY_CHOICES = [
-        ('daily', _('毎日')), # ⬅️ Translated choice
-        ('weekly', _('毎週')), # ⬅️ Translated choice
-        ('monthly', _('毎月')), # ⬅️ Translated choice
-        ('yearly', _('毎年')), # ⬅️ Translated choice
+        ('daily', _('毎日')),
+        ('weekly', _('毎週')),
+        ('monthly', _('毎月')),
+        ('yearly', _('毎年')),
     ]
 
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='recurring_templates')
     member = models.ForeignKey('FamilyMember', on_delete=models.SET_NULL, null=True)
-    transaction_type = models.CharField(max_length=10, choices=Transaction.TRANSACTION_TYPES, verbose_name=_("種類")) # ⬅️ Translated verbose_name
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=_("カテゴリー")) # ⬅️ Translated verbose_name
-    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("金額")) # ⬅️ Translated verbose_name
-    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("支払方法")) # ⬅️ Translated verbose_name
-    description = models.CharField(max_length=200, blank=True, verbose_name=_("メモ")) # ⬅️ Translated verbose_name
-
+    transaction_type = models.CharField(max_length=10, choices=Transaction.TRANSACTION_TYPES, verbose_name=_("種類"))
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name=_("カテゴリー"))
+    amount = models.DecimalField(max_digits=10, decimal_places=0, verbose_name=_("金額"))
+    payment_method = models.ForeignKey(PaymentMethod, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("支払方法"))
+    description = models.CharField(max_length=200, blank=True, verbose_name=_("メモ"))
     # Recurring settings
-    frequency = models.CharField(max_length=10, choices=FREQUENCY_CHOICES, verbose_name=_("頻度")) # ⬅️ Translated verbose_name
-    start_date = models.DateField(verbose_name=_("開始日")) # ⬅️ Translated verbose_name
-    end_date = models.DateField(null=True, blank=True, verbose_name=_("終了日")) # ⬅️ Translated verbose_name
-    day_of_month = models.IntegerField(null=True, blank=True, help_text=_("月次の場合は1-31")) # ⬅️ Translated help_text
-    is_active = models.BooleanField(default=True, verbose_name=_("有効")) # ⬅️ Translated verbose_name
+    frequency = models.CharField(max_length=10, choices=FREQUENCY_CHOICES, verbose_name=_("頻度"))
+    start_date = models.DateField(verbose_name=_("開始日"))
+    end_date = models.DateField(null=True, blank=True, verbose_name=_("終了日"))
+    day_of_month = models.IntegerField(null=True, blank=True, help_text=_("月次の場合は1-31"))
+    is_active = models.BooleanField(default=True, verbose_name=_("有効"))
     last_generated = models.DateField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = _("定期取引") # ⬅️ Translated verbose_name
-        verbose_name_plural = _("定期取引") # ⬅️ Translated verbose_name_plural
+        verbose_name = _("定期取引")
+        verbose_name_plural = _("定期取引")
 
     def __str__(self):
         return f"{self.category.name} - {self.get_frequency_display()}"
@@ -333,18 +325,15 @@ class RecurringTemplate(models.Model):
 class EmailNotificationSettings(models.Model):
     """メール通知設定"""
     family = models.OneToOneField(Family, on_delete=models.CASCADE, related_name='email_settings')
-
     # Notification preferences
-    enable_notifications = models.BooleanField(default=True, verbose_name=_("通知を有効にする")) # ⬅️ Translated verbose_name
-    days_without_log = models.IntegerField(default=3, verbose_name=_("未記録日数"), help_text=_("何日間記録がない場合に通知")) # ⬅️ Translated verbose_name/help_text
-
+    enable_notifications = models.BooleanField(default=True, verbose_name=_("通知を有効にする"))
+    days_without_log = models.IntegerField(default=3, verbose_name=_("未記録日数"), help_text=_("何日間記録がない場合に通知"))
     # Email addresses
-    notification_emails = models.TextField(verbose_name=_("通知先メールアドレス"), help_text=_("1行1メールアドレス")) # ⬅️ Translated verbose_name/help_text
-
+    notification_emails = models.TextField(verbose_name=_("通知先メールアドレス"), help_text=_("1行1メールアドレス"))
     last_notification_sent = models.DateTimeField(null=True, blank=True)
 
     class Meta:
-        verbose_name = _("メール通知設定") # ⬅️ Translated verbose_name
+        verbose_name = _("メール通知設定")
 
     def get_email_list(self):
         return [email.strip() for email in self.notification_emails.split('\n') if email.strip()]
