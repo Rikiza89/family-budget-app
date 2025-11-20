@@ -37,12 +37,22 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'pwa',    
     'budget',
 ]
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_AGE = 1209600  # 2 weeks
-SESSION_SAVE_EVERY_REQUEST = True  # Important!
+# Session expires 30 minutes after login
+SESSION_COOKIE_AGE = 30 * 60  # 30 minutes
+
+# Do not expire session on browser close
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Do not reset timer on each request
+SESSION_SAVE_EVERY_REQUEST = False
+
+# Language settings (no changes needed)
+LANGUAGE_COOKIE_NAME = 'django_language'
+LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60  # 1 year, keeps language preference
 
 
 MIDDLEWARE = [
@@ -132,7 +142,8 @@ LOCALE_PATHS = [
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATICFILES_DIRS = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -154,4 +165,70 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your-email@gmail.com'
 EMAIL_HOST_PASSWORD = 'your-app-password'
-DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER # For error reports
+
+# Gemini API Key (ensure this is set in your .env file)
+GEMINI_API_KEY ='your-api-key-here-or-in-.env'
+
+# PWA settings
+PWA_APP_NAME = '家計簿アプリ'
+PWA_APP_DESCRIPTION = '家族で使える家計簿管理アプリ'
+PWA_APP_THEME_COLOR = '#2563eb'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'portrait'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/images/icons/icon-72x72.png',
+        'sizes': '72x72',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-96x96.png',
+        'sizes': '96x96',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-128x128.png',
+        'sizes': '128x128',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-144x144.png',
+        'sizes': '144x144',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-152x152.png',
+        'sizes': '152x152',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-192x192.png',
+        'sizes': '192x192',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-384x384.png',
+        'sizes': '384x384',
+        'type': 'image/png',
+        'purpose': 'any'
+    },
+    {
+        'src': '/static/images/icons/icon-512x512.png',
+        'sizes': '512x512',
+        'type': 'image/png',
+        'purpose': 'any'
+    }
+]
+
+PWA_SERVICE_WORKER_PATH = '/static/serviceworker.js'
