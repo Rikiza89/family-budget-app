@@ -823,7 +823,7 @@ def ai_spending_analysis(request):
 
 ## 📊 家計概要（{months}ヶ月合計）
 - **期間:** {days}日間
-- **通貨:** {family.currency.code}
+- **通貨:** {family.get_currency_code()}
 - **総収入:** {currency_symbol}{total_income:,.0f}
 - **総支出:** {currency_symbol}{total_expense:,.0f}
 - **収支バランス:** {currency_symbol}{balance:,.0f}
