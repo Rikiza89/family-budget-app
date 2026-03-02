@@ -68,6 +68,7 @@ class FamilyMember(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='members')
     nickname = models.CharField(max_length=50, verbose_name=_("ニックネーム"))
+    gemini_api_key = models.CharField(max_length=200, blank=True, default='', verbose_name=_("Gemini API Key"))
     
     class Meta:
         verbose_name = _("家族メンバー")

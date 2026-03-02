@@ -504,9 +504,26 @@ def settings(request):
         'categories': categories,
         'payment_methods': payment_methods,
         'family_members': family_members,
+        'member': member,
     }
 
     return render(request, 'budget/settings.html', context)
+
+
+@login_required
+def save_gemini_api_key(request):
+    """Save or clear the user's personal Gemini API key."""
+    if request.method != 'POST':
+        return redirect('settings')
+    try:
+        member = request.user.familymember
+    except FamilyMember.DoesNotExist:
+        return redirect('setup_profile')
+    member.gemini_api_key = request.POST.get('gemini_api_key', '').strip()
+    member.save()
+    messages.success(request, _('✓ Gemini API Keyを保存しました'))
+    return redirect('settings')
+
 
 @login_required
 def manage_budgets(request):

@@ -843,7 +843,7 @@ msgstr "Crea Link Invito"
 
 #: budget/templates/budget/create_invite.html:11
 msgid "招待リンクを作成すると、家族メンバーがこのリンクから参加できます。"
-msgstr ""
+msgstr "Creando un link di invito i membri della famiglia potranno unirsi tramite questo link."
 
 #: budget/templates/budget/create_invite.html:13
 #, fuzzy
@@ -1109,7 +1109,7 @@ msgstr "Risparmi Totali"
 
 #: budget/templates/budget/join_family_confirm.html:3
 msgid "家族参加 - 家計簿"
-msgstr ""
+msgstr "Unisciti alla famiglia - Budget Familiare"
 
 #: budget/templates/budget/join_family_confirm.html:10
 msgid "家族に参加"
@@ -1134,7 +1134,7 @@ msgstr "Unisciti"
 
 #: budget/templates/budget/landing.html:3
 msgid "家計簿アプリ - かんたん・シンプル"
-msgstr ""
+msgstr "Budget Familiare - Semplice e Facile"
 
 # ===== LANDING PAGE =====
 #: budget/templates/budget/landing.html:11
@@ -1299,7 +1299,7 @@ msgstr "Inserimento Rapido"
 
 #: budget/templates/budget/preset_transaction.html:10
 msgid "記録完了"
-msgstr ""
+msgstr "Registrazione completata"
 
 #: budget/templates/budget/preset_transaction.html:19
 msgid "よく使う金額"
@@ -1307,7 +1307,7 @@ msgstr "Importi Frequenti"
 
 #: budget/templates/budget/preset_transaction.html:32
 msgid "金額を入力"
-msgstr ""
+msgstr "Inserisci importo"
 
 # ===== QUICK ADD =====
 #: budget/templates/budget/quick_add.html:3
@@ -1467,7 +1467,7 @@ msgstr ""
 
 #: budget/templates/budget/setup_categories.html:26
 msgid "保険（積立）」は支出としても貯蓄としても記録されます"
-msgstr ""
+msgstr "'Assicurazione (Risparmio)' viene registrata sia come spesa che come risparmio"
 
 #: budget/templates/budget/setup_categories.html:33
 msgid "デフォルトカテゴリーで始める"
@@ -1638,7 +1638,7 @@ msgstr "Registra Tutte le Transazioni Ricorrenti"
 #: budget/views.py:542
 #, python-format
 msgid "✓ 定期取引を%(status)sにしました"
-msgstr ""
+msgstr "✓ Transazione ricorrente impostata su %(status)s"
 
 #: budget/views.py:565
 #, fuzzy
@@ -1799,3 +1799,27 @@ msgstr "Approfondimento Categoria: %(cat)s"
 
 msgid "カスタム質問"
 msgstr "Domanda Personalizzata"
+
+msgid "AI APIキー"
+msgstr "Chiave API AI"
+
+msgid "個人のGemini APIキーを設定するとそちらが優先されます。未設定の場合はアプリ共通のキーが使われます。"
+msgstr "Se imposti una chiave API Gemini personale verrà usata al posto della chiave condivisa dell'app."
+
+msgid "個人キー設定済み"
+msgstr "Chiave personale attiva"
+
+msgid "共通キー使用中"
+msgstr "Utilizzo chiave condivisa"
+
+msgid "✓ Gemini API Keyを保存しました"
+msgstr "✓ Chiave API Gemini salvata"
+
+msgid "予算削除"
+msgstr "Elimina Budget"
+
+msgid "この予算設定を削除してもよろしいですか？"
+msgstr "Sei sicuro di voler eliminare questo budget?"
+
+msgid "家族で使える家計簿管理アプリ"
+msgstr "App per la gestione del budget familiare"

@@ -63,6 +63,9 @@ urlpatterns = [
     path('recurring/generate/', views.generate_all_recurring, name='generate_all_recurring'),
     path('recurring/<int:template_id>/toggle/', views.toggle_recurring, name='toggle_recurring'),
 
+    # API Key
+    path('settings/api-key/', setup_views.save_gemini_api_key, name='save_api_key'),
+
     # Email Notifications
     path('settings/email/', views.email_notification_settings, name='email_settings'),
 

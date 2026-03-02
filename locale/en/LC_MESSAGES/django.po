@@ -109,7 +109,7 @@ msgstr "You are already part of this family"
 #: budget/auth_views.py:179
 #, python-format
 msgid "✓ %(family_name)sに参加しました！"
-msgstr ""
+msgstr "✓ Joined %(family_name)s!"
 
 #: budget/auth_views.py:206
 #, python-format
@@ -538,7 +538,7 @@ msgstr "Example: Dad, Mom, Taro"
 
 #: budget/setup_views.py:325
 msgid "例: 田中家"
-msgstr ""
+msgstr "e.g. Smith Family"
 
 #: budget/setup_views.py:334 budget/templates/budget/setup_categories.html:21
 msgid "デフォルトカテゴリーを使用"
@@ -847,7 +847,7 @@ msgstr "Create Invitation Link – Household Budget"
 
 #: budget/templates/budget/create_invite.html:11
 msgid "招待リンクを作成すると、家族メンバーがこのリンクから参加できます。"
-msgstr ""
+msgstr "Creating an invite link lets family members join through this link."
 "By creating an invitation link, family members can join using this link."
 
 #: budget/templates/budget/create_invite.html:13
@@ -1124,7 +1124,7 @@ msgstr "A household budget app for families"
 
 #: budget/templates/budget/landing.html:12
 msgid "スマホで2タップ。収支も貯蓄も一目でわかる。"
-msgstr ""
+msgstr "Just 2 taps on your phone. Income, expenses, and savings at a glance."
 "Record in 2 taps on your smartphone. See expenses and savings at a glance."
 
 #: budget/templates/budget/landing.html:16
@@ -1154,7 +1154,7 @@ msgstr "At a Glance"
 
 #: budget/templates/budget/landing.html:40
 msgid "月次収支、カテゴリー別、予算対比がダッシュボードで確認できます。"
-msgstr ""
+msgstr "Monthly balance, category breakdown, and budget comparison on one dashboard."
 "Monthly income and expenses, category breakdowns, and budget comparisons are "
 "visible on the dashboard."
 
@@ -1164,7 +1164,7 @@ msgstr "Manage Savings Separately"
 
 #: budget/templates/budget/landing.html:46
 msgid "現金貯蓄と保険積立を別々に管理。長期資産が見える化。"
-msgstr ""
+msgstr "Manage cash savings and insurance savings separately. Visualize long-term assets."
 "Manage cash savings and insurance savings separately. Visualize long-term "
 "assets."
 
@@ -1174,7 +1174,7 @@ msgstr "Start Free Now"
 
 #: budget/templates/budget/landing.html:56
 msgid "登録は1分。家計管理を今日から始められます。"
-msgstr ""
+msgstr "Sign up in 1 minute. Start managing your household budget today."
 "Registration takes 1 minute. Start managing your household budget today."
 
 #: budget/templates/budget/landing.html:58
@@ -1584,7 +1584,7 @@ msgstr "Other Income"
 
 #: budget/views.py:300
 msgid "✓ 登録しました"
-msgstr ""
+msgstr "✓ Saved"
 
 #: budget/views.py:347
 #, fuzzy
@@ -1595,11 +1595,11 @@ msgstr "Register Saving"
 #: budget/views.py:383
 #, python-format
 msgid "✓ %(category_name)s を登録しました"
-msgstr ""
+msgstr "✓ %(category_name)s saved"
 
 #: budget/views.py:417
 msgid "✓ 削除しました"
-msgstr ""
+msgstr "✓ Deleted"
 
 #: budget/views.py:483
 #, fuzzy
@@ -1616,7 +1616,7 @@ msgstr "Record All Recurring Transactions at Once"
 #: budget/views.py:542
 #, python-format
 msgid "✓ 定期取引を%(status)sにしました"
-msgstr ""
+msgstr "✓ Recurring transaction set to %(status)s"
 
 #: budget/views.py:565
 #, fuzzy
@@ -1718,3 +1718,27 @@ msgstr "Category Deep-dive: %(cat)s"
 
 msgid "カスタム質問"
 msgstr "Custom Question"
+
+msgid "AI APIキー"
+msgstr "AI API Key"
+
+msgid "個人のGemini APIキーを設定するとそちらが優先されます。未設定の場合はアプリ共通のキーが使われます。"
+msgstr "If you set a personal Gemini API key it will be used instead of the shared app key."
+
+msgid "個人キー設定済み"
+msgstr "Personal key active"
+
+msgid "共通キー使用中"
+msgstr "Using shared key"
+
+msgid "✓ Gemini API Keyを保存しました"
+msgstr "✓ Gemini API Key saved"
+
+msgid "予算削除"
+msgstr "Delete Budget"
+
+msgid "この予算設定を削除してもよろしいですか？"
+msgstr "Are you sure you want to delete this budget?"
+
+msgid "家族で使える家計簿管理アプリ"
+msgstr "Household budget app for the whole family"

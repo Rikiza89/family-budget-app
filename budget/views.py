@@ -764,6 +764,10 @@ def ai_spending_analysis(request):
 
     currency_symbol = family.get_currency_symbol()
 
+    # Use the member's personal API key if set, otherwise fall back to global key
+    api_key = member.gemini_api_key.strip() or settings.GEMINI_API_KEY
+    genai.configure(api_key=api_key)
+
     # GET → show the options/configuration page
     if request.method == 'GET':
         # Get available categories for focus-area dropdown
