@@ -1,0 +1,17 @@
+# Core framework
+Django>=5.2,<6.0
+
+# AI / Gemini API
+google-generativeai>=0.8.0
+
+# Markdown rendering for AI analysis output
+Markdown>=3.5
+
+# Image handling (receipt uploads via models.ImageField)
+Pillow>=10.0
+
+# Date arithmetic for recurring transactions
+python-dateutil>=2.8
+
+# Progressive Web App support
+django-pwa>=2.0
