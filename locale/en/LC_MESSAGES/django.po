@@ -1697,3 +1697,24 @@ msgstr "AI Data Analysis"
 
 msgid "AIが支出パターンを分析。節約のヒントを提案します。"
 msgstr "AI analyzes spending patterns and suggests savings tips."
+
+msgid "⚠️ AIが有効なテキストを返しませんでした。（safety / 空の応答）"
+msgstr "⚠️ AI did not return valid text. (safety filter / empty response)"
+
+msgid "AI分析エラー"
+msgstr "AI Analysis Error"
+
+msgid "総合支出分析"
+msgstr "General Spending Analysis"
+
+msgid "貯蓄最適化"
+msgstr "Savings Optimization"
+
+msgid "予算計画アドバイス"
+msgstr "Budget Planning Advice"
+
+msgid "カテゴリー深掘り: %(cat)s"
+msgstr "Category Deep-dive: %(cat)s"
+
+msgid "カスタム質問"
+msgstr "Custom Question"

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
 from django.utils import timezone
 from django.utils.safestring import mark_safe
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, get_language
 from django.conf import settings
 from django.contrib import messages
 from django.db import models
@@ -816,10 +816,14 @@ def ai_spending_analysis(request):
     monthly_income = total_income / months
     monthly_expense = total_expense / months
 
+    # Map Django language code to a language name for the AI prompt
+    _lang_names = {'ja': 'Japanese', 'en': 'English', 'it': 'Italian'}
+    _response_lang = _lang_names.get(get_language() or 'ja', 'Japanese')
+
     # Build base data section of prompt
     prompt = f"""
-あなたは経験豊富なファイナンシャルプランナー（FP）です。
-以下の家計データ（過去{months}ヶ月の実績）に基づき、具体的で実行可能なアドバイスを日本語で作成してください。
+You are an experienced financial planner (FP).
+Based on the following household budget data (actual results for the past {months} months), please provide specific and actionable advice in {_response_lang}.
 
 ## 📊 家計概要（{months}ヶ月合計）
 - **期間:** {days}日間
@@ -939,20 +943,20 @@ def ai_spending_analysis(request):
         response = model.generate_content(prompt)
         ai_raw = extract_text(response)
         if not ai_raw:
-            ai_raw = "⚠️ AIが有効なテキストを返しませんでした。（safety / 空の応答）"
+            ai_raw = _("⚠️ AIが有効なテキストを返しませんでした。（safety / 空の応答）")
         ai_analysis = mark_safe(markdown.markdown(ai_raw))
     except Exception as e:
-        ai_analysis = mark_safe(f"<p class='text-red-600'>⚠️ AI分析エラー: {str(e)}</p>")
+        ai_analysis = mark_safe(f"<p class='text-red-600'>⚠️ {_('AI分析エラー')}: {str(e)}</p>")
 
     # Analysis type label for display
     analysis_labels = {
-        'general': '総合支出分析',
-        'savings': '貯蓄最適化',
-        'budget': '予算計画アドバイス',
-        'focus': f'カテゴリー深掘り: {focus_category}',
-        'custom': 'カスタム質問',
+        'general': _('総合支出分析'),
+        'savings': _('貯蓄最適化'),
+        'budget': _('予算計画アドバイス'),
+        'focus': _('カテゴリー深掘り: %(cat)s') % {'cat': focus_category},
+        'custom': _('カスタム質問'),
     }
-    analysis_label = analysis_labels.get(analysis_type, '総合支出分析')
+    analysis_label = analysis_labels.get(analysis_type, _('総合支出分析'))
 
     context = {
         'ai_analysis': ai_analysis,
