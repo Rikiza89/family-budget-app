@@ -130,6 +130,8 @@ def dashboard(request):
     next_month = month + 1 if month < 12 else 1
     next_year = year if month < 12 else year + 1
 
+    currency_symbol = family.get_currency_symbol()
+
     context = {
         'family': family,
         'member': member,
@@ -149,6 +151,7 @@ def dashboard(request):
         'prev_month': prev_month,
         'next_year': next_year,
         'next_month': next_month,
+        'currency_symbol': currency_symbol,
     }
 
     return render(request, 'budget/dashboard.html', context)
@@ -242,6 +245,10 @@ def transaction_list(request):
     context = {
         'transactions': transactions[:100],
         'categories': Category.objects.filter(family=family),
+        'currency_symbol': family.get_currency_symbol(),
+        'selected_type': trans_type or '',
+        'selected_category': category_id or '',
+        'selected_month': month or '',
     }
 
     return render(request, 'budget/transaction_list.html', context)
@@ -755,16 +762,41 @@ def ai_spending_analysis(request):
     except FamilyMember.DoesNotExist:
         return redirect('setup_profile')
 
-    # Get last 3 months data
+    currency_symbol = family.get_currency_symbol()
+
+    # GET → show the options/configuration page
+    if request.method == 'GET':
+        # Get available categories for focus-area dropdown
+        expense_categories = Category.objects.filter(
+            family=family,
+            category_type='expense'
+        ).order_by('name')
+
+        context = {
+            'expense_categories': expense_categories,
+            'currency_symbol': currency_symbol,
+        }
+        return render(request, 'budget/ai_options.html', context)
+
+    # POST → run the analysis with user-chosen options
+    months = int(request.POST.get('months', 3))
+    analysis_type = request.POST.get('analysis_type', 'general')
+    custom_question = request.POST.get('custom_question', '').strip()
+    focus_category = request.POST.get('focus_category', '')
+
+    # Clamp months to valid range
+    months = max(1, min(12, months))
+    days = months * 30
+
     today = timezone.now().date()
-    three_months_ago = today - timedelta(days=90)
+    since_date = today - timedelta(days=days)
 
     transactions = Transaction.objects.filter(
         family=family,
-        date__gte=three_months_ago
+        date__gte=since_date
     ).select_related('category')
 
-    # Prepare data for AI
+    # Aggregate data
     category_totals = {}
     for trans in transactions:
         cat_name = trans.category.name
@@ -777,27 +809,20 @@ def ai_spending_analysis(request):
         category_totals[cat_name]['total'] += float(trans.amount)
         category_totals[cat_name]['count'] += 1
 
-    # --- Improved Calculation Logic ---
-    total_income = sum(v['total'] for k, v in category_totals.items() if v['type'] == 'income')
-    total_expense = sum(v['total'] for k, v in category_totals.items() if v['type'] == 'expense')
-
-    # Calculate averages and rates for better context
+    total_income = sum(v['total'] for v in category_totals.values() if v['type'] == 'income')
+    total_expense = sum(v['total'] for v in category_totals.values() if v['type'] == 'expense')
     balance = total_income - total_expense
     savings_rate = (balance / total_income * 100) if total_income > 0 else 0
+    monthly_income = total_income / months
+    monthly_expense = total_expense / months
 
-    # Convert 3-month totals to monthly averages for the prompt
-    monthly_income = total_income / 3
-    monthly_expense = total_expense / 3
-
-    currency_symbol = family.get_currency_symbol()
-
-    # --- Improved Prompt ---
+    # Build base data section of prompt
     prompt = f"""
 あなたは経験豊富なファイナンシャルプランナー（FP）です。
-以下の家計データ（過去3ヶ月の実績）に基づき、具体的で実行可能な家計改善のアドバイスを日本語で作成してください。
+以下の家計データ（過去{months}ヶ月の実績）に基づき、具体的で実行可能なアドバイスを日本語で作成してください。
 
-## 📊 家計概要（3ヶ月合計）
-- **期間:** 90日間
+## 📊 家計概要（{months}ヶ月合計）
+- **期間:** {days}日間
 - **通貨:** {family.currency.code}
 - **総収入:** {currency_symbol}{total_income:,.0f}
 - **総支出:** {currency_symbol}{total_expense:,.0f}
@@ -810,19 +835,87 @@ def ai_spending_analysis(request):
 
 ## 📂 カテゴリー別支出詳細（金額順）
 """
-    # Sort categories by amount (highest first) so AI focuses on big spenders
     sorted_expenses = sorted(
         [(k, v) for k, v in category_totals.items() if v['type'] == 'expense'],
         key=lambda x: x[1]['total'],
         reverse=True
     )
-
     for cat_name, data in sorted_expenses:
-        monthly_avg = data['total'] / 3
+        monthly_avg = data['total'] / months
         percent_of_total = (data['total'] / total_expense * 100) if total_expense > 0 else 0
         prompt += f"- **{cat_name}**: 総額 {currency_symbol}{data['total']:,.0f} (月平均 {currency_symbol}{monthly_avg:,.0f}) | 支出全体の{percent_of_total:.1f}% | {data['count']}回\n"
 
-    prompt += """
+    # Build the instruction section based on analysis_type
+    if analysis_type == 'savings':
+        prompt += """
+
+## 📝 分析依頼内容
+貯蓄の最適化に特化した分析をMarkdown形式で出力してください。
+
+### 1. 💰 現在の貯蓄状況の評価
+貯蓄率や金額が理想的かどうかを、年齢別・収入別の一般的な目安と比較して評価してください。
+
+### 2. 🎯 貯蓄を増やす具体的な方法（3つ）
+家計データに基づき、今すぐ実践できる貯蓄増加のアクションを3つ提案してください。
+
+### 3. 📈 短期・長期の貯蓄目標
+現在のペースを続けた場合の1年後・5年後の貯蓄見通しと、改善した場合との比較を示してください。
+
+### 4. ⚠️ 注意すべきリスク
+家計バランスを見て、将来の貯蓄を脅かす可能性のある支出パターンを指摘してください。
+"""
+    elif analysis_type == 'budget':
+        prompt += """
+
+## 📝 分析依頼内容
+予算計画に特化した分析をMarkdown形式で出力してください。
+
+### 1. 📊 カテゴリー別予算配分の評価
+各カテゴリーの支出比率が家計の理想的な配分（50-30-20ルール等）と比較してどうかを評価してください。
+
+### 2. 💡 推奨予算配分（月額）
+現在の収入に基づき、各カテゴリーの推奨月次予算を具体的な金額で提示してください。
+
+### 3. 🔧 予算管理の改善ポイント
+支出パターンから読み取れる予算管理上の課題と、改善するための具体的なアドバイスを3つ提示してください。
+
+### 4. 🌟 うまくできていること
+現在の予算管理で評価できる点を挙げてください。
+"""
+    elif analysis_type == 'focus' and focus_category:
+        prompt += f"""
+
+## 📝 分析依頼内容
+「**{focus_category}**」カテゴリーに特化した深掘り分析をMarkdown形式で出力してください。
+
+### 1. 🔍 このカテゴリーの支出パターン分析
+金額・頻度・割合から見た現状の詳細な評価をしてください。
+
+### 2. 💡 このカテゴリーを改善する具体的な方法（3つ）
+実際に削減・最適化できる具体的なアクションを提案してください。
+
+### 3. 💰 削減目標と期待効果
+翌月の具体的な目標金額と、それを達成した場合の年間での貯蓄改善効果を計算してください。
+
+### 4. 🌟 このカテゴリーで評価できる点
+ポジティブな面も忘れずに指摘してください。
+"""
+    elif analysis_type == 'custom' and custom_question:
+        prompt += f"""
+
+## 📝 ユーザーからの質問
+以下の質問に、上記の家計データを参考にしながら、Markdown形式で丁寧に回答してください。
+
+**質問:** {custom_question}
+
+回答には以下を含めてください：
+- データに基づいた具体的な数字や根拠
+- 実行可能な具体的なアドバイス
+- ポジティブな視点とリスクの両面からの評価
+"""
+    else:
+        # Default: general analysis
+        prompt += """
 
 ## 📝 分析依頼内容
 以下のフォーマットに従って、Markdown形式で出力してください。
@@ -830,41 +923,50 @@ def ai_spending_analysis(request):
 
 ### 1. 🔍 現状分析（3つのポイント）
 数字に基づいた客観的な分析を3点挙げてください。
-（例：「食費が支出全体のXX%を占めており、理想的な比率を超えています」など）
 
 ### 2. 💡 具体的な改善提案（3つのステップ）
 「少し頑張れば実行できる」レベルの具体的なアクションを3つ提案してください。
-抽象的なアドバイスではなく、具体的な行動（例：「コンビニ利用を週1回減らす」）を提示してください。
 
 ### 3. 💰 今すぐ見直すべき項目（節約ターゲット）
-最も削減効果が高いカテゴリーを1つ選び、翌月の具体的な削減目標金額（数値）とその理由を提示してください。
+最も削減効果が高いカテゴリーを1つ選び、翌月の具体的な削減目標金額とその理由を提示してください。
 
 ### 4. 🌟 素晴らしい点（Goodポイント）
-家計管理の中で評価できる点、健全な数字、または努力が見られる点を1つ褒めてください。
-
+家計管理の中で評価できる点を1つ褒めてください。
 """
 
     try:
         model = genai.GenerativeModel("gemini-2.5-flash")
         response = model.generate_content(prompt)
-
         ai_raw = extract_text(response)
-
         if not ai_raw:
             ai_raw = "⚠️ AIが有効なテキストを返しませんでした。（safety / 空の応答）"
-
         ai_analysis = mark_safe(markdown.markdown(ai_raw))
-
     except Exception as e:
-        ai_analysis = f"AI分析エラー: {str(e)}"
+        ai_analysis = mark_safe(f"<p class='text-red-600'>⚠️ AI分析エラー: {str(e)}</p>")
 
+    # Analysis type label for display
+    analysis_labels = {
+        'general': '総合支出分析',
+        'savings': '貯蓄最適化',
+        'budget': '予算計画アドバイス',
+        'focus': f'カテゴリー深掘り: {focus_category}',
+        'custom': 'カスタム質問',
+    }
+    analysis_label = analysis_labels.get(analysis_type, '総合支出分析')
 
     context = {
         'ai_analysis': ai_analysis,
         'total_income': total_income,
         'total_expense': total_expense,
+        'balance': balance,
+        'savings_rate': savings_rate,
         'category_totals': category_totals,
-        'currency_symbol': currency_symbol
+        'currency_symbol': currency_symbol,
+        'months': months,
+        'analysis_type': analysis_type,
+        'analysis_label': analysis_label,
+        'custom_question': custom_question,
+        'focus_category': focus_category,
     }
 
     return render(request, 'budget/ai_analysis.html', context)

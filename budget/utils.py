@@ -56,7 +56,7 @@ CATEGORY_TRANSLATIONS = {
         'bonus': ('Bonus', '🎁'),
         'side_income': ('Entrate Extra', '💵'),
         'other_income': ('Altre Entrate', '📈'),
-    }
+    },
     'en': {
         'food': ('Groceries', '🍚'),
         'dining': ('Eating Out', '🍽️'),
@@ -90,8 +90,8 @@ PAYMENT_METHODS = {
         'ic': 'Carta Prepagata',
         'qr': 'Pagamento Digitale',
         'bank': 'Bonifico',
-      }
-      'en': {
+    },
+    'en': {
         'cash': 'Cash',
         'credit': 'Credit Card',
         'ic': 'IC Card/Transit',
@@ -106,5 +106,5 @@ def get_category_name(key, language='ja'):
 
 def get_category_icon(key):
     """Get category icon (same for all languages)"""
-    return CATEGORY_TRANSLATIONS['ja'].get(key , ('', ''))[1] }
+    return CATEGORY_TRANSLATIONS['ja'].get(key, ('', ''))[1]
 
