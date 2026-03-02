@@ -504,9 +504,26 @@ def settings(request):
         'categories': categories,
         'payment_methods': payment_methods,
         'family_members': family_members,
+        'member': member,
     }
 
     return render(request, 'budget/settings.html', context)
+
+
+@login_required
+def save_gemini_api_key(request):
+    """Save or clear the user's personal Gemini API key."""
+    if request.method != 'POST':
+        return redirect('settings')
+    try:
+        member = request.user.familymember
+    except FamilyMember.DoesNotExist:
+        return redirect('setup_profile')
+    member.gemini_api_key = request.POST.get('gemini_api_key', '').strip()
+    member.save()
+    messages.success(request, _('✓ Gemini API Keyを保存しました'))
+    return redirect('settings')
+
 
 @login_required
 def manage_budgets(request):
@@ -655,10 +672,14 @@ def currency_settings(request):
     if request.method == 'POST':
         currency_id = request.POST.get('currency')
         if currency_id:
-            currency = Currency.objects.get(id=currency_id)
+            try:
+                currency = Currency.objects.get(id=currency_id)
+            except Currency.DoesNotExist:
+                messages.error(request, _('無効な通貨が選択されました'))
+                return redirect('currency')
             family.currency = currency
             family.save()
-            messages.success(request, '✓ 通貨を変更しました')
+            messages.success(request, _('✓ 通貨を変更しました'))
             return redirect('settings')
 
     currencies = Currency.objects.all()

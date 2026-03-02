@@ -61,6 +61,35 @@
         </div>
     </div>
 
+    <!-- AI API Key -->
+    <div class="bg-white rounded-lg shadow p-4 mb-4">
+        <h3 class="text-lg font-bold mb-1">🤖 {% trans "AI APIキー" %}</h3>
+        <p class="text-xs text-gray-500 mb-3">{% trans "個人のGemini APIキーを設定するとそちらが優先されます。未設定の場合はアプリ共通のキーが使われます。" %}</p>
+        <form action="{% url 'save_api_key' %}" method="post">
+            {% csrf_token %}
+            <input type="password" name="gemini_api_key"
+                   value="{{ member.gemini_api_key }}"
+                   placeholder="AIzaSy..."
+                   class="w-full border rounded-lg px-3 py-2 text-sm mb-2 font-mono">
+            <div class="flex gap-2">
+                <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm font-bold hover:bg-blue-700">
+                    {% trans "保存" %}
+                </button>
+                {% if member.gemini_api_key %}
+                <button type="submit" name="gemini_api_key" value=""
+                        class="px-4 bg-gray-200 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-300">
+                    {% trans "削除" %}
+                </button>
+                {% endif %}
+            </div>
+        </form>
+        {% if member.gemini_api_key %}
+        <p class="text-xs text-green-600 mt-2">✓ {% trans "個人キー設定済み" %}</p>
+        {% else %}
+        <p class="text-xs text-gray-400 mt-2">{% trans "共通キー使用中" %}</p>
+        {% endif %}
+    </div>
+
     <!-- 便利リンク -->
     <div class="bg-white rounded-lg shadow p-4 mb-4">
         <h3 class="text-lg font-bold mb-3">{% trans "便利機能" %}</h3>

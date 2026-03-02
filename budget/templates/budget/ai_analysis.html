@@ -1,50 +1,162 @@
-<!-- templates/budget/ai_analysis.html -->
 {% extends 'budget/base.html' %}
 {% load i18n %}
 
+{% block title %}{% trans "AI分析結果" %} - {% trans "家計簿" %}{% endblock %}
+
 {% block content %}
 <div class="p-4">
-    <h2 class="text-2xl font-bold mb-6">🤖 {% trans "AI支出分析" %}</h2>
 
-    <!-- Summary -->
-    <div class="grid grid-cols-2 gap-4 mb-6">
-        <div class="bg-blue-50 p-4 rounded-lg">
-            <p class="text-sm text-gray-600">{% trans "総収入（3ヶ月）" %}</p>
-            <p class="text-2xl font-bold text-blue-600">{{ currency_symbol }}{{ total_income|floatformat:0 }}</p>
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center">
+            <span class="text-3xl mr-3">🤖</span>
+            <div>
+                <h2 class="text-xl font-bold">{% trans "AI分析結果" %}</h2>
+                <p class="text-xs text-gray-500">{{ analysis_label }}</p>
+            </div>
         </div>
-        <div class="bg-red-50 p-4 rounded-lg">
-            <p class="text-sm text-gray-600">{% trans "総支出（3ヶ月）" %}</p>
-            <p class="text-2xl font-bold text-red-600">{{ currency_symbol }}{{ total_expense|floatformat:0 }}</p>
+        <a href="{% url 'ai' %}" class="text-sm text-blue-600 hover:underline flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            {% trans "設定に戻る" %}
+        </a>
+    </div>
+
+    <!-- Analysis period badge -->
+    <div class="flex flex-wrap gap-2 mb-5">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            📅 {{ months }}{% trans "ヶ月分のデータ" %}
+        </span>
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+            ✨ Gemini AI
+        </span>
+        {% if custom_question %}
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+            💬 {% trans "カスタム質問" %}
+        </span>
+        {% endif %}
+    </div>
+
+    <!-- Summary cards -->
+    <div class="grid grid-cols-2 gap-3 mb-5">
+        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+            <p class="text-xs text-gray-500 mb-1">{% trans "総収入" %}（{{ months }}{% trans "ヶ月" %}）</p>
+            <p class="text-xl font-bold text-blue-700">{{ currency_symbol }}{{ total_income|floatformat:0 }}</p>
+        </div>
+        <div class="bg-red-50 p-4 rounded-xl border border-red-100">
+            <p class="text-xs text-gray-500 mb-1">{% trans "総支出" %}（{{ months }}{% trans "ヶ月" %}）</p>
+            <p class="text-xl font-bold text-red-700">{{ currency_symbol }}{{ total_expense|floatformat:0 }}</p>
+        </div>
+        <div class="{% if balance >= 0 %}bg-green-50 border-green-100{% else %}bg-red-50 border-red-100{% endif %} p-4 rounded-xl border">
+            <p class="text-xs text-gray-500 mb-1">{% trans "収支バランス" %}</p>
+            <p class="text-xl font-bold {% if balance >= 0 %}text-green-700{% else %}text-red-700{% endif %}">
+                {% if balance >= 0 %}+{% endif %}{{ currency_symbol }}{{ balance|floatformat:0 }}
+            </p>
+        </div>
+        <div class="bg-purple-50 p-4 rounded-xl border border-purple-100">
+            <p class="text-xs text-gray-500 mb-1">{% trans "貯蓄率" %}</p>
+            <p class="text-xl font-bold text-purple-700">{{ savings_rate|floatformat:1 }}%</p>
         </div>
     </div>
 
-    <!-- AI Analysis -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 class="font-bold mb-4 flex items-center">
+    <!-- Custom question display -->
+    {% if custom_question %}
+    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-5">
+        <p class="text-xs font-bold text-yellow-700 mb-1">💬 {% trans "あなたの質問" %}</p>
+        <p class="text-sm text-gray-700">{{ custom_question }}</p>
+    </div>
+    {% endif %}
+
+    <!-- AI Analysis result -->
+    <div class="bg-white rounded-xl shadow-md p-5 mb-5">
+        <h3 class="font-bold text-gray-800 mb-4 flex items-center text-lg">
             <span class="text-2xl mr-2">✨</span>
-            {% trans "Gemini AI分析結果" %}
+            {% trans "Gemini AIのアドバイス" %}
         </h3>
-        <div class="prose max-w-none">
+        <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed ai-content">
             {{ ai_analysis|safe }}
         </div>
     </div>
 
-    <!-- Category Breakdown -->
-    <div class="bg-white rounded-lg shadow p-4">
-        <h3 class="font-bold mb-4">{% trans "カテゴリー別詳細" %}</h3>
+    <!-- Category breakdown -->
+    <div class="bg-white rounded-xl shadow-md p-5 mb-5">
+        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+            <span class="text-xl mr-2">📂</span>
+            {% trans "カテゴリー別詳細" %}
+        </h3>
+
+        {% if category_totals %}
         <div class="space-y-2">
             {% for cat_name, data in category_totals.items %}
             {% if data.type == 'expense' %}
-            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <div>
-                    <p class="font-medium">{{ cat_name }}</p>
-                    <p class="text-xs text-gray-500">{{ data.count }}{% trans "回" %}</p>
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                <div class="flex-1 min-w-0">
+                    <p class="font-medium text-sm truncate">{{ cat_name }}</p>
+                    <p class="text-xs text-gray-400">{{ data.count }}{% trans "回" %}</p>
                 </div>
-                <span class="font-bold text-red-600">{{ currency_symbol }}{{ data.total|floatformat:0 }}</span>
+                <div class="text-right ml-3">
+                    <p class="font-bold text-red-600 text-sm">{{ currency_symbol }}{{ data.total|floatformat:0 }}</p>
+                    <p class="text-xs text-gray-400">{% trans "月平均" %} {{ currency_symbol }}{% widthratio data.total months 1 %}</p>
+                </div>
             </div>
             {% endif %}
             {% endfor %}
         </div>
+        {% else %}
+        <p class="text-gray-400 text-center py-4 text-sm">{% trans "支出データがありません" %}</p>
+        {% endif %}
     </div>
+
+    <!-- Action buttons -->
+    <div class="grid grid-cols-2 gap-3 mb-6">
+        <a href="{% url 'ai' %}" class="flex items-center justify-center space-x-2 bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition">
+            <span>🔄</span>
+            <span class="text-sm">{% trans "再分析" %}</span>
+        </a>
+        <a href="{% url 'dashboard' %}" class="flex items-center justify-center space-x-2 bg-gray-100 text-gray-700 py-3 rounded-xl font-medium hover:bg-gray-200 transition">
+            <span>📊</span>
+            <span class="text-sm">{% trans "ダッシュボード" %}</span>
+        </a>
+    </div>
+
 </div>
+
+<style>
+.ai-content h1, .ai-content h2, .ai-content h3 {
+    font-weight: 700;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #1e3a5f;
+}
+.ai-content h3 {
+    font-size: 1rem;
+    border-left: 3px solid #3b82f6;
+    padding-left: 0.5rem;
+}
+.ai-content ul, .ai-content ol {
+    padding-left: 1.25rem;
+    margin: 0.5rem 0;
+}
+.ai-content ul { list-style-type: disc; }
+.ai-content ol { list-style-type: decimal; }
+.ai-content li {
+    margin: 0.25rem 0;
+    line-height: 1.6;
+}
+.ai-content p {
+    margin: 0.5rem 0;
+    line-height: 1.7;
+}
+.ai-content strong {
+    color: #1f2937;
+}
+.ai-content blockquote {
+    border-left: 3px solid #e5e7eb;
+    padding-left: 1rem;
+    color: #6b7280;
+    font-style: italic;
+    margin: 0.75rem 0;
+}
+</style>
 {% endblock %}

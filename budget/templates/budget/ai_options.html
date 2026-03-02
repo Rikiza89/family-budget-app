@@ -1,0 +1,252 @@
+{% extends 'budget/base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "AI分析設定" %} - {% trans "家計簿" %}{% endblock %}
+
+{% block content %}
+<div class="p-4">
+    <div class="flex items-center mb-6">
+        <span class="text-3xl mr-3">🤖</span>
+        <div>
+            <h2 class="text-2xl font-bold">{% trans "AI家計分析" %}</h2>
+            <p class="text-sm text-gray-500">{% trans "Gemini AIがあなたの家計を分析します" %}</p>
+        </div>
+    </div>
+
+    <form method="POST" action="{% url 'ai' %}" id="aiOptionsForm">
+        {% csrf_token %}
+
+        <!-- 分析期間 -->
+        <div class="bg-white rounded-xl shadow p-5 mb-4">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                <span class="text-xl mr-2">📅</span>
+                {% trans "分析期間" %}
+            </h3>
+            <p class="text-sm text-gray-500 mb-3">{% trans "何ヶ月分のデータを分析しますか？" %}</p>
+            <div class="grid grid-cols-4 gap-2">
+                <label class="cursor-pointer">
+                    <input type="radio" name="months" value="1" class="sr-only peer">
+                    <div class="text-center p-3 border-2 border-gray-200 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:border-blue-300 transition">
+                        <p class="text-xl font-bold">1</p>
+                        <p class="text-xs text-gray-500">{% trans "ヶ月" %}</p>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="months" value="3" class="sr-only peer" checked>
+                    <div class="text-center p-3 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:border-blue-300 transition">
+                        <p class="text-xl font-bold">3</p>
+                        <p class="text-xs">{% trans "ヶ月" %}</p>
+                        <p class="text-xs font-medium">{% trans "おすすめ" %}</p>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="months" value="6" class="sr-only peer">
+                    <div class="text-center p-3 border-2 border-gray-200 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:border-blue-300 transition">
+                        <p class="text-xl font-bold">6</p>
+                        <p class="text-xs text-gray-500">{% trans "ヶ月" %}</p>
+                    </div>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" name="months" value="12" class="sr-only peer">
+                    <div class="text-center p-3 border-2 border-gray-200 rounded-lg peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 hover:border-blue-300 transition">
+                        <p class="text-xl font-bold">12</p>
+                        <p class="text-xs text-gray-500">{% trans "ヶ月" %}</p>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- 分析タイプ -->
+        <div class="bg-white rounded-xl shadow p-5 mb-4">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                <span class="text-xl mr-2">🎯</span>
+                {% trans "分析タイプ" %}
+            </h3>
+            <p class="text-sm text-gray-500 mb-3">{% trans "どのような分析をしますか？" %}</p>
+            <div class="space-y-2">
+
+                <label class="cursor-pointer block">
+                    <input type="radio" name="analysis_type" value="general" class="sr-only peer" checked>
+                    <div class="flex items-center p-4 border-2 border-blue-500 bg-blue-50 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-blue-300 hover:bg-blue-50 transition">
+                        <span class="text-2xl mr-3">📊</span>
+                        <div>
+                            <p class="font-bold text-gray-800">{% trans "総合支出分析" %}</p>
+                            <p class="text-xs text-gray-500">{% trans "現状分析・改善提案・節約ターゲットを総合的に評価" %}</p>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer block">
+                    <input type="radio" name="analysis_type" value="savings" class="sr-only peer">
+                    <div class="flex items-center p-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-blue-300 hover:bg-blue-50 transition">
+                        <span class="text-2xl mr-3">💰</span>
+                        <div>
+                            <p class="font-bold text-gray-800">{% trans "貯蓄最適化" %}</p>
+                            <p class="text-xs text-gray-500">{% trans "貯蓄率の評価・改善方法・将来見通しを分析" %}</p>
+                        </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer block">
+                    <input type="radio" name="analysis_type" value="budget" class="sr-only peer">
+                    <div class="flex items-center p-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-blue-300 hover:bg-blue-50 transition">
+                        <span class="text-2xl mr-3">🎯</span>
+                        <div>
+                            <p class="font-bold text-gray-800">{% trans "予算計画アドバイス" %}</p>
+                            <p class="text-xs text-gray-500">{% trans "理想的な予算配分と月次予算の具体的な提案" %}</p>
+                        </div>
+                    </div>
+                </label>
+
+                {% if expense_categories %}
+                <label class="cursor-pointer block">
+                    <input type="radio" name="analysis_type" value="focus" class="sr-only peer" id="focusRadio">
+                    <div class="flex items-center p-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-blue-300 hover:bg-blue-50 transition">
+                        <span class="text-2xl mr-3">🔍</span>
+                        <div class="flex-1">
+                            <p class="font-bold text-gray-800">{% trans "カテゴリー深掘り" %}</p>
+                            <p class="text-xs text-gray-500">{% trans "特定のカテゴリーに絞った詳細分析" %}</p>
+                        </div>
+                    </div>
+                </label>
+                {% endif %}
+
+                <label class="cursor-pointer block">
+                    <input type="radio" name="analysis_type" value="custom" class="sr-only peer" id="customRadio">
+                    <div class="flex items-center p-4 border-2 border-gray-200 rounded-xl peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-blue-300 hover:bg-blue-50 transition">
+                        <span class="text-2xl mr-3">💬</span>
+                        <div>
+                            <p class="font-bold text-gray-800">{% trans "カスタム質問" %}</p>
+                            <p class="text-xs text-gray-500">{% trans "AIへ自由に質問できます" %}</p>
+                        </div>
+                    </div>
+                </label>
+
+            </div>
+        </div>
+
+        <!-- カテゴリー選択（focus選択時のみ表示） -->
+        {% if expense_categories %}
+        <div class="bg-white rounded-xl shadow p-5 mb-4 hidden" id="focusCategorySection">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                <span class="text-xl mr-2">📂</span>
+                {% trans "分析するカテゴリー" %}
+            </h3>
+            <select name="focus_category" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                <option value="">{% trans "カテゴリーを選択..." %}</option>
+                {% for cat in expense_categories %}
+                <option value="{{ cat.name }}">{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+
+        <!-- カスタム質問（custom選択時のみ表示） -->
+        <div class="bg-white rounded-xl shadow p-5 mb-6 hidden" id="customQuestionSection">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                <span class="text-xl mr-2">✏️</span>
+                {% trans "AIへの質問" %}
+            </h3>
+            <textarea name="custom_question"
+                      id="customQuestionInput"
+                      rows="4"
+                      maxlength="500"
+                      placeholder="{% trans '例：食費を来月1万円減らすにはどうすればいいですか？' %}"
+                      class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none resize-none"></textarea>
+            <p class="text-xs text-gray-400 mt-1 text-right">
+                <span id="charCount">0</span>/500
+            </p>
+        </div>
+
+        <!-- 送信ボタン -->
+        <button type="submit" id="submitBtn"
+                class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 active:bg-blue-800 transition shadow-lg flex items-center justify-center space-x-2">
+            <span id="submitIcon">✨</span>
+            <span id="submitText">{% trans "AI分析を開始する" %}</span>
+        </button>
+
+        <p class="text-center text-xs text-gray-400 mt-3">
+            {% trans "分析には数秒かかる場合があります" %}
+        </p>
+    </form>
+</div>
+
+<script>
+    // Handle radio button visual state updates
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            // Reset all option cards
+            radios.forEach(r => {
+                const card = r.nextElementSibling;
+                if (card) {
+                    card.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+                    card.classList.add('border-gray-200');
+                }
+            });
+            // Highlight selected card
+            const selected = radio.nextElementSibling;
+            if (selected) {
+                selected.classList.add('border-blue-500', 'bg-blue-50');
+                selected.classList.remove('border-gray-200');
+            }
+        });
+    });
+
+    // Show/hide conditional sections
+    const analysisRadios = document.querySelectorAll('input[name="analysis_type"]');
+    const focusSection = document.getElementById('focusCategorySection');
+    const customSection = document.getElementById('customQuestionSection');
+
+    analysisRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (focusSection) focusSection.classList.add('hidden');
+            if (customSection) customSection.classList.add('hidden');
+
+            if (radio.value === 'focus' && focusSection) {
+                focusSection.classList.remove('hidden');
+            } else if (radio.value === 'custom' && customSection) {
+                customSection.classList.remove('hidden');
+            }
+        });
+    });
+
+    // Character counter for custom question
+    const textarea = document.getElementById('customQuestionInput');
+    const charCount = document.getElementById('charCount');
+    if (textarea && charCount) {
+        textarea.addEventListener('input', () => {
+            charCount.textContent = textarea.value.length;
+        });
+    }
+
+    // Loading state on submit
+    const form = document.getElementById('aiOptionsForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitText = document.getElementById('submitText');
+    const submitIcon = document.getElementById('submitIcon');
+
+    form.addEventListener('submit', (e) => {
+        // Validate custom question if needed
+        const customRadio = document.getElementById('customRadio');
+        if (customRadio && customRadio.checked && textarea && !textarea.value.trim()) {
+            e.preventDefault();
+            textarea.focus();
+            textarea.classList.add('border-red-400');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+        submitIcon.textContent = '⏳';
+        submitText.textContent = '{% trans "分析中..." %}';
+
+        // Spinner animation
+        let dots = 0;
+        setInterval(() => {
+            dots = (dots + 1) % 4;
+            submitText.textContent = '{% trans "分析中" %}' + '.'.repeat(dots);
+        }, 500);
+    });
+</script>
+{% endblock %}

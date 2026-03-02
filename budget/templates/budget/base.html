@@ -12,8 +12,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="家計簿">
-<meta name="description" content="家族で使える家計簿管理アプリ">
+<meta name="apple-mobile-web-app-title" content="{% trans '家計簿' %}">
+<meta name="description" content="{% trans '家族で使える家計簿管理アプリ' %}">
 
 <!-- Manifest -->
 <link rel="manifest" href="{% url 'manifest' %}">
@@ -221,8 +221,13 @@
     {% if messages %}
     <div class="max-w-md mx-auto px-4 pt-4">
         {% for message in messages %}
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-2 fade-in">
-            {{ message }}
+        <div class="px-4 py-3 rounded-lg mb-2 fade-in flex items-start justify-between
+            {% if message.tags == 'error' %}bg-red-100 border border-red-400 text-red-700
+            {% elif message.tags == 'warning' %}bg-yellow-100 border border-yellow-400 text-yellow-700
+            {% elif message.tags == 'info' %}bg-blue-100 border border-blue-400 text-blue-700
+            {% else %}bg-green-100 border border-green-400 text-green-700{% endif %}">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()" class="ml-3 font-bold opacity-60 hover:opacity-100">&times;</button>
         </div>
         {% endfor %}
     </div>
@@ -287,13 +292,13 @@
 
         // メッセージ自動非表示
         setTimeout(() => {
-            const messages = document.querySelectorAll('.bg-green-100');
+            const messages = document.querySelectorAll('.fade-in');
             messages.forEach(msg => {
                 msg.style.transition = 'opacity 0.5s';
                 msg.style.opacity = '0';
                 setTimeout(() => msg.remove(), 500);
             });
-        }, 3000);
+        }, 4000);
     </script>
 
     {% block extra_js %}{% endblock %}

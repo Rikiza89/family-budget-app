@@ -1,302 +1,265 @@
-# 💰 家族向け家計簿アプリ
+# Family Budget App
 
-Djangoで作られたモバイルファースト家計簿管理システム。家族で収支・貯蓄を共有管理できます。
+A mobile-first household budget management system built with Django. Track income, expenses, savings, and get AI-powered financial advice — shared across the whole family.
+
+**言語 / Language / Lingua:**
+**English** | [日本語](README.ja.md) | [Italiano](README.it.md)
 
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![Django](https://img.shields.io/badge/django-5.2+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## ✨ 主な機能
+## Features
 
-### 基本機能
-- 📊 **ダッシュボード** - 月次収支サマリーとグラフ表示
-- 💸 **クイック入力** - 2タップで記録完了（モバイル最適化）
-- 💰 **2種類の貯蓄管理**
-  - 現金貯蓄（貯金）- 純粋な積立
-  - 保険型積立（保険）- 支出と貯蓄の両方に計上
-- 📱 **レシート撮影** - 取引に写真を添付可能
-- 🎯 **予算管理** - カテゴリー別に予算設定・追跡・編集
-  - 色分け表示（緑=正常、黄=80%超、赤=超過）
-- 📈 **グラフ分析** - 過去6ヶ月の収支推移
-- 🤖 **AI支出分析** - 過去3ヶ月の支出による分析、評価、アドバイス
+### Core
+- **Dashboard** — monthly income/expense summary with charts
+- **Quick entry** — record a transaction in 2 taps (mobile-optimised)
+- **Two types of savings**
+  - *Cash savings* — pure deposits/withdrawals
+  - *Insurance savings* — counted as both an expense and long-term savings
+- **Receipt photos** — attach an image to any transaction
+- **Budget management** — set and track per-category monthly budgets with colour-coded alerts (green / yellow / red)
+- **Spending charts** — 6-month income/expense trend
+- **AI spending analysis** — Gemini AI analyses your data and gives actionable advice
 
-### 🔄 定期取引（新機能）
-- **定期取引テンプレート作成** - 家賃、給料、保険など
-- **頻度設定** - 毎日/毎週/毎月/毎年
-- **一括記録ボタン** - 全ての定期取引をワンクリックで記録
-- **有効/無効切り替え** - 不要な期間は停止可能
+### Recurring Transactions
+- Create templates for rent, salary, insurance, subscriptions, etc.
+- Frequency: daily / weekly / monthly / yearly
+- One-click bulk recording of all due recurring transactions
+- Enable/disable individual templates
 
-### 📧 メール通知（新機能）
-- **記録忘れリマインダー** - N日間記録がない場合に自動メール送信
-- **通知設定** - 家族ごとにカスタマイズ可能
-- **複数メールアドレス対応** - 家族メンバー全員に通知
+### Email Notifications
+- Reminder email when no transaction has been logged for N days
+- Per-family configuration
+- Multiple recipient email addresses supported
 
-### 📈 将来予測（新機能）
-- **最大60年先の予測** - マウスホイール/スワイプで簡単変更
-- **現金貯蓄予測** - 過去実績から自動計算
-- **保険積立予測** - 長期資産形成を可視化
-- **総貯蓄グラフ** - 将来の資産推移を一目で確認
+### Future Forecast
+- Predict savings up to 60 years ahead
+- Based on the last 12 months of actual data
+- Separate projections for cash savings and insurance savings
+- Interactive spinner (mouse wheel / swipe) to change the forecast period
 
-### 家族共有機能
-- 👨‍👩‍👧‍👦 **家族アカウント** - 複数メンバーで1つの家計簿を共有
-- 🔗 **招待システム** - 招待リンクで簡単にメンバー追加
-- 👤 **メンバー管理** - 誰が何を記録したか表示
+### Family Sharing
+- Multiple members share one household budget
+- Invite new members via a time-limited link (7-day expiry)
+- Every transaction shows who recorded it
 
-### その他
-- 💳 **支払方法管理** - 現金・クレカ・QR決済など
-- 📂 **カテゴリー管理** - 自由にカテゴリー追加・編集
-- 📥 **データエクスポート** - CSVで取引データをダウンロード
-- 🌐 **多言語対応** - 日本語/イタリア語（切り替え可能）
+### Other
+- **Payment methods** — cash, credit card, QR payment, bank transfer, IC card, etc.
+- **Custom categories** — add, edit, and delete categories freely
+- **Data export** — download transactions as CSV
+- **Multi-currency** — JPY, USD, EUR, GBP, CNY, KRW, SGD, AUD (switchable per family)
+- **Multi-language** — Japanese / Italian / English (cookie-based, switchable at any time)
+- **Personal AI API key** — each user can set their own Gemini API key in Settings
+- **PWA-ready** — installable on mobile as a home-screen app
 
-## 🚀 クイックスタート
+---
 
-### 必要環境
-- Python 3.8以上
+## Quick Start
+
+### Requirements
+- Python 3.11+
 - pip
 
-### インストール手順
+### Installation
 
 ```bash
-# 1. リポジトリをクローン
+# 1. Clone the repository
 git clone https://github.com/Rikiza89/family-budget-app.git
 cd family-budget-app
 
-# 2. 仮想環境作成
+# 2. Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate       # Windows: venv\Scripts\activate
 
-# 3. 依存パッケージインストール
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. データベース初期化
+# 4. Run migrations (creates tables and seeds currency data)
 python manage.py migrate
 
-# 5. スーパーユーザー作成
+# 5. Create a superuser (optional, for /admin access)
 python manage.py createsuperuser
 
-# 6. 開発サーバー起動
+# 6. Start the development server
 python manage.py runserver
 ```
 
-ブラウザで `http://localhost:8000` にアクセス
+Open `http://localhost:8000` in your browser.
 
-## 📱 使い方
+> **Existing database (no migration history)?**
+> If you already have a database created before migration files existed, run:
+> ```bash
+> python manage.py migrate --fake 0001
+> python manage.py migrate
+> ```
 
-### 初回セットアップ
-1. **新規登録** - ユーザー名・パスワードを入力
-2. **プロフィール設定** - 家族名とニックネームを入力
-3. **カテゴリー設定** - デフォルトカテゴリーを使用
-4. **支払方法設定** - デフォルト支払方法を使用
-5. **完了！** - ダッシュボードで使い始められます
+---
 
-### 定期取引の使い方
-1. メニュー → 「定期取引」
-2. 「追加」をタップ
-3. 金額・カテゴリー・頻度を設定
-4. 毎月、「すべての定期取引を一括記録」ボタンで簡単登録
-
-### メール通知の設定
-1. メニュー → 「メール通知」
-2. 通知を有効化
-3. 何日間記録がない場合に通知するか設定
-4. 通知先メールアドレスを入力
-
-### 将来予測の確認
-1. メニュー → 「将来予測」
-2. 予測期間をスピナーで調整（1〜60年）
-3. 現金貯蓄・保険積立の将来推移を確認
-
-### 家族メンバーを招待
-1. メニュー → 設定 → メンバー管理
-2. 「新規作成」をタップ
-3. 招待リンクをコピー
-4. LINEやメールで家族に送信
-
-### 貯蓄の記録方法
-
-**現金貯蓄（給料からの積立など）**
-- メニュー → 「貯金を登録」から入力
-
-**保険型積立（生命保険など）**
-- 「支出を記録」から入力
-- カテゴリーで「保険（積立）」を選択
-- → 支出としても貯蓄としても計上されます
-
-## 📁 プロジェクト構成
+## Project Structure
 
 ```
-family_budget/
+family-budget-app/
 ├── budget/
-│   ├── models.py              # データモデル（Transaction, CashSaving, RecurringTemplate, etc.）
-│   ├── views.py               # ビュー（dashboard, forecast, etc.）
-│   ├── forms.py               # フォーム定義
-│   ├── auth_views.py          # 認証関連
-│   ├── setup_views.py         # 設定・管理画面
-│   ├── urls.py                # URLルーティング
-│   ├── admin.py               # Django管理画面
-│   ├── management/
-│   │   └── commands/
-│   │       └── send_log_reminders.py  # メール通知コマンド
-│   └── templates/             # HTMLテンプレート
-├── locale/                    # 翻訳ファイル
-│   ├── it/                   # イタリア語
-│   └── ja/                   # 日本語
-├── media/                    # アップロード画像
+│   ├── models.py                  # Data models
+│   ├── views.py                   # Dashboard, AI analysis, export
+│   ├── setup_views.py             # Settings, categories, currencies, invites
+│   ├── auth_views.py              # Login, register, profile setup
+│   ├── forms.py                   # Django forms
+│   ├── urls.py                    # URL routing
+│   ├── admin.py                   # Django admin registration
+│   ├── migrations/                # Database migrations (incl. currency seed)
+│   ├── management/commands/
+│   │   └── send_log_reminders.py  # Email notification cron command
+│   ├── templatetags/
+│   │   └── translation_tags.py    # |translate filter for dynamic strings
+│   └── templates/budget/          # HTML templates
+├── family_budget/
+│   ├── settings.py
+│   └── urls.py
+├── locale/
+│   ├── en/LC_MESSAGES/            # English translations (.po + compiled .mo)
+│   └── it/LC_MESSAGES/            # Italian translations (.po + compiled .mo)
 ├── requirements.txt
 └── manage.py
 ```
 
-## 🎨 技術スタック
+---
 
-- **Backend**: Django 4.2+
-- **Frontend**: HTML5, Tailwind CSS (CDN), Vanilla JavaScript
-- **Database**: SQLite (デフォルト) / PostgreSQL対応
-- **Charts**: Chart.js
-- **画像処理**: Pillow
-- **日付処理**: python-dateutil
-- **国際化**: Django i18n (日本語/イタリア語)
+## Tech Stack
 
-## 📊 データモデル
+| Layer | Technology |
+|---|---|
+| Backend | Django 5.2+ |
+| Frontend | HTML5, Tailwind CSS (CDN), Vanilla JS |
+| Database | SQLite (default) / PostgreSQL compatible |
+| Charts | Chart.js |
+| AI | Google Gemini API (`google-generativeai`) |
+| Image processing | Pillow |
+| Date utilities | python-dateutil |
+| Internationalisation | Django i18n (EN / IT / JA) |
 
-### 重要な特徴
+---
 
-**貯蓄の2つのタイプ**
+## Data Models
 
-1. **CashSaving（現金貯蓄）**
-   - 給料からの積立、ボーナス貯金
-   - 使えるお金が減る
-   - 長期貯蓄に計上
+### Key Models
 
-2. **Transaction（保険型積立）**
-   - `is_insurance_saving=True` のカテゴリー
-   - 月次支出に計上
-   - 同時に長期貯蓄にも計上
+| Model | Purpose |
+|---|---|
+| `Family` | One household group; holds currency preference |
+| `FamilyMember` | Links a Django `User` to a `Family`; stores personal Gemini API key |
+| `Transaction` | Income or expense record |
+| `CashSaving` | Direct savings deposit |
+| `Category` | User-defined category; `is_insurance_saving=True` marks insurance-type |
+| `PaymentMethod` | Cash, card, QR, etc. |
+| `Budget` | Monthly spending limit per category |
+| `RecurringTemplate` | Template for periodic transactions |
+| `Currency` | Currency code, symbol, and JPY exchange rate |
+| `EmailNotificationSettings` | Per-family email reminder configuration |
 
-**定期取引**
+### Savings Logic
 
-3. **RecurringTemplate**
-   - 定期的な収支のテンプレート
-   - 毎日/毎週/毎月/毎年の頻度設定
-   - 一括記録機能で簡単管理
+**Cash savings (`CashSaving`):** Reduces available spending money; counted only as long-term savings.
 
-## 🔐 セキュリティ
+**Insurance savings (`Transaction` with `is_insurance_saving=True`):** Counted as a monthly expense *and* as long-term savings at the same time.
 
-開発環境用設定です。本番環境では以下を設定してください：
+---
+
+## Configuration
+
+### AI (Gemini)
+
+Set the shared API key in `.env` or `settings.py`:
+
+```python
+GEMINI_API_KEY = 'AIzaSy...'
+```
+
+Each user can also set a personal key in **Settings → AI API Key**. The personal key takes priority.
+
+### Email Notifications
 
 ```python
 # settings.py
-DEBUG = False
-SECRET_KEY = os.environ.get('SECRET_KEY')
-ALLOWED_HOSTS = ['your-domain.com']
-CSRF_TRUSTED_ORIGINS = ['https://your-domain.com']
-```
-
-## 📦 依存パッケージ
-
-```
-Django
-Pillow
-python-dateutil
-```
-
-PostgreSQL使用時は追加：
-```
-psycopg2-binary
-```
-
-## 📧 メール通知の設定
-
-### SMTP設定（settings.py）
-
-```python
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-app-password'  # Gmailアプリパスワード
+EMAIL_HOST_PASSWORD = 'your-app-password'   # Gmail app password
 DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
 ```
 
-### Cronジョブ設定（サーバー）
+Run the reminder command daily with cron:
 
-```bash
-# 毎日朝9時に実行
-0 9 * * * cd /path/to/project && python manage.py send_log_reminders
-```
-
-または cron.d に追加：
 ```bash
 # /etc/cron.d/budget-reminders
-0 9 * * * youruser cd /path/to/project && /path/to/venv/bin/python manage.py send_log_reminders
+0 9 * * * youruser /path/to/venv/bin/python /path/to/manage.py send_log_reminders
 ```
 
-## 📄 デモサイトはこちら
+### Production Checklist
 
-デモサイトを公開しています。 [サイトリンク](https://mydemoapplication.pythonanywhere.com) 
-是非一度お試しください。
-
-※ストレージ管理の為定期的にデータを削除しますのでご了承ください。
-本番使用にご興味ある方はぜひ連絡ください。サーバー運用に協力します。
-
-## 🐛 トラブルシューティング
-
-**マイグレーションエラー**
-```bash
-python manage.py makemigrations budget
-python manage.py migrate
+```python
+# settings.py
+DEBUG = False
+SECRET_KEY = os.environ['SECRET_KEY']
+ALLOWED_HOSTS = ['your-domain.com']
+CSRF_TRUSTED_ORIGINS = ['https://your-domain.com']
 ```
-
-**画像アップロードエラー**
-```bash
-mkdir -p media/receipts
-pip install pillow
-```
-
-**メール送信エラー**
-- Gmailの場合：アプリパスワードを使用
-- 2段階認証を有効化してアプリパスワードを生成
-
-**翻訳が表示されない**
-```bash
-python manage.py compilemessages
-python manage.py runserver
-```
-
-## 🤝 コントリビューション
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 ライセンス
-
-MIT License - 詳細は [LICENSE](LICENSE) ファイルを参照
-
-## 📞 サポート
-
-問題が発生した場合は [Issues](https://github.com/Rikiza89/family-budget-app/issues) で報告してください。
-
-## 🎯 今後の予定
-
-- [x] PWA対応（オフライン利用）
-- [ ] LINE通知連携
-- [ ] 銀行API連携（自動取込）
-- [ ] 複数通貨対応 (作業中…)
-- [x] AI支出分析
-
-## 🙏 謝辞
-
-このプロジェクトは以下を使用しています：
-- [Django](https://www.djangoproject.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Chart.js](https://www.chartjs.org/)
 
 ---
 
-Made with ❤️ for families managing their budgets together
+## Translations
 
+Translation source files live in `locale/<lang>/LC_MESSAGES/django.po`.
+After editing a `.po` file, recompile:
 
+```bash
+python manage.py compilemessages
+```
 
+Compiled `.mo` files are already committed and ready to use without running the above command.
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| Migration error | `python manage.py migrate --fake 0001 && python manage.py migrate` |
+| Currency dropdown empty | Run `python manage.py migrate` — the 0003 migration seeds currencies automatically |
+| Image upload error | `pip install pillow && mkdir -p media/receipts` |
+| Translations not applied | `python manage.py compilemessages` |
+| Email not sent | Check SMTP settings; for Gmail enable 2FA and use an App Password |
+
+---
+
+## Demo
+
+A live demo is available at [mydemoapplication.pythonanywhere.com](https://mydemoapplication.pythonanywhere.com).
+Data is cleared periodically. For production hosting assistance, feel free to reach out.
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'Add my feature'`
+4. Push: `git push origin feature/my-feature`
+5. Open a Pull Request
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE) for details.
+
+## Issues & Support
+
+Report bugs or request features at [GitHub Issues](https://github.com/Rikiza89/family-budget-app/issues).
+
+---
+
+Made with ❤️ for families managing their budgets together.

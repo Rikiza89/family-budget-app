@@ -12,14 +12,14 @@
             <div class="grid grid-cols-2 gap-3">
                 <select name="type" class="p-3 border-2 border-gray-300 rounded-lg">
                     <option value="">{% trans "すべて" %}</option>
-                    <option value="expense">{% trans "支出のみ" %}</option>
-                    <option value="income">{% trans "収入のみ" %}</option>
+                    <option value="expense" {% if selected_type == 'expense' %}selected{% endif %}>{% trans "支出のみ" %}</option>
+                    <option value="income" {% if selected_type == 'income' %}selected{% endif %}>{% trans "収入のみ" %}</option>
                 </select>
 
                 <select name="category" class="p-3 border-2 border-gray-300 rounded-lg">
                     <option value="">{% trans "全カテゴリー" %}</option>
                     {% for cat in categories %}
-                    <option value="{{ cat.id }}">{{ cat.name|translate }}</option>
+                    <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>{{ cat.name|translate }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -27,6 +27,11 @@
             <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700">
                 {% trans "フィルター適用" %}
             </button>
+            {% if selected_type or selected_category or selected_month %}
+            <a href="{% url 'transaction_list' %}" class="block text-center text-sm text-gray-500 hover:text-gray-700">
+                {% trans "フィルターをリセット" %}
+            </a>
+            {% endif %}
         </form>
     </div>
 
@@ -69,7 +74,7 @@
 
                 <div class="text-right">
                     <p class="text-xl font-bold {% if trans.transaction_type == 'income' %}text-blue-600{% else %}text-red-600{% endif %}">
-                        {% if trans.transaction_type == 'income' %}+{% else %}-{% endif %}¥{{ trans.amount|floatformat:0 }}
+                        {% if trans.transaction_type == 'income' %}+{% else %}-{% endif %}{{ currency_symbol }}{{ trans.amount|floatformat:0 }}
                     </p>
 
                     <a href="{% url 'delete_transaction' trans.id %}" class="text-xs text-red-500 hover:underline mt-2 inline-block">

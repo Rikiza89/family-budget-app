@@ -35,15 +35,26 @@ class Family(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_currency_symbol(self):
-        return self.currency.symbol
+        if self.currency:
+            return self.currency.symbol
+        return '¥'
+
+    def get_currency_code(self):
+        if self.currency:
+            return self.currency.code
+        return 'JPY'
 
     def convert_to_base(self, amount):
         """Convert amount to base currency (JPY)"""
-        return amount * self.currency.exchange_rate
+        if self.currency:
+            return amount * self.currency.exchange_rate
+        return amount
 
     def convert_from_base(self, amount):
         """Convert from base currency to family currency"""
-        return amount / self.currency.exchange_rate
+        if self.currency and self.currency.exchange_rate:
+            return amount / self.currency.exchange_rate
+        return amount
     
     class Meta:
         verbose_name = _("家族")
@@ -57,6 +68,7 @@ class FamilyMember(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     family = models.ForeignKey(Family, on_delete=models.CASCADE, related_name='members')
     nickname = models.CharField(max_length=50, verbose_name=_("ニックネーム"))
+    gemini_api_key = models.CharField(max_length=200, blank=True, default='', verbose_name=_("Gemini API Key"))
     
     class Meta:
         verbose_name = _("家族メンバー")
