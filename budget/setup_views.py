@@ -672,10 +672,14 @@ def currency_settings(request):
     if request.method == 'POST':
         currency_id = request.POST.get('currency')
         if currency_id:
-            currency = Currency.objects.get(id=currency_id)
+            try:
+                currency = Currency.objects.get(id=currency_id)
+            except Currency.DoesNotExist:
+                messages.error(request, _('無効な通貨が選択されました'))
+                return redirect('currency')
             family.currency = currency
             family.save()
-            messages.success(request, '✓ 通貨を変更しました')
+            messages.success(request, _('✓ 通貨を変更しました'))
             return redirect('settings')
 
     currencies = Currency.objects.all()

@@ -1823,3 +1823,117 @@ msgstr "Sei sicuro di voler eliminare questo budget?"
 
 msgid "家族で使える家計簿管理アプリ"
 msgstr "App per la gestione del budget familiare"
+
+msgid "AI分析設定"
+msgstr "Impostazioni Analisi AI"
+
+msgid "AI家計分析"
+msgstr "Analisi Budget Familiare con AI"
+
+msgid "Gemini AIがあなたの家計を分析します"
+msgstr "Gemini AI analizzerà il tuo budget familiare"
+
+msgid "分析期間"
+msgstr "Periodo di Analisi"
+
+msgid "何ヶ月分のデータを分析しますか？"
+msgstr "Quanti mesi di dati vuoi analizzare?"
+
+msgid "ヶ月"
+msgstr "mese/i"
+
+msgid "おすすめ"
+msgstr "Consigliato"
+
+msgid "分析タイプ"
+msgstr "Tipo di Analisi"
+
+msgid "どのような分析をしますか？"
+msgstr "Che tipo di analisi vuoi eseguire?"
+
+msgid "現状分析・改善提案・節約ターゲットを総合的に評価"
+msgstr "Valutazione completa: situazione attuale, proposte di miglioramento, obiettivi di risparmio"
+
+msgid "貯蓄率の評価・改善方法・将来見通しを分析"
+msgstr "Valuta il tasso di risparmio, i metodi di miglioramento e le prospettive future"
+
+msgid "理想的な予算配分と月次予算の具体的な提案"
+msgstr "Distribuzione ideale del budget e proposte mensili concrete"
+
+msgid "カテゴリー深掘り"
+msgstr "Approfondimento Categoria"
+
+msgid "特定のカテゴリーに絞った詳細分析"
+msgstr "Analisi dettagliata focalizzata su una categoria specifica"
+
+msgid "AIへ自由に質問できます"
+msgstr "Fai qualsiasi domanda all'AI"
+
+msgid "分析するカテゴリー"
+msgstr "Categoria da Analizzare"
+
+msgid "カテゴリーを選択..."
+msgstr "Seleziona una categoria..."
+
+msgid "AIへの質問"
+msgstr "La Tua Domanda"
+
+msgid "例：食費を来月1万円減らすにはどうすればいいですか？"
+msgstr "es. Come posso ridurre il budget alimentare di 10.000 il prossimo mese?"
+
+msgid "AI分析を開始する"
+msgstr "Avvia Analisi AI"
+
+msgid "分析には数秒かかる場合があります"
+msgstr "L'analisi potrebbe richiedere alcuni secondi"
+
+msgid "分析中..."
+msgstr "Analisi in corso..."
+
+msgid "分析中"
+msgstr "Analisi in corso"
+
+msgid "AI分析結果"
+msgstr "Risultati Analisi AI"
+
+msgid "ヶ月分のデータ"
+msgstr "mese/i di dati"
+
+msgid "Gemini AIのアドバイス"
+msgstr "Consigli di Gemini AI"
+
+msgid "あなたの質問"
+msgstr "La Tua Domanda"
+
+msgid "総収入"
+msgstr "Entrate Totali"
+
+msgid "総支出"
+msgstr "Spese Totali"
+
+msgid "収支バランス"
+msgstr "Saldo"
+
+msgid "貯蓄率"
+msgstr "Tasso di Risparmio"
+
+msgid "月平均"
+msgstr "Media Mensile"
+
+msgid "支出データがありません"
+msgstr "Nessun dato di spesa disponibile"
+
+msgid "再分析"
+msgstr "Rianalizza"
+
+msgid "未設定"
+msgstr "Non impostato"
+
+msgid "利用可能な通貨がありません。管理者にお問い合わせください。"
+msgstr "Nessuna valuta disponibile. Contatta l'amministratore."
+
+msgid "✓ 通貨を変更しました"
+msgstr "✓ Valuta aggiornata"
+
+msgid "無効な通貨が選択されました"
+msgstr "Valuta non valida selezionata"
