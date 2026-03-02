@@ -2,6 +2,9 @@
 
 A mobile-first household budget management system built with Django. Track income, expenses, savings, and get AI-powered financial advice — shared across the whole family.
 
+**言語 / Language / Lingua:**
+**English** | [日本語](README.ja.md) | [Italiano](README.it.md)
+
 ![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
 ![Django](https://img.shields.io/badge/django-5.2+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)

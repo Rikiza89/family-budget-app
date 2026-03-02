@@ -1,5 +1,8 @@
 # Family Budget App — Usage Guide
 
+**言語 / Language / Lingua:**
+**English** | [日本語](USAGE_GUIDE.ja.md) | [Italiano](USAGE_GUIDE.it.md)
+
 ## Table of Contents
 
 1. [First-Time Setup](#first-time-setup)
